@@ -1,5 +1,7 @@
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+
 function App() {
-  return <h1>Шаблон</h1>;
+  return <Logo />;
 }
 
 export default App;
