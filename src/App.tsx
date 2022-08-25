@@ -1,7 +1,9 @@
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-
 function App() {
-  return <Logo/>
+  return (
+    <>
+      <h1>Stellar Burgers</h1>
+    </>
+  );
 }
 
 export default App;
