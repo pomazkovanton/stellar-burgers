@@ -1,9 +1,9 @@
-function App() {
-  return (
-    <>
-      <h1>Stellar Burgers</h1>
-    </>
-  );
-}
+import React from 'react';
+
+import AppHeader from './components/AppHeader/AppHeader';
+
+const App: React.FC = () => {
+  return <AppHeader />;
+};
 
 export default App;
