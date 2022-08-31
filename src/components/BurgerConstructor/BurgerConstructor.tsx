@@ -33,6 +33,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
         })}
         <div className={styles.wrapper}>
           {burger.map((ingr) => {
+            if (ingr.type === 'bun') return null;
             return (
               <li key={ingr._id} className={styles.ingredient}>
                 <DragIcon type='primary' />
