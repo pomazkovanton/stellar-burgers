@@ -24,7 +24,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
                 <ConstructorElement
                   type='top'
                   isLocked={true}
-                  text={ingr.name}
+                  text={`${ingr.name} (верх)`}
                   price={ingr.price}
                   thumbnail={ingr.image}
                 />
@@ -49,7 +49,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
                 <ConstructorElement
                   type='bottom'
                   isLocked={true}
-                  text={ingr.name}
+                  text={`${ingr.name} (низ)`}
                   price={ingr.price}
                   thumbnail={ingr.image}
                 />
