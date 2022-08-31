@@ -24,7 +24,7 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/components/App"]
     }
   },
   "include": ["vite.config.ts", "**/*.ts", "**/*.tsx"],
