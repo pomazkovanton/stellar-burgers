@@ -1,15 +1,20 @@
 import React from 'react';
 
 import styles from './burgeringredients.module.css';
-import data from '../../utils/data.json';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientList from './IngredientList/IngredientList';
+import { IngredientType } from '~/types/Ingredient';
 
-const BurgerIngredients: React.FC = () => {
+interface IBurgerIngredientsProps {
+  addToBurger: (ingredient: IngredientType) => void;
+  ingredients: IngredientType[];
+}
+
+const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, addToBurger }) => {
   const [current, setCurrent] = React.useState('buns');
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div style={{ display: 'flex' }}>
         <Tab value='buns' active={current === 'buns'} onClick={setCurrent}>
           Булки
@@ -21,14 +26,31 @@ const BurgerIngredients: React.FC = () => {
           Начинки
         </Tab>
       </div>
-      {current === 'buns' ? <IngredientList type='bun' title='Булки' ingredients={data} /> : null}
+      {current === 'buns' ? (
+        <IngredientList
+          type='bun'
+          title='Булки'
+          ingredients={ingredients}
+          addToBurger={addToBurger}
+        />
+      ) : null}
       {current === 'sauces' ? (
-        <IngredientList type='sauce' title='Соусы' ingredients={data} />
+        <IngredientList
+          type='sauce'
+          title='Соусы'
+          ingredients={ingredients}
+          addToBurger={addToBurger}
+        />
       ) : null}
       {current === 'fillings' ? (
-        <IngredientList type='main' title='Начинки' ingredients={data} />
+        <IngredientList
+          type='main'
+          title='Начинки'
+          ingredients={ingredients}
+          addToBurger={addToBurger}
+        />
       ) : null}
-    </div>
+    </section>
   );
 };
 

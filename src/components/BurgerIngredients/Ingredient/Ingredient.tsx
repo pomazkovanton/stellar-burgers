@@ -7,24 +7,26 @@ import { IngredientType } from '~/types/Ingredient';
 
 interface IngredientProps {
   ingredient: IngredientType;
+  addToBurger: (ingredient: IngredientType) => void;
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
-  const [count, setCount] = useState(0);
+const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger }) => {
+  const [count, setCount] = useState(false);
 
-  const handleCount = () => {
-    setCount(count + 1);
+  const handleClick = (item: IngredientType) => {
+    setCount(!count); // Вынести состояние в App, типа если есть в стате бургер, тогда пробрасывать тру если нет фалзе
+    addToBurger(item);
   };
 
   return (
-    <div onMouseDown={handleCount} className={styles.card} role='presentation'>
+    <div onMouseDown={() => handleClick(ingredient)} className={styles.card} role='presentation'>
       <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
       <div className={styles.price}>
         <span className='text text_type_digits-default'>{ingredient.price}</span>
         <CurrencyIcon type='primary' />
       </div>
       <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
-      {count !== 0 ? <Counter count={count} size='default' /> : null}
+      {count ? <Counter count={1} size='default' /> : null}
     </div>
   );
 };
