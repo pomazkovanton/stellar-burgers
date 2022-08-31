@@ -15,7 +15,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, add
   const [current, setCurrent] = React.useState('buns');
   return (
     <section className={styles.container}>
-      <div style={{ display: 'flex' }}>
+      <div className={styles.tabs}>
         <Tab value='buns' active={current === 'buns'} onClick={setCurrent}>
           Булки
         </Tab>
