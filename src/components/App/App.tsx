@@ -28,7 +28,7 @@ const App: React.FC = () => {
       <main className={styles.container}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <div className={styles.wrapper}>
-          <BurgerIngredients ingredients={ingredients} addToBurger={addToBurger} />
+          <BurgerIngredients ingredients={ingredients} addToBurger={addToBurger} burger={burger} />
           <BurgerConstructor burger={burger} />
         </div>
       </main>

@@ -7,6 +7,7 @@ import styles from './ingredientlist.module.css';
 interface IngredientListProps {
   type: string;
   title: string;
+  burger: IngredientType[];
   ingredients: IngredientType[];
   addToBurger: (ingredient: IngredientType) => void;
 }
@@ -15,6 +16,7 @@ const IngredientList: React.FC<IngredientListProps> = ({
   ingredients,
   title,
   type,
+  burger,
   addToBurger,
 }) => {
   return (
@@ -23,7 +25,12 @@ const IngredientList: React.FC<IngredientListProps> = ({
       <ul className={styles.list}>
         {ingredients.map((ingredient) =>
           ingredient.type === type ? (
-            <Ingredient key={ingredient._id} ingredient={ingredient} addToBurger={addToBurger} />
+            <Ingredient
+              key={ingredient._id}
+              ingredient={ingredient}
+              addToBurger={addToBurger}
+              burger={burger}
+            />
           ) : null,
         )}
       </ul>

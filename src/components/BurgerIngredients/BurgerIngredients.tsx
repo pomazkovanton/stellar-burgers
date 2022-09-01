@@ -7,11 +7,16 @@ import IngredientList from './IngredientList/IngredientList';
 import { IngredientType } from '~/types/Ingredient';
 
 interface IBurgerIngredientsProps {
+  burger: IngredientType[];
   addToBurger: (ingredient: IngredientType) => void;
   ingredients: IngredientType[];
 }
 
-const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, addToBurger }) => {
+const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
+  ingredients,
+  addToBurger,
+  burger,
+}) => {
   const [current, setCurrent] = React.useState('buns');
   return (
     <section className={styles.container}>
@@ -31,6 +36,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, add
           type='bun'
           title='Булки'
           ingredients={ingredients}
+          burger={burger}
           addToBurger={addToBurger}
         />
       ) : null}
@@ -38,6 +44,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, add
         <IngredientList
           type='sauce'
           title='Соусы'
+          burger={burger}
           ingredients={ingredients}
           addToBurger={addToBurger}
         />
@@ -46,6 +53,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients, add
         <IngredientList
           type='main'
           title='Начинки'
+          burger={burger}
           ingredients={ingredients}
           addToBurger={addToBurger}
         />
