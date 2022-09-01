@@ -13,9 +13,13 @@ const App: React.FC = () => {
   const [burger, setBurger] = useState<IngredientType[]>([]);
 
   const addToBurger = (ingredient: IngredientType) => {
-    burger.includes(ingredient)
-      ? setBurger(burger.filter((el) => el !== ingredient))
-      : setBurger([...burger, ingredient]);
+    if (burger.includes(ingredient)) {
+      setBurger(burger.filter((el) => el !== ingredient));
+    } else if (ingredient.type === 'bun') {
+      setBurger([...burger.filter((el) => el.type !== 'bun'), ingredient]);
+    } else {
+      setBurger([...burger, ingredient]);
+    }
   };
 
   return (
