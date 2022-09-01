@@ -5,7 +5,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
-import { IngredientType } from '~/types/Ingredient';
+import { IngredientType } from '../../types/Ingredient';
 
 import styles from './burgerconstructor.module.css';
 
@@ -14,6 +14,14 @@ interface IBurgerConstructorProps {
 }
 
 const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
+  const calculatingPrice = (burger: IngredientType[]): number => {
+    let price = 0;
+    burger.map((el) => {
+      price += el.price;
+    });
+    return price;
+  };
+
   return (
     <section className={styles.container}>
       <ul className={styles.list}>
@@ -60,7 +68,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
       {burger.length !== 0 && (
         <div className={styles.order}>
           <div className={styles.price}>
-            <p className='text text_type_digits-medium'>610</p>
+            <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
           <Button type='primary' size='medium'>
