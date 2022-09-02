@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+
+import styles from './app.module.css';
 import { IngredientType } from '../../types/Ingredient';
 
-import data from '../../utils/data.json';
-import styles from './app.module.css';
-
 const App: React.FC = () => {
-  const [ingredients, setIngredients] = useState(data);
+  const [ingredients, setIngredients] = useState<IngredientType[]>([]);
   const [burger, setBurger] = useState<IngredientType[]>([]);
+
+  useEffect(() => {
+    fetchIngredients();
+  }, []);
 
   const addToBurger = (ingredient: IngredientType) => {
     if (burger.includes(ingredient)) {
@@ -19,6 +23,17 @@ const App: React.FC = () => {
       setBurger([...burger.filter((el) => el.type !== 'bun'), ingredient]);
     } else {
       setBurger([...burger, ingredient]);
+    }
+  };
+
+  const fetchIngredients = async () => {
+    try {
+      const res = await axios.get<IngredientType[]>(
+        'https://norma.nomoreparties.space/api/ingredients',
+      );
+      setIngredients(res.data.data);
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
