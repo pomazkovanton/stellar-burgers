@@ -71,7 +71,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
             <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <Button type='primary' size='medium'>
+          <Button type='primary' size='medium' onClick={() => setModalActive(true)}>
             Оформить заказ
           </Button>
         </div>
