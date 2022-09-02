@@ -4,16 +4,20 @@ import {
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { IngredientType } from '../../types/Ingredient';
+import Modal from '../Modal/Modal';
 
 import styles from './burgerconstructor.module.css';
+import doneImg from '../../images/done.png';
 
 interface IBurgerConstructorProps {
   burger: IngredientType[];
 }
 
 const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
+  const [modalActive, setModalActive] = useState(false);
+
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
@@ -76,6 +80,15 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
           </Button>
         </div>
       )}
+      <Modal active={modalActive} setActive={setModalActive}>
+        <h2 className='text text_type_digits-large mt-8'>034536</h2>
+        <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
+        <img className={styles.modal_img} src={doneImg} alt='Заказ готов!' />
+        <p className='text text_type_main-default mt-15'>Ваш заказ начали готовить</p>
+        <p className='text text_type_main-default text_color_inactive mt-2 mb-15'>
+          Дождитесь готовности на орбитальной станции
+        </p>
+      </Modal>
     </section>
   );
 };

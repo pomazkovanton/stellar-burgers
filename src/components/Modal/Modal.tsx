@@ -36,7 +36,7 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
           <h2 className='text text_type_main-large'>{title}</h2>
           <button onMouseDown={() => setActive(false)} className={styles.button}></button>
         </div>
-        {children}
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   );

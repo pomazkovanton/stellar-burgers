@@ -4,7 +4,7 @@ import styles from './burgeringredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientList from './IngredientList/IngredientList';
-import { IngredientType } from '~/types/Ingredient';
+import { IngredientType } from '../../types/Ingredient';
 
 interface IBurgerIngredientsProps {
   burger: IngredientType[];
