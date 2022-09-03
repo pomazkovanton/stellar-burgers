@@ -1,5 +1,6 @@
 .overlay {
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   display: flex;
@@ -20,7 +21,9 @@
 
 .modal {
   position: relative;
+  z-index: 1;
   padding: 40px 40px 60px;
+  box-sizing: border-box;
   min-width: 720px;
   background-color: var(--background);
   border: 1px solid rgb(76 76 255/ 20%);
