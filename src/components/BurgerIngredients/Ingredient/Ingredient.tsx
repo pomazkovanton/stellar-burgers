@@ -32,7 +32,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger
         <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
         {burger.includes(ingredient) ? <Counter count={1} size='default' /> : null}
       </div>
-      <Modal title='Детали ингредиента' active={modalActive} setActive={setModalActive}>
+      <Modal title='Детали ингредиента' isActive={modalActive} setActive={setModalActive}>
         <IngredientDetails ingredient={ingredient} />
       </Modal>
     </>

@@ -7,33 +7,32 @@ import ModalOverlay from './ModalOverlay/ModalOverlay';
 
 interface IModalProps {
   title?: string;
-  active: boolean;
+  isActive: boolean;
   setActive: (active: boolean) => void;
   children: React.ReactNode;
 }
 
 const modalRoot = document.getElementById('modals') as HTMLElement;
 
-const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) => {
-  useEffect(() => {
-    document.addEventListener('keydown', handleEscClose);
-    return () => document.removeEventListener('keydown', handleEscClose);
-  }, []);
-
+const Modal: React.FC<IModalProps> = ({ isActive, setActive, children, title }) => {
   const closePopup = () => {
     setActive(false);
   };
 
-  const handleEscClose = (evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
-      closePopup();
-    }
-  };
+  useEffect(() => {
+    const handleEscClose = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        closePopup();
+      }
+    };
+    if (isActive) document.addEventListener('keydown', handleEscClose);
+    return () => document.removeEventListener('keydown', handleEscClose);
+  }, [isActive]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay isActive={active} onClose={closePopup}>
+    <ModalOverlay isActive={isActive} onClose={closePopup}>
       <div
-        className={active ? [styles.modal, styles.show].join(' ') : styles.modal}
+        className={isActive ? [styles.modal, styles.show].join(' ') : styles.modal}
         onMouseDown={(e) => e.stopPropagation()}
         role='presentation'
       >

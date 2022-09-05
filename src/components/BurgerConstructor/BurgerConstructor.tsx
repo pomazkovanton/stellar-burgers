@@ -80,7 +80,7 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
           </Button>
         </div>
       )}
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal isActive={modalActive} setActive={setModalActive}>
         <OrderDetails numberOrder='034536' />
       </Modal>
     </section>
