@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import styles from './modal.module.css';
+import ModalOverlay from './ModalOverlay/ModalOverlay';
 
 interface IModalProps {
   title?: string;
@@ -22,11 +23,7 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
   }, []);
 
   return (
-    <div
-      className={active ? [styles.overlay, styles.show].join(' ') : styles.overlay}
-      onMouseDown={() => setActive(false)}
-      role='presentation'
-    >
+    <ModalOverlay active={active} setActive={setActive}>
       <div
         className={active ? [styles.modal, styles.show].join(' ') : styles.modal}
         onMouseDown={(e) => e.stopPropagation()}
@@ -38,7 +35,7 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
         </div>
         <div className={styles.content}>{children}</div>
       </div>
-    </div>
+    </ModalOverlay>
   );
 };
 
