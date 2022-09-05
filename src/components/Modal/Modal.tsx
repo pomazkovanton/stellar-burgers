@@ -1,3 +1,4 @@
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect } from 'react';
 
 import styles from './modal.module.css';
@@ -31,7 +32,9 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
       >
         <div className={styles.header}>
           <h2 className='text text_type_main-large'>{title}</h2>
-          <button onMouseDown={() => setActive(false)} className={styles.button}></button>
+          <button onMouseDown={() => setActive(false)} className={styles.button}>
+            <CloseIcon type='primary' />
+          </button>
         </div>
         <div className={styles.content}>{children}</div>
       </div>
