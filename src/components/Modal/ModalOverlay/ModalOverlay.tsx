@@ -3,16 +3,16 @@ import React from 'react';
 import styles from './modaloverlay.module.css';
 
 interface IModalOverlayProps {
-  active: boolean;
-  setActive: (active: boolean) => void;
+  isActive: boolean;
+  onClose: () => void;
   children: React.ReactNode;
 }
 
-const ModalOverlay: React.FC<IModalOverlayProps> = ({ children, active, setActive }) => {
+const ModalOverlay: React.FC<IModalOverlayProps> = ({ children, isActive, onClose }) => {
   return (
     <div
-      className={active ? [styles.overlay, styles.show].join(' ') : styles.overlay}
-      onMouseDown={() => setActive(false)}
+      className={isActive ? [styles.overlay, styles.show].join(' ') : styles.overlay}
+      onMouseDown={onClose}
       role='presentation'
     >
       {children}

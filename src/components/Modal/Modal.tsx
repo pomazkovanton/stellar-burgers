@@ -15,19 +15,23 @@ interface IModalProps {
 const modalRoot = document.getElementById('modals') as HTMLElement;
 
 const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) => {
-  const handleEscClose = (evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
-      setActive(false);
-    }
-  };
-
   useEffect(() => {
     document.addEventListener('keydown', handleEscClose);
     return () => document.removeEventListener('keydown', handleEscClose);
   }, []);
 
+  const closePopup = () => {
+    setActive(false);
+  };
+
+  const handleEscClose = (evt: KeyboardEvent) => {
+    if (evt.key === 'Escape') {
+      closePopup();
+    }
+  };
+
   return ReactDOM.createPortal(
-    <ModalOverlay active={active} setActive={setActive}>
+    <ModalOverlay isActive={active} onClose={closePopup}>
       <div
         className={active ? [styles.modal, styles.show].join(' ') : styles.modal}
         onMouseDown={(e) => e.stopPropagation()}
@@ -35,7 +39,7 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
       >
         <div className={styles.header}>
           <h2 className='text text_type_main-large'>{title}</h2>
-          <button onMouseDown={() => setActive(false)} className={styles.button}>
+          <button onMouseDown={closePopup} className={styles.button}>
             <CloseIcon type='primary' />
           </button>
         </div>
