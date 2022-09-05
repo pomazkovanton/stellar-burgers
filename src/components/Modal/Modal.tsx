@@ -1,5 +1,6 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 import styles from './modal.module.css';
 import ModalOverlay from './ModalOverlay/ModalOverlay';
@@ -10,6 +11,8 @@ interface IModalProps {
   setActive: (active: boolean) => void;
   children: React.ReactNode;
 }
+
+const modalRoot = document.getElementById('modals') as HTMLElement;
 
 const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) => {
   const handleEscClose = (evt: KeyboardEvent) => {
@@ -23,7 +26,7 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
     return () => document.removeEventListener('keydown', handleEscClose);
   }, []);
 
-  return (
+  return ReactDOM.createPortal(
     <ModalOverlay active={active} setActive={setActive}>
       <div
         className={active ? [styles.modal, styles.show].join(' ') : styles.modal}
@@ -38,7 +41,8 @@ const Modal: React.FC<IModalProps> = ({ active, setActive, children, title }) =>
         </div>
         <div className={styles.content}>{children}</div>
       </div>
-    </ModalOverlay>
+    </ModalOverlay>,
+    modalRoot,
   );
 };
 
