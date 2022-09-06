@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './ingredient.module.css';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientType } from '../../../types/Ingredient';
-import Modal from 'src/components/Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-
 interface IngredientProps {
   ingredient: IngredientType;
   burger: IngredientType[];
+  openModal: (ingredient: IngredientType) => void;
   addToBurger: (ingredient: IngredientType) => void;
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger }) => {
-  const [modalActive, setModalActive] = useState(false);
-
+const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger, openModal }) => {
   const handleClick = (ingredient: IngredientType): void => {
     addToBurger(ingredient);
-    if (!burger.includes(ingredient)) setModalActive(true);
+    openModal(ingredient);
   };
 
   return (
@@ -32,9 +28,6 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger
         <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
         {burger.includes(ingredient) ? <Counter count={1} size='default' /> : null}
       </div>
-      <Modal title='Детали ингредиента' isActive={modalActive} setActive={setModalActive}>
-        <IngredientDetails ingredient={ingredient} />
-      </Modal>
     </>
   );
 };

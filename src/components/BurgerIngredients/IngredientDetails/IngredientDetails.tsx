@@ -4,10 +4,12 @@ import { IngredientType } from '../../../types/Ingredient';
 import styles from './ingredientdetails.module.css';
 
 interface IngredientDetailsProps {
-  ingredient: IngredientType;
+  ingredient: IngredientType | null;
 }
 
 const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => {
+  if (ingredient === null) return null;
+
   return (
     <>
       <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
