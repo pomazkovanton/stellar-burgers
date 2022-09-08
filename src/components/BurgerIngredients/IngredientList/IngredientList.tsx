@@ -9,6 +9,7 @@ interface IngredientListProps {
   title: string;
   burger: IngredientType[];
   ingredients: IngredientType[];
+  openModal: (ingredient: IngredientType) => void;
   addToBurger: (ingredient: IngredientType) => void;
 }
 
@@ -18,6 +19,7 @@ const IngredientList: React.FC<IngredientListProps> = ({
   type,
   burger,
   addToBurger,
+  openModal,
 }) => {
   return (
     <div className={styles.container}>
@@ -30,6 +32,7 @@ const IngredientList: React.FC<IngredientListProps> = ({
               ingredient={ingredient}
               addToBurger={addToBurger}
               burger={burger}
+              openModal={openModal}
             />
           ) : null,
         )}

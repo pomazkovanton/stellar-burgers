@@ -2,6 +2,7 @@ module.exports = {
   extends: ['stylelint-config-standard'],
   plugins: ['stylelint-order'],
   rules: {
+    'selector-class-pattern': null,
     'order/order': [
       'declarations',
       {

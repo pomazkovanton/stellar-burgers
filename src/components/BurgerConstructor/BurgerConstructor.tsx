@@ -4,16 +4,20 @@ import {
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { IngredientType } from '../../types/Ingredient';
+import Modal from '../Modal/Modal';
 
 import styles from './burgerconstructor.module.css';
+import OrderDetails from './OrderDetails/OrderDetails';
 
 interface IBurgerConstructorProps {
   burger: IngredientType[];
 }
 
 const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
+  const [modalActive, setModalActive] = useState(false);
+
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
@@ -71,11 +75,14 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
             <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <Button type='primary' size='medium'>
+          <Button type='primary' size='medium' onClick={() => setModalActive(true)}>
             Оформить заказ
           </Button>
         </div>
       )}
+      <Modal isActive={modalActive} setActive={setModalActive}>
+        <OrderDetails numberOrder='034536' />
+      </Modal>
     </section>
   );
 };
