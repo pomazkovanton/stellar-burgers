@@ -1,7 +1,3 @@
 .container {
   max-width: 600px;
 }
-
-.tabs {
-  display: flex;
-}

@@ -2,12 +2,27 @@ import React, { useState } from 'react';
 
 import styles from './burgeringredients.module.css';
 
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientList from './IngredientList/IngredientList';
 import Modal from 'src/components/Modal/Modal';
 import IngredientDetails from './IngredientDetails/IngredientDetails';
 
 import { IngredientType } from '../../types/Ingredient';
+import Tabs from './Tabs/Tabs';
+
+const tabsIngredients = [
+  {
+    name: 'Булки',
+    value: 'buns',
+  },
+  {
+    name: 'Соусы',
+    value: 'sauces',
+  },
+  {
+    name: 'Начинки',
+    value: 'fillings',
+  },
+];
 
 interface IBurgerIngredientsProps {
   burger: IngredientType[];
@@ -32,17 +47,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
   return (
     <>
       <section className={styles.container}>
-        <div className={styles.tabs}>
-          <Tab value='buns' active={current === 'buns'} onClick={setCurrent}>
-            Булки
-          </Tab>
-          <Tab value='sauces' active={current === 'sauces'} onClick={setCurrent}>
-            Соусы
-          </Tab>
-          <Tab value='fillings' active={current === 'fillings'} onClick={setCurrent}>
-            Начинки
-          </Tab>
-        </div>
+        <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
         {current === 'buns' ? (
           <IngredientList
             type='bun'
