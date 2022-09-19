@@ -44,40 +44,39 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
     setModalContent(ingredient);
   };
 
+  let type = '';
+  let title = '';
+
+  switch (current) {
+    case 'buns': {
+      type = 'bun';
+      title = 'Булки';
+      break;
+    }
+    case 'sauces': {
+      type = 'sauce';
+      title = 'Соусы';
+      break;
+    }
+    case 'fillings': {
+      type = 'main';
+      title = 'Начинки';
+      break;
+    }
+  }
+
   return (
     <>
       <section className={styles.container}>
         <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
-        {current === 'buns' ? (
-          <IngredientList
-            type='bun'
-            title='Булки'
-            ingredients={ingredients}
-            burger={burger}
-            addToBurger={addToBurger}
-            openModal={openModal}
-          />
-        ) : null}
-        {current === 'sauces' ? (
-          <IngredientList
-            type='sauce'
-            title='Соусы'
-            burger={burger}
-            ingredients={ingredients}
-            addToBurger={addToBurger}
-            openModal={openModal}
-          />
-        ) : null}
-        {current === 'fillings' ? (
-          <IngredientList
-            type='main'
-            title='Начинки'
-            burger={burger}
-            ingredients={ingredients}
-            addToBurger={addToBurger}
-            openModal={openModal}
-          />
-        ) : null}
+        <IngredientList
+          type={type}
+          title={title}
+          ingredients={ingredients}
+          burger={burger}
+          addToBurger={addToBurger}
+          openModal={openModal}
+        />
       </section>
       <Modal title='Детали ингредиента' isActive={modalActive} setActive={setModalActive}>
         <IngredientDetails ingredient={modalContent} />
