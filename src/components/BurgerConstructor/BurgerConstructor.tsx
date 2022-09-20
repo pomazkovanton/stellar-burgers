@@ -20,7 +20,7 @@ const BurgerConstructor: React.FC = () => {
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
-      price += el.price;
+      el.type !== 'bun' ? (price += el.price) : (price += el.price * 2);
     });
     return price;
   };
