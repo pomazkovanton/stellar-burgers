@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 
 import {
   ConstructorElement,
@@ -15,7 +16,13 @@ import { IngredientType } from '../../types/Ingredient';
 
 const BurgerConstructor: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
+  const [numberOrder, setNumberOrder] = useState('');
   const burger = useContext(BurgerConstructorContext);
+
+  const fetchOrder = async (body) => {
+    const res = await axios.post('https://norma.nomoreparties.space/api/orders', body);
+    return res;
+  };
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
@@ -23,6 +30,16 @@ const BurgerConstructor: React.FC = () => {
       el.type !== 'bun' ? (price += el.price) : (price += el.price * 2);
     });
     return price;
+  };
+
+  const handleOrderClick = async () => {
+    try {
+      const { data } = await fetchOrder({ ingredients: burger.map((el) => el._id) });
+      setNumberOrder(data.order.number);
+      setModalActive(true);
+    } catch (error) {
+      console.log('Error: ' + error);
+    }
   };
 
   return (
@@ -74,13 +91,13 @@ const BurgerConstructor: React.FC = () => {
             <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <Button type='primary' size='medium' onClick={() => setModalActive(true)}>
+          <Button type='primary' size='medium' onClick={handleOrderClick}>
             Оформить заказ
           </Button>
         </div>
       )}
       <Modal isActive={modalActive} setActive={setModalActive}>
-        <OrderDetails numberOrder='034536' />
+        <OrderDetails numberOrder={numberOrder} />
       </Modal>
     </section>
   );
