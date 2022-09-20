@@ -1,22 +1,21 @@
+import React, { useState, useContext } from 'react';
+
 import {
   ConstructorElement,
   CurrencyIcon,
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useState } from 'react';
-import { IngredientType } from '../../types/Ingredient';
 import Modal from '../Modal/Modal';
-
-import styles from './burgerconstructor.module.css';
 import OrderDetails from './OrderDetails/OrderDetails';
 
-interface IBurgerConstructorProps {
-  burger: IngredientType[];
-}
+import styles from './burgerconstructor.module.css';
+import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
+import { IngredientType } from '../../types/Ingredient';
 
-const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
+const BurgerConstructor: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
+  const burger = useContext(BurgerConstructorContext);
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;

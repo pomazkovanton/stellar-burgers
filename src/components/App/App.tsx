@@ -7,6 +7,7 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
 import styles from './app.module.css';
 import { IngredientType } from '../../types/Ingredient';
+import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
 
 const App: React.FC = () => {
   const [ingredients, setIngredients] = useState<IngredientType[]>([]);
@@ -44,7 +45,9 @@ const App: React.FC = () => {
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <div className={styles.wrapper}>
           <BurgerIngredients ingredients={ingredients} addToBurger={addToBurger} burger={burger} />
-          <BurgerConstructor burger={burger} />
+          <BurgerConstructorContext.Provider value={burger}>
+            <BurgerConstructor />
+          </BurgerConstructorContext.Provider>
         </div>
       </main>
     </>
