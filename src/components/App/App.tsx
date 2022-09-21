@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -8,10 +7,12 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import styles from './app.module.css';
 import { IngredientType } from '../../types/Ingredient';
 import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
+import { getIngredients } from 'src/utils/burger-api';
 
 const App: React.FC = () => {
   const [ingredients, setIngredients] = useState<IngredientType[]>([]);
   const [burger, setBurger] = useState<IngredientType[]>([]);
+  const [isLoadingIngredients, setIsLoadingIngredients] = useState(false);
 
   useEffect(() => {
     fetchIngredients();
@@ -28,13 +29,14 @@ const App: React.FC = () => {
   };
 
   const fetchIngredients = async () => {
+    setIsLoadingIngredients(true);
     try {
-      const res = await axios.get<IngredientType[]>(
-        'https://norma.nomoreparties.space/api/ingredients',
-      );
-      setIngredients(res.data.data);
+      const { data } = await getIngredients();
+      setIngredients(data.data);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setIsLoadingIngredients(false);
     }
   };
 
@@ -44,7 +46,16 @@ const App: React.FC = () => {
       <main className={styles.container}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <div className={styles.wrapper}>
-          <BurgerIngredients ingredients={ingredients} addToBurger={addToBurger} burger={burger} />
+          {isLoadingIngredients ? (
+            <h2>Загрузка данных...</h2>
+          ) : (
+            <BurgerIngredients
+              ingredients={ingredients}
+              addToBurger={addToBurger}
+              burger={burger}
+            />
+          )}
+
           <BurgerConstructorContext.Provider value={burger}>
             <BurgerConstructor />
           </BurgerConstructorContext.Provider>

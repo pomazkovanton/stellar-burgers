@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 
 import {
   ConstructorElement,
@@ -13,16 +12,13 @@ import OrderDetails from './OrderDetails/OrderDetails';
 import styles from './burgerconstructor.module.css';
 import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
 import { IngredientType } from '../../types/Ingredient';
+import { getOrder } from 'src/utils/burger-api';
 
 const BurgerConstructor: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
   const [numberOrder, setNumberOrder] = useState('');
   const burger = useContext(BurgerConstructorContext);
-
-  const fetchOrder = async (body) => {
-    const res = await axios.post('https://norma.nomoreparties.space/api/orders', body);
-    return res;
-  };
+  const [isLoadingOrder, setIsLoadingOrder] = useState(false);
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
@@ -33,12 +29,15 @@ const BurgerConstructor: React.FC = () => {
   };
 
   const handleOrderClick = async () => {
+    setIsLoadingOrder(true);
     try {
-      const { data } = await fetchOrder({ ingredients: burger.map((el) => el._id) });
+      const { data } = await getOrder({ ingredients: burger.map((el) => el._id) });
       setNumberOrder(data.order.number);
       setModalActive(true);
     } catch (error) {
       console.log('Error: ' + error);
+    } finally {
+      setIsLoadingOrder(false);
     }
   };
 
@@ -92,7 +91,7 @@ const BurgerConstructor: React.FC = () => {
             <CurrencyIcon type='primary' />
           </div>
           <Button type='primary' size='medium' onClick={handleOrderClick}>
-            Оформить заказ
+            {isLoadingOrder ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </div>
       )}
