@@ -43,8 +43,10 @@ const BurgerConstructor: React.FC = () => {
     setIsLoadingOrder(true);
     try {
       const { data } = await getOrder({ ingredients: getIdIngredients(burger) });
-      setNumberOrder(data.order.number);
-      setModalActive(true);
+      if (data.success) {
+        setNumberOrder(data.order.number);
+        setModalActive(true);
+      }
     } catch (error) {
       console.log('Error: ' + error);
     } finally {
