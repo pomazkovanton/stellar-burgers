@@ -28,10 +28,21 @@ const BurgerConstructor: React.FC = () => {
     return price;
   };
 
+  const getIdIngredients = (ingredients: IngredientType[]) => {
+    const bun: IngredientType[] = ingredients.filter((ingr) => ingr.type === 'bun');
+    const otherIngredients: IngredientType[] = ingredients.filter((ingr) => ingr.type !== 'bun');
+    const ingredientsID: string[] =
+      bun.length !== 0
+        ? [bun[0]._id, ...otherIngredients.map((ingr) => ingr._id), bun[0]._id]
+        : [...otherIngredients.map((ingr) => ingr._id)];
+
+    return ingredientsID;
+  };
+
   const handleOrderClick = async () => {
     setIsLoadingOrder(true);
     try {
-      const { data } = await getOrder({ ingredients: burger.map((el) => el._id) });
+      const { data } = await getOrder({ ingredients: getIdIngredients(burger) });
       setNumberOrder(data.order.number);
       setModalActive(true);
     } catch (error) {
