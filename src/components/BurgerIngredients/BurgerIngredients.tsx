@@ -12,15 +12,15 @@ import Tabs from './Tabs/Tabs';
 const tabsIngredients = [
   {
     name: 'Булки',
-    value: 'buns',
+    value: 'bun',
   },
   {
     name: 'Соусы',
-    value: 'sauces',
+    value: 'sauce',
   },
   {
     name: 'Начинки',
-    value: 'fillings',
+    value: 'main',
   },
 ];
 
@@ -35,7 +35,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
   addToBurger,
   burger,
 }) => {
-  const [current, setCurrent] = useState('buns');
+  const [current, setCurrent] = useState('bun');
   const [modalActive, setModalActive] = useState(false);
   const [modalContent, setModalContent] = useState<IngredientType | null>(null);
 
@@ -44,39 +44,25 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
     setModalContent(ingredient);
   };
 
-  let type = '';
-  let title = '';
-
-  switch (current) {
-    case 'buns': {
-      type = 'bun';
-      title = 'Булки';
-      break;
-    }
-    case 'sauces': {
-      type = 'sauce';
-      title = 'Соусы';
-      break;
-    }
-    case 'fillings': {
-      type = 'main';
-      title = 'Начинки';
-      break;
-    }
-  }
-
   return (
     <>
-      <section className={styles.container}>
+      <section className={styles.wrapper}>
         <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
-        <IngredientList
-          type={type}
-          title={title}
-          ingredients={ingredients}
-          burger={burger}
-          addToBurger={addToBurger}
-          openModal={openModal}
-        />
+        <div className={styles.container}>
+          {tabsIngredients.map((tab) => {
+            return (
+              <IngredientList
+                key={tab.value}
+                type={tab.value}
+                title={tab.name}
+                ingredients={ingredients}
+                burger={burger}
+                addToBurger={addToBurger}
+                openModal={openModal}
+              />
+            );
+          })}
+        </div>
       </section>
       <Modal title='Детали ингредиента' isActive={modalActive} setActive={setModalActive}>
         <IngredientDetails ingredient={modalContent} />
