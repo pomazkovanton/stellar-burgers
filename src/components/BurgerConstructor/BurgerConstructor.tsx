@@ -48,6 +48,7 @@ const BurgerConstructor: React.FC = () => {
         setModalActive(true);
       }
     } catch (error) {
+      alert('Не удалось зарегистрировать заказ!');
       console.log('Error: ' + error);
     } finally {
       setIsLoadingOrder(false);

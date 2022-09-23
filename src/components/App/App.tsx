@@ -35,6 +35,7 @@ const App: React.FC = () => {
       setIngredients(data.data);
     } catch (error) {
       console.error('Error:', error);
+      alert('Ошибка загрузки данных!');
     } finally {
       setIsLoadingIngredients(false);
     }
