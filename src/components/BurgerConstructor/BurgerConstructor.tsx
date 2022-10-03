@@ -29,12 +29,12 @@ const BurgerConstructor: React.FC = () => {
   };
 
   const getIdIngredients = (ingredients: IngredientType[]) => {
-    const bun: IngredientType[] = ingredients.filter((ingr) => ingr.type === 'bun');
+    const bun: IngredientType | undefined = ingredients.find((ingr) => ingr.type === 'bun');
     const otherIngredients: IngredientType[] = ingredients.filter((ingr) => ingr.type !== 'bun');
-    const ingredientsID: string[] =
-      bun.length !== 0
-        ? [bun[0]._id, ...otherIngredients.map((ingr) => ingr._id), bun[0]._id]
-        : [...otherIngredients.map((ingr) => ingr._id)];
+
+    const ingredientsID: string[] = bun
+      ? [bun._id, ...otherIngredients.map((ingr) => ingr._id), bun._id]
+      : [...otherIngredients.map((ingr) => ingr._id)];
 
     return ingredientsID;
   };
