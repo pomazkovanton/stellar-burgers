@@ -104,7 +104,12 @@ const BurgerConstructor: React.FC = () => {
             <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <Button type='primary' size='medium' onClick={handleOrderClick}>
+          <Button
+            type='primary'
+            size='medium'
+            onClick={handleOrderClick}
+            disabled={isLoadingOrder ? true : false}
+          >
             {isLoadingOrder ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </div>
