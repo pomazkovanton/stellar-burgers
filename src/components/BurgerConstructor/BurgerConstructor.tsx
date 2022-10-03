@@ -1,29 +1,58 @@
+import React, { useState, useContext } from 'react';
+
 import {
   ConstructorElement,
   CurrencyIcon,
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useState } from 'react';
-import { IngredientType } from '../../types/Ingredient';
 import Modal from '../Modal/Modal';
-
-import styles from './burgerconstructor.module.css';
 import OrderDetails from './OrderDetails/OrderDetails';
 
-interface IBurgerConstructorProps {
-  burger: IngredientType[];
-}
+import styles from './burgerconstructor.module.css';
+import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
+import { IngredientType } from '../../types/Ingredient';
+import { getOrder } from 'src/utils/burger-api';
 
-const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
+const BurgerConstructor: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
+  const [numberOrder, setNumberOrder] = useState('');
+  const burger = useContext(BurgerConstructorContext);
+  const [isLoadingOrder, setIsLoadingOrder] = useState(false);
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
-      price += el.price;
+      el.type !== 'bun' ? (price += el.price) : (price += el.price * 2);
     });
     return price;
+  };
+
+  const getIdIngredients = (ingredients: IngredientType[]) => {
+    const bun: IngredientType | undefined = ingredients.find((ingr) => ingr.type === 'bun');
+    const otherIngredients: IngredientType[] = ingredients.filter((ingr) => ingr.type !== 'bun');
+
+    const ingredientsID: string[] = bun
+      ? [bun._id, ...otherIngredients.map((ingr) => ingr._id), bun._id]
+      : [...otherIngredients.map((ingr) => ingr._id)];
+
+    return ingredientsID;
+  };
+
+  const handleOrderClick = async () => {
+    setIsLoadingOrder(true);
+    try {
+      const { data } = await getOrder({ ingredients: getIdIngredients(burger) });
+      if (data.success) {
+        setNumberOrder(data.order.number);
+        setModalActive(true);
+      }
+    } catch (error) {
+      alert('Не удалось зарегистрировать заказ!');
+      console.log('Error: ' + error);
+    } finally {
+      setIsLoadingOrder(false);
+    }
   };
 
   return (
@@ -75,13 +104,18 @@ const BurgerConstructor: React.FC<IBurgerConstructorProps> = ({ burger }) => {
             <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
             <CurrencyIcon type='primary' />
           </div>
-          <Button type='primary' size='medium' onClick={() => setModalActive(true)}>
-            Оформить заказ
+          <Button
+            type='primary'
+            size='medium'
+            onClick={handleOrderClick}
+            disabled={isLoadingOrder ? true : false}
+          >
+            {isLoadingOrder ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </div>
       )}
       <Modal isActive={modalActive} setActive={setModalActive}>
-        <OrderDetails numberOrder='034536' />
+        <OrderDetails numberOrder={numberOrder} />
       </Modal>
     </section>
   );
