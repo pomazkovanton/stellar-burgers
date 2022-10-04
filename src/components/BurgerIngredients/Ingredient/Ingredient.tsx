@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToBurger } from '../../../store/burgerSlice';
+import { addDetails } from '../../../store/ingredientDetailsSlice';
 
 import styles from './ingredient.module.css';
 
@@ -8,16 +9,17 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { IngredientType } from '../../../types/Ingredient';
 interface IngredientProps {
   ingredient: IngredientType;
-  openModal: (ingredient: IngredientType) => void;
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient, openModal }) => {
-  const { burger } = useSelector((state) => state.burger);
-  const count = burger.filter((el) => el === ingredient).length;
+const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
   const dispatch = useDispatch();
+  const { burger } = useSelector((state) => state.burger);
+
+  const count = burger.filter((el) => el === ingredient).length;
+
   const handleClick = (ingredient: IngredientType): void => {
     dispatch(addToBurger(ingredient));
-    openModal(ingredient);
+    dispatch(addDetails(ingredient));
   };
 
   return (

@@ -8,17 +8,16 @@ interface IngredientListProps {
   type: string;
   title: string;
   ingredients: IngredientType[];
-  openModal: (ingredient: IngredientType) => void;
 }
 
-const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, type, openModal }) => {
+const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, type }) => {
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>{title}</h2>
       <ul className={styles.list}>
         {ingredients.map((ingredient) =>
           ingredient.type === type ? (
-            <Ingredient key={ingredient._id} ingredient={ingredient} openModal={openModal} />
+            <Ingredient key={ingredient._id} ingredient={ingredient} />
           ) : null,
         )}
       </ul>

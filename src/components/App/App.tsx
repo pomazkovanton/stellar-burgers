@@ -4,19 +4,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../BurgerIngredients/IngredientDetails/IngredientDetails';
 
 import styles from './app.module.css';
 import { fetchIngredients } from '../../store/ingredientsSlice';
+import { removeDetails } from '../../store/ingredientDetailsSlice';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const { ingredients, ingredientsStatus, ingredientsError } = useSelector(
     (store) => store.ingredients,
   );
+  const { ingredientDetails, modalActive } = useSelector((store) => store.ingredientDetails);
 
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
+
+  const handleCloseModalDetails = () => {
+    dispatch(removeDetails());
+  };
 
   return (
     <>
@@ -30,6 +38,9 @@ const App: React.FC = () => {
           <BurgerConstructor />
         </div>
       </main>
+      <Modal title='Детали ингредиента' isActive={modalActive} closeModal={handleCloseModalDetails}>
+        <IngredientDetails ingredient={ingredientDetails} />
+      </Modal>
     </>
   );
 };
