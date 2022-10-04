@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToBurger } from '../../../store/burgerSlice';
 
 import styles from './ingredient.module.css';
 
@@ -6,14 +8,15 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { IngredientType } from '../../../types/Ingredient';
 interface IngredientProps {
   ingredient: IngredientType;
-  burger: IngredientType[];
   openModal: (ingredient: IngredientType) => void;
-  addToBurger: (ingredient: IngredientType) => void;
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger, openModal }) => {
+const Ingredient: React.FC<IngredientProps> = ({ ingredient, openModal }) => {
+  const { burger } = useSelector((state) => state.burger);
+  const count = burger.filter((el) => el === ingredient).length;
+  const dispatch = useDispatch();
   const handleClick = (ingredient: IngredientType): void => {
-    addToBurger(ingredient);
+    dispatch(addToBurger(ingredient));
     openModal(ingredient);
   };
 
@@ -26,7 +29,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger
           <CurrencyIcon type='primary' />
         </div>
         <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
-        {burger.includes(ingredient) ? <Counter count={1} size='default' /> : null}
+        {burger.includes(ingredient) ? <Counter count={count} size='default' /> : null}
       </div>
     </>
   );

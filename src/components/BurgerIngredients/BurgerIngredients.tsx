@@ -25,22 +25,17 @@ const tabsIngredients = [
 ];
 
 interface IBurgerIngredientsProps {
-  burger: IngredientType[];
-  addToBurger: (ingredient: IngredientType) => void;
   ingredients: IngredientType[];
 }
 
-const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
-  ingredients,
-  addToBurger,
-  burger,
-}) => {
+const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients }) => {
   const [current, setCurrent] = useState('bun');
   const [modalActive, setModalActive] = useState(false);
   const [modalContent, setModalContent] = useState<IngredientType | null>(null);
 
   const openModal = (ingredient: IngredientType) => {
-    if (!burger.includes(ingredient)) setModalActive(!modalActive);
+    // if (!burger.includes(ingredient)) setModalActive(!modalActive);
+    setModalActive(!modalActive);
     setModalContent(ingredient);
   };
 
@@ -56,8 +51,6 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
                 type={tab.value}
                 title={tab.name}
                 ingredients={ingredients}
-                burger={burger}
-                addToBurger={addToBurger}
                 openModal={openModal}
               />
             );

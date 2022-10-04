@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
-
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -10,16 +11,14 @@ import Modal from '../Modal/Modal';
 import OrderDetails from './OrderDetails/OrderDetails';
 
 import styles from './burgerconstructor.module.css';
-import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
 import { IngredientType } from '../../types/Ingredient';
 import { getOrder } from 'src/utils/burger-api';
 
 const BurgerConstructor: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
   const [numberOrder, setNumberOrder] = useState('');
-  const burger = useContext(BurgerConstructorContext);
   const [isLoadingOrder, setIsLoadingOrder] = useState(false);
-
+  const { burger } = useSelector((state) => state.burger);
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
@@ -76,7 +75,7 @@ const BurgerConstructor: React.FC = () => {
           {burger.map((ingr) => {
             if (ingr.type === 'bun') return null;
             return (
-              <li key={ingr._id} className={styles.ingredient}>
+              <li key={uuidv4()} className={styles.ingredient}>
                 <DragIcon type='primary' />
                 <ConstructorElement text={ingr.name} price={ingr.price} thumbnail={ingr.image} />
               </li>
