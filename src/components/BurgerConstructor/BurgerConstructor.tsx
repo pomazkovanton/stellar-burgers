@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { useDrop } from 'react-dnd';
 
 import {
   ConstructorElement,
@@ -11,6 +12,7 @@ import {
 
 import { IngredientType } from '../../types/Ingredient';
 import { fetchOrder } from '../../store/orderSlice';
+import { addToBurger } from '../../store/burgerSlice';
 
 import styles from './burgerconstructor.module.css';
 
@@ -20,6 +22,12 @@ const BurgerConstructor: React.FC = () => {
   const isBunAdded = burger.find((ingr) => ingr.type === 'bun');
 
   const dispatch = useDispatch();
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop({ ingredient }) {
+      dispatch(addToBurger(ingredient));
+    },
+  });
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
@@ -43,7 +51,7 @@ const BurgerConstructor: React.FC = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} ref={dropTarget}>
       <ul className={styles.list}>
         {burger.map((ingr) => {
           if (ingr.type === 'bun')

@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -37,15 +39,19 @@ const App: React.FC = () => {
   return (
     <>
       <AppHeader />
-      <main className={styles.container}>
-        <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
-        <div className={styles.wrapper}>
-          {ingredientsStatus === 'loading' && <h2>Загрузка данных...</h2>}
-          {ingredientsStatus === 'rejected' && <h2>Ошибка загрузки данных: {ingredientsError}</h2>}
-          {ingredientsStatus === 'resolved' && <BurgerIngredients ingredients={ingredients} />}
-          <BurgerConstructor />
-        </div>
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <main className={styles.container}>
+          <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
+          <div className={styles.wrapper}>
+            {ingredientsStatus === 'loading' && <h2>Загрузка данных...</h2>}
+            {ingredientsStatus === 'rejected' && (
+              <h2>Ошибка загрузки данных: {ingredientsError}</h2>
+            )}
+            {ingredientsStatus === 'resolved' && <BurgerIngredients ingredients={ingredients} />}
+            <BurgerConstructor />
+          </div>
+        </main>
+      </DndProvider>
       <Modal
         title='Детали ингредиента'
         isActive={isShowDetails}
