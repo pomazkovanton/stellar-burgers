@@ -6,17 +6,21 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../BurgerIngredients/IngredientDetails/IngredientDetails';
+import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 
-import styles from './app.module.css';
 import { fetchIngredients } from '../../store/ingredientsSlice';
 import { removeDetails } from '../../store/ingredientDetailsSlice';
+import { removeOrder } from '../../store/orderSlice';
+
+import styles from './app.module.css';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const { ingredients, ingredientsStatus, ingredientsError } = useSelector(
     (store) => store.ingredients,
   );
-  const { ingredientDetails, modalActive } = useSelector((store) => store.ingredientDetails);
+  const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
+  const { order, isShowOrder } = useSelector((store) => store.order);
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -24,6 +28,10 @@ const App: React.FC = () => {
 
   const handleCloseModalDetails = () => {
     dispatch(removeDetails());
+  };
+
+  const handleCloseModalOrder = () => {
+    dispatch(removeOrder());
   };
 
   return (
@@ -38,8 +46,15 @@ const App: React.FC = () => {
           <BurgerConstructor />
         </div>
       </main>
-      <Modal title='Детали ингредиента' isActive={modalActive} closeModal={handleCloseModalDetails}>
+      <Modal
+        title='Детали ингредиента'
+        isActive={isShowDetails}
+        closeModal={handleCloseModalDetails}
+      >
         <IngredientDetails ingredient={ingredientDetails} />
+      </Modal>
+      <Modal isActive={isShowOrder} closeModal={handleCloseModalOrder}>
+        <OrderDetails numberOrder={order} />
       </Modal>
     </>
   );

@@ -4,15 +4,15 @@ const ingredientDetailsSlice = createSlice({
   name: 'ingredientDetails',
   initialState: {
     ingredientDetails: {},
-    modalActive: false,
+    isShowDetails: false,
   },
   reducers: {
     addDetails(state, action) {
       state.ingredientDetails = action.payload;
-      state.modalActive = true;
+      state.isShowDetails = true;
     },
     removeDetails(state) {
-      state.modalActive = false;
+      state.isShowDetails = false;
       state.ingredientDetails = {};
     },
   },

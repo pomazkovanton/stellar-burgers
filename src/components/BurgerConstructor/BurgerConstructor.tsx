@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { useSelector } from 'react-redux';
+
 import {
   ConstructorElement,
   CurrencyIcon,
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../Modal/Modal';
-import OrderDetails from './OrderDetails/OrderDetails';
+
+import { IngredientType } from '../../types/Ingredient';
+import { fetchOrder } from '../../store/orderSlice';
 
 import styles from './burgerconstructor.module.css';
-import { IngredientType } from '../../types/Ingredient';
-import { getOrder } from 'src/utils/burger-api';
 
 const BurgerConstructor: React.FC = () => {
-  const [modalActive, setModalActive] = useState(false);
-  const [numberOrder, setNumberOrder] = useState('');
-  const [isLoadingOrder, setIsLoadingOrder] = useState(false);
   const { burger } = useSelector((state) => state.burger);
+  const { orderStatus } = useSelector((state) => state.order);
+  const isBunAdded = burger.find((ingr) => ingr.type === 'bun');
+
+  const dispatch = useDispatch();
+
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
     burger.map((el) => {
@@ -30,28 +32,14 @@ const BurgerConstructor: React.FC = () => {
   const getIdIngredients = (ingredients: IngredientType[]) => {
     const bun: IngredientType | undefined = ingredients.find((ingr) => ingr.type === 'bun');
     const otherIngredients: IngredientType[] = ingredients.filter((ingr) => ingr.type !== 'bun');
-
-    const ingredientsID: string[] = bun
-      ? [bun._id, ...otherIngredients.map((ingr) => ingr._id), bun._id]
-      : [...otherIngredients.map((ingr) => ingr._id)];
+    const ingredientsID: string[] = [bun._id, ...otherIngredients.map((ingr) => ingr._id), bun._id];
 
     return ingredientsID;
   };
 
-  const handleOrderClick = async () => {
-    setIsLoadingOrder(true);
-    try {
-      const { data } = await getOrder({ ingredients: getIdIngredients(burger) });
-      if (data.success) {
-        setNumberOrder(data.order.number);
-        setModalActive(true);
-      }
-    } catch (error) {
-      alert('Не удалось зарегистрировать заказ!');
-      console.log('Error: ' + error);
-    } finally {
-      setIsLoadingOrder(false);
-    }
+  const handleOrderClick = () => {
+    const idIngredients = { ingredients: getIdIngredients(burger) };
+    dispatch(fetchOrder(idIngredients));
   };
 
   return (
@@ -107,15 +95,12 @@ const BurgerConstructor: React.FC = () => {
             type='primary'
             size='medium'
             onClick={handleOrderClick}
-            disabled={isLoadingOrder ? true : false}
+            disabled={!isBunAdded ? true : false}
           >
-            {isLoadingOrder ? 'Оформление...' : 'Оформить заказ'}
+            {orderStatus === 'loading' ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </div>
       )}
-      <Modal isActive={modalActive} setActive={setModalActive}>
-        <OrderDetails numberOrder={numberOrder} />
-      </Modal>
     </section>
   );
 };
