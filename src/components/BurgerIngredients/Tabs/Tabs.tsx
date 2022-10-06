@@ -20,18 +20,18 @@ const Tabs: React.FC<ITabsProps> = ({ current, handleClick, tabs }) => {
     <div className={styles.tabs}>
       {tabs.map((tab) => {
         return (
-          <Tab key={tab.value} value={tab.value} active={current === tab.value}>
-            <Link
-              className={styles.link}
-              containerId='containerElement'
-              to={tab.value}
-              spy={true}
-              smooth={true}
-              onSetActive={handleClick}
-            >
+          <Link
+            key={tab.value}
+            containerId='containerElement'
+            to={tab.value}
+            spy={true}
+            smooth={true}
+            onSetActive={handleClick}
+          >
+            <Tab value={tab.value} active={current === tab.value}>
               {tab.name}
-            </Link>
-          </Tab>
+            </Tab>
+          </Link>
         );
       })}
     </div>
