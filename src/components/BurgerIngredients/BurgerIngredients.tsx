@@ -33,7 +33,7 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients }) =
     <>
       <section className={styles.wrapper}>
         <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
-        <div className={styles.container}>
+        <div className={styles.container} id='containerElement'>
           {tabsIngredients.map((tab) => {
             return (
               <IngredientList

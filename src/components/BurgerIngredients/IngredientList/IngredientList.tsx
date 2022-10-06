@@ -12,7 +12,7 @@ interface IngredientListProps {
 
 const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, type }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id={type}>
       <h2 className='text text_type_main-medium'>{title}</h2>
       <ul className={styles.list}>
         {ingredients.map((ingredient) =>
