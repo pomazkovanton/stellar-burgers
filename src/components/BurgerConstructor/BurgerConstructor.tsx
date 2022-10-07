@@ -22,12 +22,17 @@ const BurgerConstructor: React.FC = () => {
   const isBunAdded = burger.find((ingr) => ingr.type === 'bun');
 
   const dispatch = useDispatch();
-  const [, dropTarget] = useDrop({
+
+  const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
     drop({ ingredient }) {
       dispatch(addToBurger(ingredient));
     },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
   });
+  const borderColor = isHover ? 'lightblue' : 'transparent';
 
   const calculatingPrice = (burger: IngredientType[]): number => {
     let price = 0;
@@ -51,74 +56,66 @@ const BurgerConstructor: React.FC = () => {
   };
 
   return (
-    <section className={styles.container} ref={dropTarget}>
-      {burger.length !== 0 ? (
-        <div>
-          <ul className={styles.list}>
-            {burger.map((ingr) => {
-              if (ingr.type === 'bun')
-                return (
-                  <li key={ingr._id} className={styles.margin}>
-                    <ConstructorElement
-                      type='top'
-                      isLocked={true}
-                      text={`${ingr.name} (верх)`}
-                      price={ingr.price}
-                      thumbnail={ingr.image}
-                    />
-                  </li>
-                );
-            })}
-            <div className={styles.wrapper}>
-              {burger.map((ingr) => {
-                if (ingr.type === 'bun') return null;
-                return (
-                  <li key={uuidv4()} className={styles.ingredient}>
-                    <DragIcon type='primary' />
-                    <ConstructorElement
-                      text={ingr.name}
-                      price={ingr.price}
-                      thumbnail={ingr.image}
-                    />
-                  </li>
-                );
-              })}
-            </div>
-            {burger.map((ingr) => {
-              if (ingr.type === 'bun')
-                return (
-                  <li key={ingr._id} className={styles.margin}>
-                    <ConstructorElement
-                      type='bottom'
-                      isLocked={true}
-                      text={`${ingr.name} (низ)`}
-                      price={ingr.price}
-                      thumbnail={ingr.image}
-                    />
-                  </li>
-                );
-            })}
-          </ul>
-          {burger.length !== 0 && (
-            <div className={styles.order}>
-              <div className={styles.price}>
-                <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
-                <CurrencyIcon type='primary' />
-              </div>
-              <Button
-                type='primary'
-                size='medium'
-                onClick={handleOrderClick}
-                disabled={!isBunAdded ? true : false}
-              >
-                {orderStatus === 'loading' ? 'Оформление...' : 'Оформить заказ'}
-              </Button>
-            </div>
-          )}
+    <section
+      className={styles.container}
+      ref={dropTarget}
+      style={{ borderColor: `${borderColor}` }}
+    >
+      <ul className={styles.list}>
+        {burger.map((ingr) => {
+          if (ingr.type === 'bun')
+            return (
+              <li key={ingr._id} className={styles.margin}>
+                <ConstructorElement
+                  type='top'
+                  isLocked={true}
+                  text={`${ingr.name} (верх)`}
+                  price={ingr.price}
+                  thumbnail={ingr.image}
+                />
+              </li>
+            );
+        })}
+        <div className={styles.wrapper}>
+          {burger.map((ingr) => {
+            if (ingr.type === 'bun') return null;
+            return (
+              <li key={uuidv4()} className={styles.ingredient}>
+                <DragIcon type='primary' />
+                <ConstructorElement text={ingr.name} price={ingr.price} thumbnail={ingr.image} />
+              </li>
+            );
+          })}
         </div>
-      ) : (
-        <div>
-          <h2>Сделайте свой первый заказ</h2>
+        {burger.map((ingr) => {
+          if (ingr.type === 'bun')
+            return (
+              <li key={ingr._id} className={styles.margin}>
+                <ConstructorElement
+                  type='bottom'
+                  isLocked={true}
+                  text={`${ingr.name} (низ)`}
+                  price={ingr.price}
+                  thumbnail={ingr.image}
+                />
+              </li>
+            );
+        })}
+      </ul>
+      {burger.length !== 0 && (
+        <div className={styles.order}>
+          <div className={styles.price}>
+            <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
+            <CurrencyIcon type='primary' />
+          </div>
+          <Button
+            type='primary'
+            size='medium'
+            onClick={handleOrderClick}
+            disabled={!isBunAdded ? true : false}
+          >
+            {orderStatus === 'loading' ? 'Оформление...' : 'Оформить заказ'}
+          </Button>
         </div>
       )}
     </section>
