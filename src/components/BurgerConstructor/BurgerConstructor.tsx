@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -11,9 +10,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { IngredientType } from '../../types/Ingredient';
 import { fetchOrder } from '../../store/orderSlice';
 import { addToBurger } from '../../store/burgerSlice';
+import { BurgerIngredients } from '../../types/burgerIngredients';
 
 import styles from './burgerconstructor.module.css';
 
@@ -35,7 +34,7 @@ const BurgerConstructor: React.FC = () => {
   });
   const borderColor = isHover ? 'lightblue' : 'transparent';
 
-  const calculatingPrice = (burger): number => {
+  const calculatingPrice = (burger: BurgerIngredients[]): number => {
     let price = 0;
     burger.map((el) => {
       el.item.type !== 'bun' ? (price += el.item.price) : (price += el.item.price * 2);
@@ -43,10 +42,16 @@ const BurgerConstructor: React.FC = () => {
     return price;
   };
 
-  const getIdIngredients = (ingredients: IngredientType[]) => {
-    const bun: IngredientType | undefined = ingredients.find((ingr) => ingr.type === 'bun');
-    const otherIngredients: IngredientType[] = ingredients.filter((ingr) => ingr.type !== 'bun');
-    const ingredientsID: string[] = [bun._id, ...otherIngredients.map((ingr) => ingr._id), bun._id];
+  const getIdIngredients = (ingredients: BurgerIngredients[]) => {
+    const bun: BurgerIngredients = ingredients.find((ingr) => ingr.item.type === 'bun');
+    const otherIngredients: BurgerIngredients[] = ingredients.filter(
+      (ingr) => ingr.item.type !== 'bun',
+    );
+    const ingredientsID: string[] = [
+      bun.item._id,
+      ...otherIngredients.map((ingr) => ingr.item._id),
+      bun.item._id,
+    ];
 
     return ingredientsID;
   };
