@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import {
   ConstructorElement,
@@ -19,7 +20,7 @@ import styles from './burgerconstructor.module.css';
 const BurgerConstructor: React.FC = () => {
   const { burger } = useSelector((state) => state.burger);
   const { orderStatus } = useSelector((state) => state.order);
-  const isBunAdded = burger.find((ingr) => ingr.type === 'bun');
+  const isBunAdded = burger.find((ingr) => ingr.item.type === 'bun');
 
   const dispatch = useDispatch();
 
@@ -34,10 +35,10 @@ const BurgerConstructor: React.FC = () => {
   });
   const borderColor = isHover ? 'lightblue' : 'transparent';
 
-  const calculatingPrice = (burger: IngredientType[]): number => {
+  const calculatingPrice = (burger): number => {
     let price = 0;
     burger.map((el) => {
-      el.type !== 'bun' ? (price += el.price) : (price += el.price * 2);
+      el.item.type !== 'bun' ? (price += el.item.price) : (price += el.item.price * 2);
     });
     return price;
   };
@@ -63,40 +64,64 @@ const BurgerConstructor: React.FC = () => {
     >
       <ul className={styles.list}>
         {burger.map((ingr) => {
-          if (ingr.type === 'bun')
+          if (ingr.item.type === 'bun')
             return (
-              <li key={ingr._id} className={styles.margin}>
+              <li key={ingr.item._id} className={styles.margin}>
                 <ConstructorElement
                   type='top'
                   isLocked={true}
-                  text={`${ingr.name} (верх)`}
-                  price={ingr.price}
-                  thumbnail={ingr.image}
+                  text={`${ingr.item.name} (верх)`}
+                  price={ingr.item.price}
+                  thumbnail={ingr.item.image}
                 />
               </li>
             );
         })}
-        <div className={styles.wrapper}>
-          {burger.map((ingr) => {
-            if (ingr.type === 'bun') return null;
-            return (
-              <li key={uuidv4()} className={styles.ingredient}>
-                <DragIcon type='primary' />
-                <ConstructorElement text={ingr.name} price={ingr.price} thumbnail={ingr.image} />
-              </li>
-            );
-          })}
-        </div>
+        <DragDropContext onDragEnd={(result) => console.log(result)}>
+          <Droppable droppableId='burgerIngredients'>
+            {(droppableProvided) => (
+              <div
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
+                className={styles.wrapper}
+              >
+                {burger.map((ingr, index) => {
+                  if (ingr.item.type === 'bun') return null;
+                  return (
+                    <Draggable key={ingr.id} draggableId={ingr.id} index={index}>
+                      {(draggableProvided) => (
+                        <li
+                          {...draggableProvided.draggableProps}
+                          ref={draggableProvided.innerRef}
+                          {...draggableProvided.dragHandleProps}
+                          className={styles.ingredient}
+                        >
+                          <DragIcon type='primary' />
+                          <ConstructorElement
+                            text={ingr.item.name}
+                            price={ingr.item.price}
+                            thumbnail={ingr.item.image}
+                          />
+                        </li>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
         {burger.map((ingr) => {
-          if (ingr.type === 'bun')
+          if (ingr.item.type === 'bun')
             return (
-              <li key={ingr._id} className={styles.margin}>
+              <li key={ingr.item._id} className={styles.margin}>
                 <ConstructorElement
                   type='bottom'
                   isLocked={true}
-                  text={`${ingr.name} (низ)`}
-                  price={ingr.price}
-                  thumbnail={ingr.image}
+                  text={`${ingr.item.name} (низ)`}
+                  price={ingr.item.price}
+                  thumbnail={ingr.item.image}
                 />
               </li>
             );

@@ -22,7 +22,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
   const dispatch = useDispatch();
   const { burger } = useSelector((state) => state.burger);
 
-  const count = burger.filter((el) => el === ingredient).length;
+  const count = burger.filter((el) => el.item._id === ingredient._id).length;
 
   const handleClick = (ingredient: IngredientType): void => {
     dispatch(addToBurger(ingredient));
@@ -44,7 +44,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
           <CurrencyIcon type='primary' />
         </div>
         <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
-        {burger.includes(ingredient) ? <Counter count={count} size='default' /> : null}
+        {count !== 0 ? <Counter count={count} size='default' /> : null}
       </div>
     </>
   );
