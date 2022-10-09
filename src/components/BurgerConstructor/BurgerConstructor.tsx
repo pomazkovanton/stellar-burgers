@@ -11,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { fetchOrder } from '../../store/orderSlice';
-import { addToBurger } from '../../store/burgerSlice';
+import { addToBurger, reorderInBurger } from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
 
 import styles from './burgerconstructor.module.css';
@@ -61,6 +61,15 @@ const BurgerConstructor: React.FC = () => {
     dispatch(fetchOrder(idIngredients));
   };
 
+  const handleDragIngredient = (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.index === destination.index && source.droppableId === destination.droppableId) {
+      return;
+    }
+    dispatch(reorderInBurger({ startIndex: source.index, endIndex: destination.index }));
+  };
+
   return (
     <section
       className={styles.container}
@@ -82,7 +91,7 @@ const BurgerConstructor: React.FC = () => {
               </li>
             );
         })}
-        <DragDropContext onDragEnd={(result) => console.log(result)}>
+        <DragDropContext onDragEnd={handleDragIngredient}>
           <Droppable droppableId='burgerIngredients'>
             {(droppableProvided) => (
               <div

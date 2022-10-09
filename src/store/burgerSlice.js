@@ -13,8 +13,13 @@ const ingredientsSlice = createSlice({
       }
       state.burger.push({ id: uuidv4(), item: action.payload });
     },
+    reorderInBurger(state, action) {
+      const { startIndex, endIndex } = action.payload;
+      const [removed] = state.burger.splice(startIndex, 1);
+      state.burger.splice(endIndex, 0, removed);
+    },
   },
 });
 
-export const { addToBurger } = ingredientsSlice.actions;
+export const { addToBurger, reorderInBurger } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
