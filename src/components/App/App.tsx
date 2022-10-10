@@ -13,6 +13,7 @@ import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 import { fetchIngredients } from '../../store/ingredientsSlice';
 import { removeDetails } from '../../store/ingredientDetailsSlice';
 import { removeOrder } from '../../store/orderSlice';
+import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../../utils/constans';
 
 import styles from './app.module.css';
 
@@ -43,11 +44,11 @@ const App: React.FC = () => {
         <main className={styles.container}>
           <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
           <div className={styles.wrapper}>
-            {ingredientsStatus === 'loading' && <h2>Загрузка данных...</h2>}
-            {ingredientsStatus === 'rejected' && (
+            {ingredientsStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
+            {ingredientsStatus === REJECTED_DATA && (
               <h2>Ошибка загрузки данных: {ingredientsError}</h2>
             )}
-            {ingredientsStatus === 'resolved' && <BurgerIngredients ingredients={ingredients} />}
+            {ingredientsStatus === RESOLVED_DATA && <BurgerIngredients ingredients={ingredients} />}
             <BurgerConstructor />
           </div>
         </main>

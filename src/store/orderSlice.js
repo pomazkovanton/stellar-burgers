@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOrder } from '../utils/burger-api';
+import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
@@ -29,16 +30,16 @@ const orderSlice = createSlice({
   },
   extraReducers: {
     [fetchOrder.pending]: (state) => {
-      state.orderStatus = 'loading';
+      state.orderStatus = lOADING_DATA;
       state.orderError = null;
     },
     [fetchOrder.fulfilled]: (state, action) => {
-      state.orderStatus = 'resolved';
+      state.orderStatus = RESOLVED_DATA;
       state.order = action.payload.order.number;
       state.isShowOrder = true;
     },
     [fetchOrder.rejected]: (state, action) => {
-      state.orderStatus = 'rejected';
+      state.orderStatus = REJECTED_DATA;
       state.orderError = action.payload;
     },
   },

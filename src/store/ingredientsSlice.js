@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredients } from '../utils/burger-api';
+import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
@@ -22,15 +23,15 @@ const ingredientsSlice = createSlice({
   },
   extraReducers: {
     [fetchIngredients.pending]: (state) => {
-      state.ingredientsStatus = 'loading';
+      state.ingredientsStatus = lOADING_DATA;
       state.ingredientsError = null;
     },
     [fetchIngredients.fulfilled]: (state, action) => {
-      state.ingredientsStatus = 'resolved';
+      state.ingredientsStatus = RESOLVED_DATA;
       state.ingredients = action.payload;
     },
     [fetchIngredients.rejected]: (state, action) => {
-      state.ingredientsStatus = 'rejected';
+      state.ingredientsStatus = REJECTED_DATA;
       state.ingredientsError = action.payload;
     },
   },

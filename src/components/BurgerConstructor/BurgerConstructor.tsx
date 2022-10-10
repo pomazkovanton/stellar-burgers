@@ -14,6 +14,7 @@ import {
 import { fetchOrder } from '../../store/orderSlice';
 import { addToBurger, reorderInBurger, removeFromBurger } from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
+import { lOADING_DATA } from '../../utils/constans';
 
 import styles from './burgerconstructor.module.css';
 
@@ -152,7 +153,7 @@ const BurgerConstructor: React.FC = () => {
             <CurrencyIcon type='primary' />
           </div>
           <Button type='primary' size='medium' onClick={handleOrderClick} disabled={!isBunAdded}>
-            {orderStatus === 'loading' ? 'Оформление...' : 'Оформить заказ'}
+            {orderStatus === lOADING_DATA ? 'Оформление...' : 'Оформить заказ'}
           </Button>
         </div>
       )}
