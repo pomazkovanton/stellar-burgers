@@ -20,7 +20,6 @@ const ingredientsSlice = createSlice({
     ingredientsStatus: '',
     ingredientsError: null,
   },
-  reducers: {},
   extraReducers: {
     [fetchIngredients.pending]: (state) => {
       state.ingredientsStatus = 'loading';
@@ -37,5 +36,4 @@ const ingredientsSlice = createSlice({
   },
 });
 
-// export const {} = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
