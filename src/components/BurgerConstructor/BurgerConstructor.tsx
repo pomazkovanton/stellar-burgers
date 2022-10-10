@@ -35,11 +35,10 @@ const BurgerConstructor: React.FC = () => {
   const borderColor = isHover ? 'lightblue' : 'transparent';
 
   const calculatingPrice = (burger: BurgerIngredients[]): number => {
-    let price = 0;
-    burger.map((el) => {
-      el.item.type !== 'bun' ? (price += el.item.price) : (price += el.item.price * 2);
-    });
-    return price;
+    return burger.reduce(
+      (acc, ingr) => (ingr.item.type !== 'bun' ? acc + ingr.item.price : acc + ingr.item.price * 2),
+      0,
+    );
   };
 
   const getIdIngredients = (ingredients: BurgerIngredients[]) => {
