@@ -21,7 +21,10 @@ import styles from './burgerconstructor.module.css';
 const BurgerConstructor: React.FC = () => {
   const { burger } = useSelector((state) => state.burger);
   const { orderStatus } = useSelector((state) => state.order);
-  const isBunAdded = burger.find((ingr) => ingr.item.type === 'bun');
+
+  const bun = burger.find((ingr) => ingr.item.type === 'bun');
+  const otherIngredients = burger.filter((ingr) => ingr.item.type !== 'bun');
+  const isBunAdded = bun !== undefined;
 
   const dispatch = useDispatch();
 
@@ -46,22 +49,12 @@ const BurgerConstructor: React.FC = () => {
     );
   };
 
-  const getIdIngredients = (ingredients: BurgerIngredients[]) => {
-    const bun: BurgerIngredients = ingredients.find((ingr) => ingr.item.type === 'bun');
-    const otherIngredients: BurgerIngredients[] = ingredients.filter(
-      (ingr) => ingr.item.type !== 'bun',
-    );
-    const ingredientsID: string[] = [
-      bun.item._id,
-      ...otherIngredients.map((ingr) => ingr.item._id),
-      bun.item._id,
-    ];
-
-    return ingredientsID;
+  const getIdIngredients = () => {
+    return [bun.item._id, ...otherIngredients.map((ingr) => ingr.item._id), bun.item._id];
   };
 
   const handleOrderClick = () => {
-    const idIngredients = { ingredients: getIdIngredients(burger) };
+    const idIngredients = { ingredients: getIdIngredients() };
     dispatch(fetchOrder(idIngredients));
   };
 
@@ -81,30 +74,26 @@ const BurgerConstructor: React.FC = () => {
   return (
     <section className={classContainer} ref={dropTarget}>
       <ul className={styles.list}>
-        {burger.map((ingr) => {
-          if (ingr.item.type === 'bun')
-            return (
-              <li key={ingr.item._id} className={styles.margin}>
-                <ConstructorElement
-                  type='top'
-                  isLocked={true}
-                  text={`${ingr.item.name} (верх)`}
-                  price={ingr.item.price}
-                  thumbnail={ingr.item.image}
-                />
-              </li>
-            );
-        })}
+        {isBunAdded && (
+          <li key={uuidv4()} className={styles.margin}>
+            <ConstructorElement
+              type='top'
+              isLocked={true}
+              text={`${bun.item.name} (верх)`}
+              price={bun.item.price}
+              thumbnail={bun.item.image}
+            />
+          </li>
+        )}
         <DragDropContext onDragEnd={handleDragIngredient}>
           <Droppable droppableId='burgerIngredients'>
             {(droppableProvided) => (
-              <div
+              <ul
                 {...droppableProvided.droppableProps}
                 ref={droppableProvided.innerRef}
                 className={styles.wrapper}
               >
-                {burger.map((ingr, index) => {
-                  if (ingr.item.type === 'bun') return null;
+                {otherIngredients.map((ingr, index) => {
                   return (
                     <Draggable key={ingr.id} draggableId={ingr.id} index={index}>
                       {(draggableProvided) => (
@@ -127,24 +116,21 @@ const BurgerConstructor: React.FC = () => {
                   );
                 })}
                 {droppableProvided.placeholder}
-              </div>
+              </ul>
             )}
           </Droppable>
         </DragDropContext>
-        {burger.map((ingr) => {
-          if (ingr.item.type === 'bun')
-            return (
-              <li key={ingr.item._id} className={styles.margin}>
-                <ConstructorElement
-                  type='bottom'
-                  isLocked={true}
-                  text={`${ingr.item.name} (низ)`}
-                  price={ingr.item.price}
-                  thumbnail={ingr.item.image}
-                />
-              </li>
-            );
-        })}
+        {isBunAdded && (
+          <li key={uuidv4()} className={styles.margin}>
+            <ConstructorElement
+              type='bottom'
+              isLocked={true}
+              text={`${bun.item.name} (низ)`}
+              price={bun.item.price}
+              thumbnail={bun.item.image}
+            />
+          </li>
+        )}
       </ul>
       {burger.length !== 0 && (
         <div className={styles.order}>
