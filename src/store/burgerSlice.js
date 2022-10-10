@@ -18,8 +18,11 @@ const ingredientsSlice = createSlice({
       const [removed] = state.burger.splice(startIndex, 1);
       state.burger.splice(endIndex, 0, removed);
     },
+    removeFromBurger(state, action) {
+      state.burger = state.burger.filter((ingr) => ingr.id !== action.payload);
+    },
   },
 });
 
-export const { addToBurger, reorderInBurger } = ingredientsSlice.actions;
+export const { addToBurger, reorderInBurger, removeFromBurger } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

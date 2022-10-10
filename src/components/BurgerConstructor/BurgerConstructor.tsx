@@ -11,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { fetchOrder } from '../../store/orderSlice';
-import { addToBurger, reorderInBurger } from '../../store/burgerSlice';
+import { addToBurger, reorderInBurger, removeFromBurger } from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
 
 import styles from './burgerconstructor.module.css';
@@ -70,6 +70,10 @@ const BurgerConstructor: React.FC = () => {
     dispatch(reorderInBurger({ startIndex: source.index, endIndex: destination.index }));
   };
 
+  const handleDeleteIngredient = (id: number): void => {
+    dispatch(removeFromBurger(id));
+  };
+
   return (
     <section
       className={styles.container}
@@ -115,6 +119,7 @@ const BurgerConstructor: React.FC = () => {
                             text={ingr.item.name}
                             price={ingr.item.price}
                             thumbnail={ingr.item.image}
+                            handleClose={() => handleDeleteIngredient(ingr.id)}
                           />
                         </li>
                       )}
