@@ -2,8 +2,12 @@
   padding-left: 16px;
   padding-bottom: 52px;
   width: 600px;
-  border: 1px solid;
+  border: 1px solid transparent;
   border-radius: 50px;
+}
+
+.containerHover {
+  border-color: aquamarine;
 }
 
 .list {

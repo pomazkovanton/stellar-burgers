@@ -32,7 +32,10 @@ const BurgerConstructor: React.FC = () => {
       isHover: monitor.isOver(),
     }),
   });
-  const borderColor = isHover ? 'lightblue' : 'transparent';
+
+  const classContainer = !isHover
+    ? styles.container
+    : [styles.container, styles.containerHover].join(' ');
 
   const calculatingPrice = (burger: BurgerIngredients[]): number => {
     return burger.reduce(
@@ -74,11 +77,7 @@ const BurgerConstructor: React.FC = () => {
   };
 
   return (
-    <section
-      className={styles.container}
-      ref={dropTarget}
-      style={{ borderColor: `${borderColor}` }}
-    >
+    <section className={classContainer} ref={dropTarget}>
       <ul className={styles.list}>
         {burger.map((ingr) => {
           if (ingr.item.type === 'bun')
