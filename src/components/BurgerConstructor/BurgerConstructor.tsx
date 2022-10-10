@@ -10,8 +10,10 @@ import {
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
+import Modal from '../Modal/Modal';
 
-import { fetchOrder } from '../../store/orderSlice';
+import { fetchOrder, removeOrder } from '../../store/orderSlice';
 import { addToBurger, reorderInBurger, removeFromBurger } from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
 import { lOADING_DATA } from '../../utils/constans';
@@ -20,7 +22,7 @@ import styles from './burgerconstructor.module.css';
 
 const BurgerConstructor: React.FC = () => {
   const { burger } = useSelector((state) => state.burger);
-  const { orderStatus } = useSelector((state) => state.order);
+  const { orderStatus, order, isShowOrder } = useSelector((state) => state.order);
 
   const bun = burger.find((ingr) => ingr.item.type === 'bun');
   const otherIngredients = burger.filter((ingr) => ingr.item.type !== 'bun');
@@ -71,79 +73,88 @@ const BurgerConstructor: React.FC = () => {
     dispatch(removeFromBurger(id));
   };
 
+  const handleCloseModalOrder = () => {
+    dispatch(removeOrder());
+  };
+
   return (
-    <section className={classContainer} ref={dropTarget}>
-      <ul className={styles.list}>
-        {isBunAdded && (
-          <li key={uuidv4()} className={styles.margin}>
-            <ConstructorElement
-              type='top'
-              isLocked={true}
-              text={`${bun.item.name} (верх)`}
-              price={bun.item.price}
-              thumbnail={bun.item.image}
-            />
-          </li>
-        )}
-        <DragDropContext onDragEnd={handleDragIngredient}>
-          <Droppable droppableId='burgerIngredients'>
-            {(droppableProvided) => (
-              <ul
-                {...droppableProvided.droppableProps}
-                ref={droppableProvided.innerRef}
-                className={styles.wrapper}
-              >
-                {otherIngredients.map((ingr, index) => {
-                  return (
-                    <Draggable key={ingr.id} draggableId={ingr.id} index={index}>
-                      {(draggableProvided) => (
-                        <li
-                          {...draggableProvided.draggableProps}
-                          ref={draggableProvided.innerRef}
-                          {...draggableProvided.dragHandleProps}
-                          className={styles.ingredient}
-                        >
-                          <DragIcon type='primary' />
-                          <ConstructorElement
-                            text={ingr.item.name}
-                            price={ingr.item.price}
-                            thumbnail={ingr.item.image}
-                            handleClose={() => handleDeleteIngredient(ingr.id)}
-                          />
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {droppableProvided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
-        {isBunAdded && (
-          <li key={uuidv4()} className={styles.margin}>
-            <ConstructorElement
-              type='bottom'
-              isLocked={true}
-              text={`${bun.item.name} (низ)`}
-              price={bun.item.price}
-              thumbnail={bun.item.image}
-            />
-          </li>
-        )}
-      </ul>
-      {burger.length !== 0 && (
-        <div className={styles.order}>
-          <div className={styles.price}>
-            <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
-            <CurrencyIcon type='primary' />
+    <>
+      <section className={classContainer} ref={dropTarget}>
+        <ul className={styles.list}>
+          {isBunAdded && (
+            <li key={uuidv4()} className={styles.margin}>
+              <ConstructorElement
+                type='top'
+                isLocked={true}
+                text={`${bun.item.name} (верх)`}
+                price={bun.item.price}
+                thumbnail={bun.item.image}
+              />
+            </li>
+          )}
+          <DragDropContext onDragEnd={handleDragIngredient}>
+            <Droppable droppableId='burgerIngredients'>
+              {(droppableProvided) => (
+                <ul
+                  {...droppableProvided.droppableProps}
+                  ref={droppableProvided.innerRef}
+                  className={styles.wrapper}
+                >
+                  {otherIngredients.map((ingr, index) => {
+                    return (
+                      <Draggable key={ingr.id} draggableId={ingr.id} index={index}>
+                        {(draggableProvided) => (
+                          <li
+                            {...draggableProvided.draggableProps}
+                            ref={draggableProvided.innerRef}
+                            {...draggableProvided.dragHandleProps}
+                            className={styles.ingredient}
+                          >
+                            <DragIcon type='primary' />
+                            <ConstructorElement
+                              text={ingr.item.name}
+                              price={ingr.item.price}
+                              thumbnail={ingr.item.image}
+                              handleClose={() => handleDeleteIngredient(ingr.id)}
+                            />
+                          </li>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {droppableProvided.placeholder}
+                </ul>
+              )}
+            </Droppable>
+          </DragDropContext>
+          {isBunAdded && (
+            <li key={uuidv4()} className={styles.margin}>
+              <ConstructorElement
+                type='bottom'
+                isLocked={true}
+                text={`${bun.item.name} (низ)`}
+                price={bun.item.price}
+                thumbnail={bun.item.image}
+              />
+            </li>
+          )}
+        </ul>
+        {burger.length !== 0 && (
+          <div className={styles.order}>
+            <div className={styles.price}>
+              <p className='text text_type_digits-medium'>{calculatingPrice(burger)}</p>
+              <CurrencyIcon type='primary' />
+            </div>
+            <Button type='primary' size='medium' onClick={handleOrderClick} disabled={!isBunAdded}>
+              {orderStatus === lOADING_DATA ? 'Оформление...' : 'Оформить заказ'}
+            </Button>
           </div>
-          <Button type='primary' size='medium' onClick={handleOrderClick} disabled={!isBunAdded}>
-            {orderStatus === lOADING_DATA ? 'Оформление...' : 'Оформить заказ'}
-          </Button>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+      <Modal isActive={isShowOrder} closeModal={handleCloseModalOrder}>
+        <OrderDetails numberOrder={order} />
+      </Modal>
+    </>
   );
 };
 
