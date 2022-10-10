@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ConstructorElement,
@@ -26,7 +27,7 @@ const BurgerConstructor: React.FC = () => {
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
     drop({ ingredient }) {
-      dispatch(addToBurger(ingredient));
+      dispatch(addToBurger({ id: uuidv4(), item: ingredient }));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
@@ -8,10 +7,10 @@ const ingredientsSlice = createSlice({
   },
   reducers: {
     addToBurger(state, action) {
-      if (action.payload.type === 'bun') {
+      if (action.payload.item.type === 'bun') {
         state.burger = state.burger.filter((el) => el.item.type !== 'bun');
       }
-      state.burger.push({ id: uuidv4(), item: action.payload });
+      state.burger.push({ id: action.payload.id, item: action.payload.item });
     },
     reorderInBurger(state, action) {
       const { startIndex, endIndex } = action.payload;
