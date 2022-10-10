@@ -24,7 +24,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
 
   const count = burger.filter((el) => el.item._id === ingredient._id).length;
 
-  const handleClick = (ingredient: IngredientType): void => {
+  const handleClick = (): void => {
     dispatch(addToBurger(ingredient));
     dispatch(addDetails(ingredient));
   };
@@ -32,7 +32,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
   return (
     <>
       <div
-        onMouseUp={() => handleClick(ingredient)}
+        onMouseUp={handleClick}
         className={styles.card}
         role='presentation'
         draggable={true}
