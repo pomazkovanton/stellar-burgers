@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-const BASE_API_URL = 'https://norma.nomoreparties.space/api';
-const ORDERS_URL = `${BASE_API_URL}/orders`;
-const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
+import { ORDERS_URL, INGREDIENTS_URL } from './constans';
 
 //Универсальный обработчик запроса на сервер
 const handleRequest = async (url: string, method: string, data = {}) => {

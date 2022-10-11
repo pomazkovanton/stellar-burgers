@@ -8,21 +8,17 @@ import ModalOverlay from './ModalOverlay/ModalOverlay';
 interface IModalProps {
   title?: string;
   isActive: boolean;
-  setActive: (active: boolean) => void;
+  closeModal: () => void;
   children: React.ReactNode;
 }
 
 const modalRoot = document.getElementById('modals') as HTMLElement;
 
-const Modal: React.FC<IModalProps> = ({ isActive, setActive, children, title }) => {
-  const closePopup = () => {
-    setActive(false);
-  };
-
+const Modal: React.FC<IModalProps> = ({ isActive, closeModal, children, title }) => {
   useEffect(() => {
     const handleEscClose = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
-        closePopup();
+        closeModal();
       }
     };
     if (isActive) document.addEventListener('keydown', handleEscClose);
@@ -30,7 +26,7 @@ const Modal: React.FC<IModalProps> = ({ isActive, setActive, children, title }) 
   }, [isActive]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay isActive={isActive} onClose={closePopup}>
+    <ModalOverlay isActive={isActive} onClose={closeModal}>
       <div
         className={isActive ? [styles.modal, styles.show].join(' ') : styles.modal}
         onMouseDown={(e) => e.stopPropagation()}
@@ -38,7 +34,7 @@ const Modal: React.FC<IModalProps> = ({ isActive, setActive, children, title }) 
       >
         <div className={styles.header}>
           <h2 className='text text_type_main-large'>{title}</h2>
-          <button onMouseDown={closePopup} className={styles.button}>
+          <button onMouseDown={closeModal} className={styles.button}>
             <CloseIcon type='primary' />
           </button>
         </div>

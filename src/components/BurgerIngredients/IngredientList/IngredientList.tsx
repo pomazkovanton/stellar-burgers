@@ -7,33 +7,17 @@ import styles from './ingredientlist.module.css';
 interface IngredientListProps {
   type: string;
   title: string;
-  burger: IngredientType[];
   ingredients: IngredientType[];
-  openModal: (ingredient: IngredientType) => void;
-  addToBurger: (ingredient: IngredientType) => void;
 }
 
-const IngredientList: React.FC<IngredientListProps> = ({
-  ingredients,
-  title,
-  type,
-  burger,
-  addToBurger,
-  openModal,
-}) => {
+const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, type }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id={type}>
       <h2 className='text text_type_main-medium'>{title}</h2>
       <ul className={styles.list}>
         {ingredients.map((ingredient) =>
           ingredient.type === type ? (
-            <Ingredient
-              key={ingredient._id}
-              ingredient={ingredient}
-              addToBurger={addToBurger}
-              burger={burger}
-              openModal={openModal}
-            />
+            <Ingredient key={ingredient._id} ingredient={ingredient} />
           ) : null,
         )}
       </ul>

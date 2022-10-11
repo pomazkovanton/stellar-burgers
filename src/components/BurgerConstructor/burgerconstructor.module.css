@@ -2,6 +2,12 @@
   padding-left: 16px;
   padding-bottom: 52px;
   width: 600px;
+  border: 1px solid transparent;
+  border-radius: 50px;
+}
+
+.containerHover {
+  border-color: aquamarine;
 }
 
 .list {
@@ -15,11 +21,14 @@
 }
 
 .wrapper {
+  margin: 0;
+  padding: 0;
   padding-right: 8px;
   display: flex;
   overflow-y: auto;
   max-height: 464px;
   flex-direction: column;
+  list-style: none;
   direction: ltr;
   gap: 16px;
   scrollbar-color: var(--background-element) var(--text-inactive-color);

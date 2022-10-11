@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-scroll';
 
 import styles from './tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -19,14 +20,18 @@ const Tabs: React.FC<ITabsProps> = ({ current, handleClick, tabs }) => {
     <div className={styles.tabs}>
       {tabs.map((tab) => {
         return (
-          <Tab
+          <Link
             key={tab.value}
-            value={tab.value}
-            active={current === tab.value}
-            onClick={handleClick}
+            containerId='containerElement'
+            to={tab.value}
+            spy={true}
+            smooth={true}
+            onSetActive={handleClick}
           >
-            {tab.name}
-          </Tab>
+            <Tab value={tab.value} active={current === tab.value}>
+              {tab.name}
+            </Tab>
+          </Link>
         );
       })}
     </div>

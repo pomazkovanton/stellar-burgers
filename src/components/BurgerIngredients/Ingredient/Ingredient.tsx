@@ -1,32 +1,51 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
+
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { IngredientType } from '../../../types/Ingredient';
+import { addToBurger } from '../../../store/burgerSlice';
+import { addDetails } from '../../../store/ingredientDetailsSlice';
 
 import styles from './ingredient.module.css';
 
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientType } from '../../../types/Ingredient';
 interface IngredientProps {
   ingredient: IngredientType;
-  burger: IngredientType[];
-  openModal: (ingredient: IngredientType) => void;
-  addToBurger: (ingredient: IngredientType) => void;
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ ingredient, addToBurger, burger, openModal }) => {
-  const handleClick = (ingredient: IngredientType): void => {
-    addToBurger(ingredient);
-    openModal(ingredient);
+const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: { ingredient },
+  });
+  const dispatch = useDispatch();
+  const { burger } = useSelector((state) => state.burger);
+
+  const count = burger.filter((el) => el.item._id === ingredient._id).length;
+
+  const handleClick = (): void => {
+    dispatch(addToBurger({ id: uuidv4(), item: ingredient }));
+    dispatch(addDetails(ingredient));
   };
 
   return (
     <>
-      <div onMouseDown={() => handleClick(ingredient)} className={styles.card} role='presentation'>
+      <div
+        onMouseUp={handleClick}
+        className={styles.card}
+        role='presentation'
+        draggable={true}
+        ref={dragRef}
+      >
         <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
         <div className={styles.price}>
           <span className='text text_type_digits-default'>{ingredient.price}</span>
           <CurrencyIcon type='primary' />
         </div>
         <p className={`text text_type_main-default ${styles.name}`}>{ingredient.name}</p>
-        {burger.includes(ingredient) ? <Counter count={1} size='default' /> : null}
+        {count !== 0 ? <Counter count={count} size='default' /> : null}
       </div>
     </>
   );

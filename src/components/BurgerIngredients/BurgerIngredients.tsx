@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-
-import styles from './burgeringredients.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 import IngredientList from './IngredientList/IngredientList';
-import Modal from 'src/components/Modal/Modal';
-import IngredientDetails from './IngredientDetails/IngredientDetails';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../BurgerIngredients/IngredientDetails/IngredientDetails';
 
 import { IngredientType } from '../../types/Ingredient';
 import Tabs from './Tabs/Tabs';
+import { removeDetails } from '../../store/ingredientDetailsSlice';
+import styles from './burgeringredients.module.css';
 
 const tabsIngredients = [
   {
@@ -25,30 +26,22 @@ const tabsIngredients = [
 ];
 
 interface IBurgerIngredientsProps {
-  burger: IngredientType[];
-  addToBurger: (ingredient: IngredientType) => void;
   ingredients: IngredientType[];
 }
 
-const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
-  ingredients,
-  addToBurger,
-  burger,
-}) => {
+const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients }) => {
+  const dispatch = useDispatch();
   const [current, setCurrent] = useState('bun');
-  const [modalActive, setModalActive] = useState(false);
-  const [modalContent, setModalContent] = useState<IngredientType | null>(null);
+  const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
 
-  const openModal = (ingredient: IngredientType) => {
-    if (!burger.includes(ingredient)) setModalActive(!modalActive);
-    setModalContent(ingredient);
+  const handleCloseModalDetails = () => {
+    dispatch(removeDetails());
   };
-
   return (
     <>
       <section className={styles.wrapper}>
         <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
-        <div className={styles.container}>
+        <div className={styles.container} id='containerElement'>
           {tabsIngredients.map((tab) => {
             return (
               <IngredientList
@@ -56,16 +49,17 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({
                 type={tab.value}
                 title={tab.name}
                 ingredients={ingredients}
-                burger={burger}
-                addToBurger={addToBurger}
-                openModal={openModal}
               />
             );
           })}
         </div>
       </section>
-      <Modal title='Детали ингредиента' isActive={modalActive} setActive={setModalActive}>
-        <IngredientDetails ingredient={modalContent} />
+      <Modal
+        title='Детали ингредиента'
+        isActive={isShowDetails}
+        closeModal={handleCloseModalDetails}
+      >
+        <IngredientDetails ingredient={ingredientDetails} />
       </Modal>
     </>
   );

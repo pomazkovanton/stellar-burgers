@@ -1,67 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
+import { fetchIngredients } from '../../store/ingredientsSlice';
+import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../../utils/constans';
+
 import styles from './app.module.css';
-import { IngredientType } from '../../types/Ingredient';
-import { BurgerConstructorContext } from 'src/services/burgerConstructorContext';
-import { getIngredients } from 'src/utils/burger-api';
 
 const App: React.FC = () => {
-  const [ingredients, setIngredients] = useState<IngredientType[]>([]);
-  const [burger, setBurger] = useState<IngredientType[]>([]);
-  const [isLoadingIngredients, setIsLoadingIngredients] = useState(false);
+  const dispatch = useDispatch();
+  const { ingredients, ingredientsStatus, ingredientsError } = useSelector(
+    (store) => store.ingredients,
+  );
 
   useEffect(() => {
-    fetchIngredients();
-  }, []);
-
-  const addToBurger = (ingredient: IngredientType) => {
-    if (burger.includes(ingredient)) {
-      setBurger(burger.filter((el) => el !== ingredient));
-    } else if (ingredient.type === 'bun') {
-      setBurger([...burger.filter((el) => el.type !== 'bun'), ingredient]);
-    } else {
-      setBurger([...burger, ingredient]);
-    }
-  };
-
-  const fetchIngredients = async () => {
-    setIsLoadingIngredients(true);
-    try {
-      const { data } = await getIngredients();
-      setIngredients(data.data);
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Ошибка загрузки данных!');
-    } finally {
-      setIsLoadingIngredients(false);
-    }
-  };
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   return (
     <>
       <AppHeader />
-      <main className={styles.container}>
-        <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
-        <div className={styles.wrapper}>
-          {isLoadingIngredients ? (
-            <h2>Загрузка данных...</h2>
-          ) : (
-            <BurgerIngredients
-              ingredients={ingredients}
-              addToBurger={addToBurger}
-              burger={burger}
-            />
-          )}
-
-          <BurgerConstructorContext.Provider value={burger}>
+      <DndProvider backend={HTML5Backend}>
+        <main className={styles.container}>
+          <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
+          <div className={styles.wrapper}>
+            {ingredientsStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
+            {ingredientsStatus === REJECTED_DATA && (
+              <h2>Ошибка загрузки данных: {ingredientsError}</h2>
+            )}
+            {ingredientsStatus === RESOLVED_DATA && <BurgerIngredients ingredients={ingredients} />}
             <BurgerConstructor />
-          </BurgerConstructorContext.Provider>
-        </div>
-      </main>
+          </div>
+        </main>
+      </DndProvider>
     </>
   );
 };
