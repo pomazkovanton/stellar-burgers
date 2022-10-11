@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -24,8 +24,12 @@ const BurgerConstructor: React.FC = () => {
   const { burger } = useSelector((state) => state.burger);
   const { orderStatus, order, isShowOrder } = useSelector((state) => state.order);
 
-  const bun = burger.find((ingr) => ingr.item.type === 'bun');
-  const otherIngredients = burger.filter((ingr) => ingr.item.type !== 'bun');
+  const bun = useMemo(() => burger.find((ingr) => ingr.item.type === 'bun'), [burger]);
+  const otherIngredients = useMemo(
+    () => burger.filter((ingr) => ingr.item.type !== 'bun'),
+    [burger],
+  );
+
   const isBunAdded = bun !== undefined;
 
   const dispatch = useDispatch();
