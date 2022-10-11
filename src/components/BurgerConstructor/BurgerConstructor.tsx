@@ -82,7 +82,7 @@ const BurgerConstructor: React.FC = () => {
       <section className={classContainer} ref={dropTarget}>
         <ul className={styles.list}>
           {isBunAdded && (
-            <li key={uuidv4()} className={styles.margin}>
+            <li className={styles.margin}>
               <ConstructorElement
                 type='top'
                 isLocked={true}
@@ -128,7 +128,7 @@ const BurgerConstructor: React.FC = () => {
             </Droppable>
           </DragDropContext>
           {isBunAdded && (
-            <li key={uuidv4()} className={styles.margin}>
+            <li className={styles.margin}>
               <ConstructorElement
                 type='bottom'
                 isLocked={true}
