@@ -11,25 +11,25 @@ import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPag
 const App: React.FC = () => {
   return (
     <>
-      <AppHeader />
-      <main>
-        <Router>
+      <Router>
+        <AppHeader />
+        <main>
           <Switch>
             <Route exact path='/stellar-burgers/'>
               <HomePage />
             </Route>
-            <Route exact path='/stellar-burgers/login'>
+            <Route path='/stellar-burgers/login'>
               <LoginPage />
             </Route>
-            <Route exact path='/stellar-burgers/register'>
+            <Route path='/stellar-burgers/register'>
               <RegisterPage />
             </Route>
-            <Route exact path='/stellar-burgers/forgot-password'>
+            <Route path='/stellar-burgers/forgot-password'>
               <ForgotPasswordPage />
             </Route>
           </Switch>
-        </Router>
-      </main>
+        </main>
+      </Router>
     </>
   );
 };

@@ -1,5 +1,17 @@
 .link {
   display: flex;
   text-decoration: none;
+  color: var(--text-inactive-color);
+}
+
+.link p {
   color: inherit;
+}
+
+.link svg {
+  fill: currentColor;
+}
+
+.active {
+  color: var(--text-primary-color);
 }

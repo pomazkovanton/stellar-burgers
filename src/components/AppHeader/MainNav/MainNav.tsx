@@ -9,11 +9,11 @@ const MainNav: React.FC = () => {
   return (
     <nav>
       <ul className={styles.list}>
-        <NavItem url='/'>
-          <BurgerIcon type='primary' />
-          <p className='text text_type_main-default ml-2'>Конструктор</p>
+        <NavItem url='/stellar-burgers/'>
+          <BurgerIcon type='secondary' />
+          <p className='text text_type_main-default text_color_inactive ml-2'>Конструктор</p>
         </NavItem>
-        <NavItem url='/'>
+        <NavItem url='/stellar-burgers/feed'>
           <ListIcon type='secondary' />
           <p className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</p>
         </NavItem>

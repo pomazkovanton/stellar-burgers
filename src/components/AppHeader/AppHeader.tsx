@@ -15,7 +15,7 @@ const AppHeader: React.FC = () => {
           <Logo />
         </div>
         <ul className={styles.list}>
-          <NavItem url='/'>
+          <NavItem url='/stellar-burgers/profile'>
             <ProfileIcon type='secondary' />
             <p className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</p>
           </NavItem>
