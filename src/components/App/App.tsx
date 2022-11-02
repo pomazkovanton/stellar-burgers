@@ -5,6 +5,7 @@ import AppHeader from '../AppHeader/AppHeader';
 
 import HomePage from '../../pages/HomePage/HomePage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 
 const App: React.FC = () => {
   return (
@@ -12,11 +13,14 @@ const App: React.FC = () => {
       <AppHeader />
       <Router>
         <Switch>
+          <Route exact path='/stellar-burgers/'>
+            <HomePage />
+          </Route>
           <Route exact path='/stellar-burgers/login'>
             <LoginPage />
           </Route>
-          <Route exact path='/stellar-burgers/'>
-            <HomePage />
+          <Route exact path='/stellar-burgers/register'>
+            <RegisterPage />
           </Route>
         </Switch>
       </Router>
