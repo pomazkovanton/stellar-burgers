@@ -1,18 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import AppHeader from '../AppHeader/AppHeader';
 
 import HomePage from '../../pages/HomePage/HomePage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
 
 const App: React.FC = () => {
   return (
     <>
       <AppHeader />
       <Router>
-        <Route exact path='/'>
-          <HomePage />
-        </Route>
+        <Switch>
+          <Route exact path='/stellar-burgers/login'>
+            <LoginPage />
+          </Route>
+          <Route exact path='/stellar-burgers/'>
+            <HomePage />
+          </Route>
+        </Switch>
       </Router>
     </>
   );

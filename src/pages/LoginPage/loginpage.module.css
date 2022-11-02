@@ -1,0 +1,36 @@
+.container {
+  margin: 180px auto 0;
+  max-width: 480px;
+  text-align: center;
+}
+
+.form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.form div {
+  width: 100%;
+  flex-basis: content;
+}
+
+.list {
+  margin: 0;
+  margin-top: 80px;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.listItem button {
+  padding: 0;
+}
