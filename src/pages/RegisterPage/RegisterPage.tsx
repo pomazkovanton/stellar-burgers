@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -9,11 +10,20 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './registerpage.module.css';
+import { registerUser } from '../../store/userSlice';
 
 const RegisterPage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setValue] = useState({ name: '', email: '', password: '' });
+  const dispatch = useDispatch();
+
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handlerRegister = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(form));
+  };
 
   return (
     <div className={styles.container}>
@@ -22,19 +32,15 @@ const RegisterPage: React.FC = () => {
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={onChange}
+          value={form.name}
           name={'name'}
           error={false}
           size={'default'}
         />
-        <EmailInput onChange={(e) => setEmail(e.target.value)} value={email} name='email' />
-        <PasswordInput
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          name='password'
-        />
-        <Button type='primary' size='medium' htmlType='submit'>
+        <EmailInput onChange={onChange} value={form.email} name='email' />
+        <PasswordInput onChange={onChange} value={form.password} name='password' />
+        <Button type='primary' size='medium' htmlType='submit' onClick={handlerRegister}>
           Зарегистрироваться
         </Button>
       </form>
