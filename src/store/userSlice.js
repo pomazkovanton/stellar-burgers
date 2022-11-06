@@ -21,6 +21,7 @@ const userSlice = createSlice({
     name: null,
     accessToken: null,
     refreshToken: null,
+    isAuthUser: false,
     userStatus: '',
     userError: null,
   },
@@ -36,6 +37,7 @@ const userSlice = createSlice({
       state.name = action.payload.user.name;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      state.isAuthUser = true;
     },
     [registerUser.rejected]: (state, action) => {
       state.userStatus = REJECTED_DATA;
