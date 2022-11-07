@@ -12,7 +12,7 @@ import {
   RESET_PASSWORD_ROUTE,
 } from './constans';
 
-export const publickRoutes = [
+export const publicRoutes = [
   {
     path: LOGIN_ROUTE,
     page: LoginPage,

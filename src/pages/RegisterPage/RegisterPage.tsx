@@ -10,7 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './registerpage.module.css';
-import { registerUser } from '../../store/userSlice';
+import { register } from '../../store/authSlice';
 
 const RegisterPage: React.FC = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' });
@@ -22,7 +22,7 @@ const RegisterPage: React.FC = () => {
 
   const handlerRegister = (e) => {
     e.preventDefault();
-    dispatch(registerUser(form));
+    dispatch(register(form));
   };
 
   return (

@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/constans';
-import { privateRoutes, publickRoutes } from '../../utils/routes';
+import { privateRoutes, publicRoutes } from '../../utils/routes';
 
 const AppRouter = () => {
-  const { isAuthUser } = useSelector((state) => state.user);
+  const { isAuth } = useSelector((state) => state.auth);
 
-  return isAuthUser ? (
+  return isAuth ? (
     <Switch>
       {privateRoutes.map(({ path, page }) => {
         return <Route key={path} path={path} component={page} exact />;
@@ -17,7 +17,7 @@ const AppRouter = () => {
     </Switch>
   ) : (
     <Switch>
-      {publickRoutes.map(({ path, page }) => {
+      {publicRoutes.map(({ path, page }) => {
         return <Route key={path} path={path} component={page} exact />;
       })}
       <Redirect to={LOGIN_ROUTE} />
