@@ -2,6 +2,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import ForgotPasswordPage from '../pages/ForgotPasswordPage/ForgotPasswordPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 
 import {
   FORGOT_PASSWORD_ROUTE,
@@ -27,7 +28,7 @@ export const publicRoutes = [
   },
   {
     path: RESET_PASSWORD_ROUTE,
-    page: null,
+    page: ResetPasswordPage,
   },
 ];
 
