@@ -19,13 +19,11 @@ const ForgotPasswordPage: React.FC = () => {
     e.preventDefault();
     try {
       const { data } = await getCodeInEmail(form);
-      console.log(data);
       if (data.success) {
         history.push(RESET_PASSWORD_ROUTE);
       }
     } catch (error) {
       alert('Ошибка: Не получилось востановить пароль!' + error.message);
-      console.log(error.message);
     }
   };
 
