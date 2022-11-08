@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { getNewPassword } from '../../utils/auth-api';
+import { LOGIN_ROUTE } from '../../utils/constans';
 
 import styles from './resetpasswordpage.module.css';
 
 const ResetPasswordPage = () => {
-  const [form, setValue] = useState({ password: '', code: '' });
+  const [form, setValue] = useState({ password: '', token: '' });
+  const history = useHistory();
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handlerResetPassword = (e) => {
+  const handlerResetPassword = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await getNewPassword(form);
+      if (data.success) {
+        alert('Пароль успешно изменен на новый!');
+        history.push(LOGIN_ROUTE);
+      }
+    } catch (error) {
+      alert('Ошибка: Не получилось сбросить пароль!' + error.message);
+    }
   };
 
   return (
@@ -29,8 +42,8 @@ const ResetPasswordPage = () => {
         />
         <Input
           onChange={onChange}
-          value={form.code}
-          name='code'
+          value={form.token}
+          name='token'
           placeholder={'Введите код из письма'}
           type='text'
         />
