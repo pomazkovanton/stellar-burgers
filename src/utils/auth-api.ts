@@ -1,5 +1,5 @@
 import { handleRequest } from './utils';
-import { FORGOT_PASSWORD_URL, REGISTER_URL, RESET_PASSWORD_URL } from './constans';
+import { FORGOT_PASSWORD_URL, LOGIN_URL, REGISTER_URL, RESET_PASSWORD_URL } from './constans';
 
 //Регистрация пользователя на сервере
 export const getRegisterData = (data) => {
@@ -14,4 +14,9 @@ export const getCodeInEmail = (email) => {
 //Запрос на смену пароля
 export const getNewPassword = (data) => {
   return handleRequest(RESET_PASSWORD_URL, 'POST', data);
+};
+
+//Авторизация пользователя на сервере
+export const getAuthData = (data) => {
+  return handleRequest(LOGIN_URL, 'POST', data);
 };

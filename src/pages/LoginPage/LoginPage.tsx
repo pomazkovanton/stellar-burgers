@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -8,22 +9,29 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './loginpage.module.css';
+import { login } from '../../store/authSlice';
+import { REJECTED_DATA } from '../../utils/constans';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setValue] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handlerLogin = (e) => {
+    e.preventDefault();
+    dispatch(login(form));
+  };
 
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Вход</h2>
       <form className={styles.form}>
-        <EmailInput onChange={(e) => setEmail(e.target.value)} value={email} name='email' />
-        <PasswordInput
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          name='password'
-        />
-        <Button type='primary' size='medium' htmlType='submit'>
+        <EmailInput onChange={onChange} value={form.email} name='email' />
+        <PasswordInput onChange={onChange} value={form.password} name='password' />
+        <Button type='primary' size='medium' htmlType='submit' onClick={handlerLogin}>
           Войти
         </Button>
       </form>
