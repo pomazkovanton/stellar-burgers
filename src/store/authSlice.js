@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getRegisterData } from '../utils/auth-api';
+import { setCookie } from '../utils/utils';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
 export const register = createAsyncThunk(
   'user/register',
-  async function (userData, { rejectWithValue }) {
+  async function (registerData, { rejectWithValue }) {
     try {
-      const { data } = await getRegisterData(userData);
+      const { data } = await getRegisterData(registerData);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -17,29 +17,28 @@ export const register = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    name: null,
-    email: null,
+    user: null,
     token: null,
     isAuth: false,
-    authStatus: '',
-    authError: null,
+    registerStatus: null,
+    registerError: null,
   },
   reducers: {},
   extraReducers: {
     [register.pending]: (state) => {
-      state.authStatus = lOADING_DATA;
-      state.authError = null;
+      state.registerStatus = lOADING_DATA;
+      state.registerError = null;
     },
     [register.fulfilled]: (state, action) => {
-      state.authStatus = RESOLVED_DATA;
-      state.email = action.payload.user.email;
-      state.name = action.payload.user.name;
-      state.token = action.payload.accessToken;
+      state.registerStatus = RESOLVED_DATA;
+      state.user = action.payload.user;
+      state.token = action.payload.accessToken.split('Bearer ')[1];
       state.isAuth = true;
+      setCookie('token', action.payload.refreshToken);
     },
     [register.rejected]: (state, action) => {
-      state.authStatus = REJECTED_DATA;
-      state.authError = action.payload;
+      state.registerStatus = REJECTED_DATA;
+      state.registerError = action.payload;
     },
   },
 });

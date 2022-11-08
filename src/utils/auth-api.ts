@@ -2,8 +2,8 @@ import { handleRequest } from './utils';
 import { FORGOT_PASSWORD_URL, REGISTER_URL, RESET_PASSWORD_URL } from './constans';
 
 //Регистрация пользователя на сервере
-export const getRegisterData = (userData) => {
-  return handleRequest(REGISTER_URL, 'POST', userData);
+export const getRegisterData = (data) => {
+  return handleRequest(REGISTER_URL, 'POST', data);
 };
 
 //Запрос кода восстановления пароля с сервера
