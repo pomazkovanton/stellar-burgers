@@ -2,6 +2,7 @@
   display: flex;
   text-decoration: none;
   color: var(--text-inactive-color);
+  transition: all 0.4s linear;
 }
 
 .link p {
@@ -10,6 +11,10 @@
 
 .link svg {
   fill: currentColor;
+}
+
+.link:hover {
+  color: var(--text-primary-color);
 }
 
 .active {
