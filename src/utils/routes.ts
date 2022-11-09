@@ -3,6 +3,7 @@ import ForgotPasswordPage from '../pages/ForgotPasswordPage/ForgotPasswordPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
 import {
   FORGOT_PASSWORD_ROUTE,
@@ -39,6 +40,6 @@ export const privateRoutes = [
   },
   {
     path: PROFILE_ROUTE,
-    page: null,
+    page: ProfilePage,
   },
 ];

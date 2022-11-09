@@ -1,0 +1,52 @@
+.container {
+  max-width: 860px;
+  margin: 120px auto 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper {
+  max-width: 320px;
+}
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 80px;
+}
+
+.link {
+  text-decoration: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 20px 0;
+  color: var(--text-inactive-color);
+  transition: all 0.4s linear;
+}
+
+.link:hover {
+  color: var(--text-primary-color);
+}
+
+.link span {
+  color: inherit;
+}
+
+.active {
+  color: var(--text-primary-color);
+}
+
+.form {
+  width: 480px;
+  display: flex;
+  justify-content: stretch;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form div {
+  width: 100%;
+  flex-basis: content;
+}

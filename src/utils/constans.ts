@@ -17,6 +17,8 @@ export const REGISTER_ROUTE = `${HOME_ROUTE}register`;
 export const FORGOT_PASSWORD_ROUTE = `${HOME_ROUTE}forgot-password`;
 export const RESET_PASSWORD_ROUTE = `${HOME_ROUTE}reset-password`;
 export const PROFILE_ROUTE = `${HOME_ROUTE}profile`;
+export const PROFILE_ROUTE_ORDERS = `${PROFILE_ROUTE}/orders`;
+export const PROFILE_ROUTE_ORDER = `${PROFILE_ROUTE_ORDERS}/:id`;
 
 // Список статусов загрузки данных
 export const lOADING_DATA = 'loading';
