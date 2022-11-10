@@ -16,6 +16,10 @@ import {
 
 export const publicRoutes = [
   {
+    path: HOME_ROUTE,
+    page: HomePage,
+  },
+  {
     path: LOGIN_ROUTE,
     page: LoginPage,
   },
