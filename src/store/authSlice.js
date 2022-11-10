@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setCookie } from '../utils/utils';
-import { getRegisterData, getAuthData, getNewToken } from '../utils/auth-api';
+import { setCookie, deleteCookie } from '../utils/utils';
+import { getRegisterData, getAuthData, getNewToken, getLogoutData } from '../utils/auth-api';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
 export const register = createAsyncThunk(
@@ -36,6 +36,15 @@ export const updateToken = createAsyncThunk(
   },
 );
 
+export const logout = createAsyncThunk('user/logout', async function (token, { rejectWithValue }) {
+  try {
+    const { data } = await getLogoutData(token);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -51,6 +60,9 @@ const authSlice = createSlice({
 
     updateTokenStatus: null,
     updateTokenError: null,
+
+    logoutStatus: null,
+    logoutError: null,
   },
   reducers: {},
   extraReducers: {
@@ -99,6 +111,21 @@ const authSlice = createSlice({
     [updateToken.rejected]: (state, action) => {
       state.isAuth = false;
       state.updateTokenStatus = REJECTED_DATA;
+      state.updateTokenError = action.payload;
+    },
+    [logout.pending]: (state) => {
+      state.logoutStatus = lOADING_DATA;
+      state.logoutError = null;
+    },
+    [logout.fulfilled]: (state, action) => {
+      state.logoutStatus = RESOLVED_DATA;
+      state.isAuth = false;
+      state.token = null;
+      state.user = null;
+      deleteCookie('token');
+    },
+    [logout.rejected]: (state, action) => {
+      state.logoutError = REJECTED_DATA;
       state.updateTokenError = action.payload;
     },
   },

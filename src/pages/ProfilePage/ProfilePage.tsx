@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profilepage.module.css';
 import { PROFILE_ROUTE, PROFILE_ROUTE_ORDERS } from 'src/utils/constans';
+import { logout } from '../../store/authSlice';
+import { getCookie } from '../../utils/utils';
 
 const ProfilePage = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' });
+  const dispatch = useDispatch();
+  const refreshToken = getCookie('token');
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -16,6 +21,10 @@ const ProfilePage = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     console.log('work');
+  };
+
+  const handlerLogout = () => {
+    dispatch(logout({ token: refreshToken }));
   };
 
   return (
@@ -45,7 +54,7 @@ const ProfilePage = () => {
             </NavLink>
           </li>
           <li>
-            <button className={styles.link}>
+            <button className={styles.link} onClick={handlerLogout}>
               <span className='text text_type_main-medium text_color_inactive'>Выход</span>
             </button>
           </li>

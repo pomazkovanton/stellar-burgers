@@ -2,6 +2,7 @@ import { handleRequest } from './utils';
 import {
   FORGOT_PASSWORD_URL,
   LOGIN_URL,
+  LOGOUT_URL,
   REGISTER_URL,
   RESET_PASSWORD_URL,
   TOKEN_URL,
@@ -30,4 +31,9 @@ export const getAuthData = (data) => {
 //Обновление токена
 export const getNewToken = (token) => {
   return handleRequest(TOKEN_URL, 'POST', token);
+};
+
+//Выход из системы
+export const getLogoutData = (token) => {
+  return handleRequest(LOGOUT_URL, 'POST', token);
 };
