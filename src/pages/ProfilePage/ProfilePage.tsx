@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profilepage.module.css';
 import { PROFILE_ROUTE, PROFILE_ROUTE_ORDERS } from 'src/utils/constans';
@@ -89,6 +89,14 @@ const ProfilePage = () => {
           type='password'
           icon={'EditIcon'}
         />
+        <div className={styles.buttons}>
+          <Button type='secondary' size='medium'>
+            Отмена
+          </Button>
+          <Button type='primary' size='medium' extraClass='ml-5'>
+            Сохранить
+          </Button>
+        </div>
       </form>
     </div>
   );

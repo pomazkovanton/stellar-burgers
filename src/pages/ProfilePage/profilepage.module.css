@@ -3,6 +3,7 @@
   display: flex;
   max-width: 860px;
   justify-content: space-between;
+  transform: translateX(-180px);
 }
 
 .wrapper {
@@ -49,4 +50,10 @@
 .form div {
   width: 100%;
   flex-basis: content;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
