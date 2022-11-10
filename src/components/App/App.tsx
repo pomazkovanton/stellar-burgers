@@ -6,7 +6,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import AppRouter from '../AppRouter/AppRouter';
 
 import { getCookie } from '../../utils/utils';
-import { updateToken } from '../../store/authSlice';
+import { getUser, updateToken } from '../../store/authSlice';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,9 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!token && refreshToken) {
       dispatch(updateToken({ token: refreshToken }));
+    }
+    if (token) {
+      dispatch(getUser({ authorization: `Bearer ${token}` }));
     }
   }, [dispatch, token, refreshToken]);
 

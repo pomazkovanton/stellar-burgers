@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,7 +10,8 @@ import { logout } from '../../store/authSlice';
 import { getCookie } from '../../utils/utils';
 
 const ProfilePage = () => {
-  const [form, setValue] = useState({ name: '', email: '', password: '' });
+  const { user } = useSelector((state) => state.auth);
+  const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
   const dispatch = useDispatch();
   const refreshToken = getCookie('token');
 

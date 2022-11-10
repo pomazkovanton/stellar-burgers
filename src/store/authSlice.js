@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setCookie, deleteCookie } from '../utils/utils';
-import { getRegisterData, getAuthData, getNewToken, getLogoutData } from '../utils/auth-api';
+import {
+  getRegisterData,
+  getAuthData,
+  getNewToken,
+  getLogoutData,
+  getUserData,
+} from '../utils/auth-api';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
 export const register = createAsyncThunk(
@@ -45,6 +51,18 @@ export const logout = createAsyncThunk('user/logout', async function (token, { r
   }
 });
 
+export const getUser = createAsyncThunk(
+  'user/getUser',
+  async function (token, { rejectWithValue }) {
+    try {
+      const { data } = await getUserData(token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -63,6 +81,9 @@ const authSlice = createSlice({
 
     logoutStatus: null,
     logoutError: null,
+
+    getDataUserStatus: null,
+    getDataUserError: null,
   },
   reducers: {},
   extraReducers: {
@@ -125,8 +146,20 @@ const authSlice = createSlice({
       deleteCookie('token');
     },
     [logout.rejected]: (state, action) => {
-      state.logoutError = REJECTED_DATA;
-      state.updateTokenError = action.payload;
+      state.logoutStatus = REJECTED_DATA;
+      state.logoutError = action.payload;
+    },
+    [getUser.pending]: (state) => {
+      state.getDataUserStatus = lOADING_DATA;
+      state.getDataUserError = null;
+    },
+    [getUser.fulfilled]: (state, action) => {
+      state.getDataUserStatus = RESOLVED_DATA;
+      state.user = action.payload.user;
+    },
+    [getUser.rejected]: (state, action) => {
+      state.getDataUserStatus = REJECTED_DATA;
+      state.getDataUserError = action.payload;
     },
   },
 });

@@ -6,6 +6,7 @@ import {
   REGISTER_URL,
   RESET_PASSWORD_URL,
   TOKEN_URL,
+  USER_URL,
 } from './constans';
 
 //Регистрация пользователя на сервере
@@ -37,3 +38,13 @@ export const getNewToken = (token) => {
 export const getLogoutData = (token) => {
   return handleRequest(LOGOUT_URL, 'POST', token);
 };
+
+//Получение данных о пользователе
+export const getUserData = (token) => {
+  return handleRequest(USER_URL, 'GET', {}, token);
+};
+
+// //Обновление данных о пользователе
+// export const refreshUserData = (token) => {
+//   return handleRequest(LOGOUT_URL, 'POST', token);
+// };
