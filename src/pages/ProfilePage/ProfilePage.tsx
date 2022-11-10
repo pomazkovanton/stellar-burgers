@@ -12,8 +12,12 @@ import { getCookie } from '../../utils/utils';
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
+  const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
   const refreshToken = getCookie('token');
+  const inputNameRef = React.useRef(null);
+  const inputEmailRef = React.useRef(null);
+  const inputPasswordRef = React.useRef(null);
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -26,6 +30,16 @@ const ProfilePage = () => {
 
   const handlerLogout = () => {
     dispatch(logout({ token: refreshToken }));
+  };
+
+  const onIconClick = (inputRef) => {
+    const input = inputRef.current;
+    const IndexDisabledClass = 'input__textfield-disabled';
+
+    input.className = input.className.replace(IndexDisabledClass, '');
+    input.focus();
+    input.disabled = false;
+    setIsVisible(true);
   };
 
   return (
@@ -72,6 +86,9 @@ const ProfilePage = () => {
           placeholder={'Имя'}
           type='text'
           icon={'EditIcon'}
+          ref={inputNameRef}
+          onIconClick={() => onIconClick(inputNameRef)}
+          disabled
         />
         <Input
           onChange={onChange}
@@ -80,6 +97,9 @@ const ProfilePage = () => {
           placeholder={'Логин'}
           type='email'
           icon={'EditIcon'}
+          ref={inputEmailRef}
+          onIconClick={() => onIconClick(inputEmailRef)}
+          disabled
         />
         <Input
           onChange={onChange}
@@ -88,15 +108,20 @@ const ProfilePage = () => {
           placeholder={'Пароль'}
           type='password'
           icon={'EditIcon'}
+          ref={inputPasswordRef}
+          onIconClick={() => onIconClick(inputPasswordRef)}
+          disabled
         />
-        <div className={styles.buttons}>
-          <Button type='secondary' size='medium'>
-            Отмена
-          </Button>
-          <Button type='primary' size='medium' extraClass='ml-5'>
-            Сохранить
-          </Button>
-        </div>
+        {isVisible && (
+          <div className={styles.buttons}>
+            <Button type='secondary' size='medium'>
+              Отмена
+            </Button>
+            <Button type='primary' size='medium' extraClass='ml-5'>
+              Сохранить
+            </Button>
+          </div>
+        )}
       </form>
     </div>
   );
