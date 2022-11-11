@@ -6,6 +6,7 @@ import {
   getNewToken,
   getLogoutData,
   getUserData,
+  refreshUserData,
 } from '../utils/auth-api';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
 
@@ -63,6 +64,18 @@ export const getUser = createAsyncThunk(
   },
 );
 
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async function (updateUserData, { rejectWithValue }) {
+    try {
+      const { data } = await refreshUserData(updateUserData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -84,6 +97,9 @@ const authSlice = createSlice({
 
     getDataUserStatus: null,
     getDataUserError: null,
+
+    updateDataUserStatus: null,
+    updateDataUserError: null,
   },
   reducers: {},
   extraReducers: {
@@ -160,6 +176,18 @@ const authSlice = createSlice({
     [getUser.rejected]: (state, action) => {
       state.getDataUserStatus = REJECTED_DATA;
       state.getDataUserError = action.payload;
+    },
+    [updateUser.pending]: (state) => {
+      state.updateDataUserStatus = lOADING_DATA;
+      state.updateDataUserError = null;
+    },
+    [updateUser.fulfilled]: (state, action) => {
+      state.updateDataUserStatus = RESOLVED_DATA;
+      state.user = action.payload.user;
+    },
+    [updateUser.rejected]: (state, action) => {
+      state.updateDataUserStatus = REJECTED_DATA;
+      state.updateDataUserError = action.payload;
     },
   },
 });

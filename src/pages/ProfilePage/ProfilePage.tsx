@@ -6,15 +6,21 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 
 import styles from './profilepage.module.css';
 import { PROFILE_ROUTE, PROFILE_ROUTE_ORDERS } from 'src/utils/constans';
-import { logout } from '../../store/authSlice';
+import { logout, updateUser } from '../../store/authSlice';
 import { getCookie } from '../../utils/utils';
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+
   const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
   const [isVisible, setIsVisible] = useState(false);
-  const dispatch = useDispatch();
+
   const refreshToken = getCookie('token');
+  const accessToken = { authorization: `Bearer ${token}` };
+
   const inputNameRef = React.useRef(null);
   const inputEmailRef = React.useRef(null);
   const inputPasswordRef = React.useRef(null);
@@ -23,16 +29,28 @@ const ProfilePage = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
+  const setDisabledForm = () => {
+    const inputs = [inputNameRef.current, inputEmailRef.current, inputPasswordRef.current];
+    inputs.map((input) => {
+      if (input.disabled === false) {
+        input.classList.add('input__textfield-disabled');
+        input.disabled = true;
+      }
+    });
+  };
+
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log('work');
+    dispatch(updateUser({ user: form, token: accessToken }));
+    setDisabledForm();
+    setIsVisible(false);
   };
 
   const handlerLogout = () => {
     dispatch(logout({ token: refreshToken }));
   };
 
-  const onIconClick = (inputRef) => {
+  const handlerIconClick = (inputRef) => {
     const input = inputRef.current;
     input.classList.remove('input__textfield-disabled');
     input.focus();
@@ -41,13 +59,7 @@ const ProfilePage = () => {
   };
 
   const handlerCancelBtn = () => {
-    const inputs = [inputNameRef.current, inputEmailRef.current, inputPasswordRef.current];
-    inputs.map((input) => {
-      if (input.disabled === false) {
-        input.classList.add('input__textfield-disabled');
-        input.disabled = true;
-      }
-    });
+    setDisabledForm();
     setValue({ name: user.name, email: user.email, password: '' });
     setIsVisible(false);
   };
@@ -97,7 +109,7 @@ const ProfilePage = () => {
           type='text'
           icon={'EditIcon'}
           ref={inputNameRef}
-          onIconClick={() => onIconClick(inputNameRef)}
+          onIconClick={() => handlerIconClick(inputNameRef)}
           disabled
         />
         <Input
@@ -108,7 +120,7 @@ const ProfilePage = () => {
           type='email'
           icon={'EditIcon'}
           ref={inputEmailRef}
-          onIconClick={() => onIconClick(inputEmailRef)}
+          onIconClick={() => handlerIconClick(inputEmailRef)}
           disabled
         />
         <Input
@@ -119,7 +131,7 @@ const ProfilePage = () => {
           type='password'
           icon={'EditIcon'}
           ref={inputPasswordRef}
-          onIconClick={() => onIconClick(inputPasswordRef)}
+          onIconClick={() => handlerIconClick(inputPasswordRef)}
           disabled
         />
         {isVisible && (
@@ -127,7 +139,7 @@ const ProfilePage = () => {
             <Button type='secondary' size='medium' onClick={handlerCancelBtn}>
               Отмена
             </Button>
-            <Button type='primary' size='medium' extraClass='ml-5'>
+            <Button type='primary' size='medium' extraClass='ml-5' onClick={handlerSubmit}>
               Сохранить
             </Button>
           </div>

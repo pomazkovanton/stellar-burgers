@@ -44,7 +44,7 @@ export const getUserData = (token) => {
   return handleRequest(USER_URL, 'GET', {}, token);
 };
 
-// //Обновление данных о пользователе
-// export const refreshUserData = (token) => {
-//   return handleRequest(LOGOUT_URL, 'POST', token);
-// };
+//Обновление данных о пользователе
+export const refreshUserData = (data) => {
+  return handleRequest(USER_URL, 'PATCH', data.user, data.token);
+};
