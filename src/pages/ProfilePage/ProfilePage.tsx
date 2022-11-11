@@ -34,12 +34,22 @@ const ProfilePage = () => {
 
   const onIconClick = (inputRef) => {
     const input = inputRef.current;
-    const IndexDisabledClass = 'input__textfield-disabled';
-
-    input.className = input.className.replace(IndexDisabledClass, '');
+    input.classList.remove('input__textfield-disabled');
     input.focus();
     input.disabled = false;
     setIsVisible(true);
+  };
+
+  const handlerCancelBtn = () => {
+    const inputs = [inputNameRef.current, inputEmailRef.current, inputPasswordRef.current];
+    inputs.map((input) => {
+      if (input.disabled === false) {
+        input.classList.add('input__textfield-disabled');
+        input.disabled = true;
+      }
+    });
+    setValue({ name: user.name, email: user.email, password: '' });
+    setIsVisible(false);
   };
 
   return (
@@ -114,7 +124,7 @@ const ProfilePage = () => {
         />
         {isVisible && (
           <div className={styles.buttons}>
-            <Button type='secondary' size='medium'>
+            <Button type='secondary' size='medium' onClick={handlerCancelBtn}>
               Отмена
             </Button>
             <Button type='primary' size='medium' extraClass='ml-5'>
