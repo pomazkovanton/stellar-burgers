@@ -7,6 +7,7 @@ import AppRouter from '../AppRouter/AppRouter';
 
 import { getCookie } from '../../utils/utils';
 import { getUser, updateToken } from '../../store/authSlice';
+import { fetchIngredients } from '../../store/ingredientsSlice';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const refreshToken = getCookie('token');
 
   useEffect(() => {
+    dispatch(fetchIngredients());
     if (!token && refreshToken) {
       dispatch(updateToken({ token: refreshToken }));
     }
