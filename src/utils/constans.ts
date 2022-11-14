@@ -21,8 +21,8 @@ export const REGISTER_ROUTE = `${HOME_ROUTE}register`;
 export const FORGOT_PASSWORD_ROUTE = `${HOME_ROUTE}forgot-password`;
 export const RESET_PASSWORD_ROUTE = `${HOME_ROUTE}reset-password`;
 export const PROFILE_ROUTE = `${HOME_ROUTE}profile`;
-export const PROFILE_ROUTE_ORDERS = `${PROFILE_ROUTE}/orders`;
-export const PROFILE_ROUTE_ORDER = `${PROFILE_ROUTE_ORDERS}/:id`;
+export const PROFILE_ORDERS_ROUTE = `${PROFILE_ROUTE}/orders`;
+export const PROFILE_ORDER_ROUTE = `${PROFILE_ORDERS_ROUTE}/:id`;
 export const INGREDIENTS_ROUTE = `${HOME_ROUTE}ingredients`;
 export const INGREDIENT_ROUTE = `${INGREDIENTS_ROUTE}/:id`;
 

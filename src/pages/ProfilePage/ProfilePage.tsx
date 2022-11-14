@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profilepage.module.css';
-import { PROFILE_ROUTE, PROFILE_ROUTE_ORDERS } from 'src/utils/constans';
+import { PROFILE_ORDERS_ROUTE, PROFILE_ROUTE } from 'src/utils/constans';
 import { logout, updateUser } from '../../store/authSlice';
 import { getCookie } from '../../utils/utils';
 
@@ -81,7 +81,7 @@ const ProfilePage = () => {
           <li>
             <NavLink
               exact
-              to={PROFILE_ROUTE_ORDERS}
+              to={PROFILE_ORDERS_ROUTE}
               className={styles.link}
               activeClassName={styles.active}
             >

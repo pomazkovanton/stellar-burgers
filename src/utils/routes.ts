@@ -15,6 +15,7 @@ import {
   HOME_ROUTE,
   INGREDIENT_ROUTE,
   LOGIN_ROUTE,
+  PROFILE_ORDERS_ROUTE,
   PROFILE_ROUTE,
   REGISTER_ROUTE,
   RESET_PASSWORD_ROUTE,
@@ -43,6 +44,10 @@ export const privateRoutes = [
   {
     path: PROFILE_ROUTE,
     page: ProfilePage,
+  },
+  {
+    path: PROFILE_ORDERS_ROUTE,
+    page: null,
   },
 ];
 
