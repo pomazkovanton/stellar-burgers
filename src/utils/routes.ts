@@ -16,10 +16,6 @@ import {
 
 export const publicRoutes = [
   {
-    path: HOME_ROUTE,
-    page: HomePage,
-  },
-  {
     path: LOGIN_ROUTE,
     page: LoginPage,
   },
@@ -39,11 +35,14 @@ export const publicRoutes = [
 
 export const privateRoutes = [
   {
-    path: HOME_ROUTE,
-    page: HomePage,
-  },
-  {
     path: PROFILE_ROUTE,
     page: ProfilePage,
+  },
+];
+
+export const commonRoutes = [
+  {
+    path: HOME_ROUTE,
+    page: HomePage,
   },
 ];
