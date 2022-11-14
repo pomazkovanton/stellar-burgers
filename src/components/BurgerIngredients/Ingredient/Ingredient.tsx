@@ -30,7 +30,7 @@ const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
 
   const handleClick = (): void => {
     dispatch(addToBurger({ id: uuidv4(), item: ingredient }));
-    // dispatch(addDetails(ingredient));
+    dispatch(addDetails(ingredient));
   };
 
   return (

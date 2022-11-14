@@ -1,3 +1,4 @@
+//Импорт страниц
 import HomePage from '../pages/HomePage/HomePage';
 import ForgotPasswordPage from '../pages/ForgotPasswordPage/ForgotPasswordPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
@@ -5,6 +6,9 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import IngredientPage from '../pages/IngredientPage/IngredientPage';
+
+// Импорт модальных окон
+import IngredientModal from '../components/BurgerIngredients/IngredientModal/IngredientModal';
 
 import {
   FORGOT_PASSWORD_ROUTE,
@@ -50,5 +54,12 @@ export const commonRoutes = [
   {
     path: INGREDIENT_ROUTE,
     page: IngredientPage,
+  },
+];
+
+export const modalRoutes = [
+  {
+    path: INGREDIENT_ROUTE,
+    page: IngredientModal,
   },
 ];
