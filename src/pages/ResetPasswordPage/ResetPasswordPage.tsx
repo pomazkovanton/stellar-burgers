@@ -13,7 +13,7 @@ const ResetPasswordPage = () => {
   const { values, handleChange } = useForm({ password: '', token: '' });
   const history = useHistory();
 
-  const handlerResetPassword = async (e) => {
+  const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await getNewPassword(values);
@@ -29,7 +29,7 @@ const ResetPasswordPage = () => {
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Восстановление пароля</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlerSubmit}>
         <Input
           onChange={handleChange}
           value={values.password}
@@ -44,7 +44,7 @@ const ResetPasswordPage = () => {
           placeholder={'Введите код из письма'}
           type='text'
         />
-        <Button type='primary' size='medium' htmlType='submit' onClick={handlerResetPassword}>
+        <Button type='primary' size='medium' htmlType='submit'>
           Сохранить
         </Button>
       </form>

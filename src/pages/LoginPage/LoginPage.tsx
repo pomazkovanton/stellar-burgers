@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
   const { values, handleChange } = useForm({ email: '', password: '' });
   const dispatch = useDispatch();
 
-  const handlerLogin = (e) => {
+  const handlerSubmit = (e) => {
     e.preventDefault();
     dispatch(login(values));
   };
@@ -24,10 +24,10 @@ const LoginPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Вход</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlerSubmit}>
         <EmailInput onChange={handleChange} value={values.email} name='email' />
         <PasswordInput onChange={handleChange} value={values.password} name='password' />
-        <Button type='primary' size='medium' htmlType='submit' onClick={handlerLogin}>
+        <Button type='primary' size='medium' htmlType='submit'>
           Войти
         </Button>
       </form>

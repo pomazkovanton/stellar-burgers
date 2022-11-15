@@ -137,10 +137,10 @@ const ProfilePage = () => {
         />
         {isVisible && (
           <div className={styles.buttons}>
-            <Button type='secondary' size='medium' onClick={handlerCancelBtn}>
+            <Button type='secondary' size='medium' htmlType='button' onClick={handlerCancelBtn}>
               Отмена
             </Button>
-            <Button type='primary' size='medium' extraClass='ml-5' onClick={handlerSubmit}>
+            <Button type='primary' size='medium' extraClass='ml-5' htmlType='submit'>
               Сохранить
             </Button>
           </div>

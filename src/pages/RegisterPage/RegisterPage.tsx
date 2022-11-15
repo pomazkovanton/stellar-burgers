@@ -17,7 +17,7 @@ const RegisterPage: React.FC = () => {
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
 
-  const handlerRegister = (e) => {
+  const handlerSubmit = (e) => {
     e.preventDefault();
     dispatch(register(values));
   };
@@ -25,7 +25,7 @@ const RegisterPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Регистрация</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlerSubmit}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -37,7 +37,7 @@ const RegisterPage: React.FC = () => {
         />
         <EmailInput onChange={handleChange} value={values.email} name='email' />
         <PasswordInput onChange={handleChange} value={values.password} name='password' />
-        <Button type='primary' size='medium' htmlType='submit' onClick={handlerRegister}>
+        <Button type='primary' size='medium' htmlType='submit'>
           Зарегистрироваться
         </Button>
       </form>

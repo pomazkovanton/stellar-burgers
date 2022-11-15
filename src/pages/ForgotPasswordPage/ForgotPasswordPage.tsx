@@ -25,7 +25,7 @@ const ForgotPasswordPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Восстановление пароля</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlerSubmit}>
         <Input
           onChange={handleChange}
           value={values.email}
@@ -33,7 +33,7 @@ const ForgotPasswordPage: React.FC = () => {
           placeholder={'Укажите e-mail'}
           type='email'
         />
-        <Button type='primary' size='medium' htmlType='submit' onClick={handlerSubmit}>
+        <Button type='primary' size='medium' htmlType='submit'>
           Восстановить
         </Button>
       </form>
