@@ -38,6 +38,14 @@ export const publicRoutes = [
     path: RESET_PASSWORD_ROUTE,
     page: ResetPasswordPage,
   },
+  {
+    path: HOME_ROUTE,
+    page: HomePage,
+  },
+  {
+    path: INGREDIENT_ROUTE,
+    page: IngredientPage,
+  },
 ];
 
 export const privateRoutes = [
@@ -47,18 +55,7 @@ export const privateRoutes = [
   },
   {
     path: PROFILE_ORDERS_ROUTE,
-    page: null,
-  },
-];
-
-export const commonRoutes = [
-  {
-    path: HOME_ROUTE,
-    page: HomePage,
-  },
-  {
-    path: INGREDIENT_ROUTE,
-    page: IngredientPage,
+    page: ProfilePage,
   },
 ];
 
