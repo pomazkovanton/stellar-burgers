@@ -29,23 +29,21 @@ const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients }) =
   const [current, setCurrent] = useState('bun');
 
   return (
-    <>
-      <section className={styles.wrapper}>
-        <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
-        <div className={styles.container} id='containerElement'>
-          {tabsIngredients.map((tab) => {
-            return (
-              <IngredientList
-                key={tab.value}
-                type={tab.value}
-                title={tab.name}
-                ingredients={ingredients}
-              />
-            );
-          })}
-        </div>
-      </section>
-    </>
+    <section className={styles.wrapper}>
+      <Tabs current={current} handleClick={setCurrent} tabs={tabsIngredients} />
+      <div className={styles.container} id='containerElement'>
+        {tabsIngredients.map((tab) => {
+          return (
+            <IngredientList
+              key={tab.value}
+              type={tab.value}
+              title={tab.name}
+              ingredients={ingredients}
+            />
+          );
+        })}
+      </div>
+    </section>
   );
 };
 

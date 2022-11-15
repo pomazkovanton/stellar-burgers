@@ -25,14 +25,12 @@ const App: React.FC = () => {
   }, [dispatch, token, refreshToken]);
 
   return (
-    <>
-      <Router>
-        <AppHeader />
-        <main>
-          <AppRouter />
-        </main>
-      </Router>
-    </>
+    <Router>
+      <AppHeader />
+      <main>
+        <AppRouter />
+      </main>
+    </Router>
   );
 };
 

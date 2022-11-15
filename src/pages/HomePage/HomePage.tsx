@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <main className={styles.container}>
+      <div className={styles.container}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <div className={styles.wrapper}>
           {ingredientsStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
           {ingredientsStatus === RESOLVED_DATA && <BurgerIngredients ingredients={ingredients} />}
           <BurgerConstructor />
         </div>
-      </main>
+      </div>
     </DndProvider>
   );
 };
