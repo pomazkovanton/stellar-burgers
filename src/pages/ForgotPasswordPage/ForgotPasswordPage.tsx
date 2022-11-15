@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
+import useForm from '../../hooks/useForm';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import styles from './forgotpasswordpage.module.css';
 import { getCodeInEmail } from '../../utils/auth-api';
 import { RESET_PASSWORD_ROUTE } from '../../utils/constans';
 
 const ForgotPasswordPage: React.FC = () => {
-  const [form, setValue] = useState({ email: '' });
+  const { values, handleChange } = useForm({ email: '' });
   const history = useHistory();
-
-  const onChange = (e) => {
-    setValue({ email: e.target.value });
-  };
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await getCodeInEmail(form);
+      const { data } = await getCodeInEmail(values);
       if (data.success) {
         history.push(RESET_PASSWORD_ROUTE);
       }
@@ -32,8 +27,8 @@ const ForgotPasswordPage: React.FC = () => {
       <h2 className='text text_type_main-medium'>Восстановление пароля</h2>
       <form className={styles.form}>
         <Input
-          onChange={onChange}
-          value={form.email}
+          onChange={handleChange}
+          value={values.email}
           name='email'
           placeholder={'Укажите e-mail'}
           type='email'

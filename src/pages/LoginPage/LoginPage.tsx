@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -10,27 +10,23 @@ import {
 
 import styles from './loginpage.module.css';
 import { login } from '../../store/authSlice';
-import { REJECTED_DATA } from '../../utils/constans';
+import useForm from '../../hooks/useForm';
 
 const LoginPage: React.FC = () => {
-  const [form, setValue] = useState({ email: '', password: '' });
+  const { values, handleChange } = useForm({ email: '', password: '' });
   const dispatch = useDispatch();
-
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handlerLogin = (e) => {
     e.preventDefault();
-    dispatch(login(form));
+    dispatch(login(values));
   };
 
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-medium'>Вход</h2>
       <form className={styles.form}>
-        <EmailInput onChange={onChange} value={form.email} name='email' />
-        <PasswordInput onChange={onChange} value={form.password} name='password' />
+        <EmailInput onChange={handleChange} value={values.email} name='email' />
+        <PasswordInput onChange={handleChange} value={values.password} name='password' />
         <Button type='primary' size='medium' htmlType='submit' onClick={handlerLogin}>
           Войти
         </Button>

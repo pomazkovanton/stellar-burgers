@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -11,18 +11,15 @@ import {
 
 import styles from './registerpage.module.css';
 import { register } from '../../store/authSlice';
+import useForm from '../../hooks/useForm';
 
 const RegisterPage: React.FC = () => {
-  const [form, setValue] = useState({ name: '', email: '', password: '' });
+  const { values, handleChange } = useForm({ name: '', email: '', password: '' });
   const dispatch = useDispatch();
-
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handlerRegister = (e) => {
     e.preventDefault();
-    dispatch(register(form));
+    dispatch(register(values));
   };
 
   return (
@@ -32,14 +29,14 @@ const RegisterPage: React.FC = () => {
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={onChange}
-          value={form.name}
+          onChange={handleChange}
+          value={values.name}
           name={'name'}
           error={false}
           size={'default'}
         />
-        <EmailInput onChange={onChange} value={form.email} name='email' />
-        <PasswordInput onChange={onChange} value={form.password} name='password' />
+        <EmailInput onChange={handleChange} value={values.email} name='email' />
+        <PasswordInput onChange={handleChange} value={values.password} name='password' />
         <Button type='primary' size='medium' htmlType='submit' onClick={handlerRegister}>
           Зарегистрироваться
         </Button>

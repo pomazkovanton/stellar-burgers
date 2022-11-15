@@ -8,6 +8,7 @@ import styles from './profilepage.module.css';
 import { PROFILE_ORDERS_ROUTE, PROFILE_ROUTE } from 'src/utils/constans';
 import { logout, updateUser } from '../../store/authSlice';
 import { getCookie } from '../../utils/utils';
+import useForm from '../../hooks/useForm';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,11 @@ const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
 
-  const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
+  const { values, handleChange, setValues } = useForm({
+    name: user.name,
+    email: user.email,
+    password: '',
+  });
   const [isVisible, setIsVisible] = useState(false);
 
   const refreshToken = getCookie('token');
@@ -24,10 +29,6 @@ const ProfilePage = () => {
   const inputNameRef = React.useRef(null);
   const inputEmailRef = React.useRef(null);
   const inputPasswordRef = React.useRef(null);
-
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
 
   const setDisabledForm = () => {
     const inputs = [inputNameRef.current, inputEmailRef.current, inputPasswordRef.current];
@@ -41,7 +42,7 @@ const ProfilePage = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ user: form, token: accessToken }));
+    dispatch(updateUser({ user: values, token: accessToken }));
     setDisabledForm();
     setIsVisible(false);
   };
@@ -60,7 +61,7 @@ const ProfilePage = () => {
 
   const handlerCancelBtn = () => {
     setDisabledForm();
-    setValue({ name: user.name, email: user.email, password: '' });
+    setValues({ name: user.name, email: user.email, password: '' });
     setIsVisible(false);
   };
 
@@ -102,8 +103,8 @@ const ProfilePage = () => {
       </div>
       <form className={styles.form} onSubmit={handlerSubmit}>
         <Input
-          onChange={onChange}
-          value={form.name}
+          onChange={handleChange}
+          value={values.name}
           name='name'
           placeholder={'Имя'}
           type='text'
@@ -113,8 +114,8 @@ const ProfilePage = () => {
           disabled
         />
         <Input
-          onChange={onChange}
-          value={form.email}
+          onChange={handleChange}
+          value={values.email}
           name='email'
           placeholder={'Логин'}
           type='email'
@@ -124,8 +125,8 @@ const ProfilePage = () => {
           disabled
         />
         <Input
-          onChange={onChange}
-          value={form.password}
+          onChange={handleChange}
+          value={values.password}
           name='password'
           placeholder={'Пароль'}
           type='password'
