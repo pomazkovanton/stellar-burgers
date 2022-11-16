@@ -25,6 +25,7 @@ export const PROFILE_ORDERS_ROUTE = `${PROFILE_ROUTE}/orders`;
 export const PROFILE_ORDER_ROUTE = `${PROFILE_ORDERS_ROUTE}/:id`;
 export const INGREDIENTS_ROUTE = `${HOME_ROUTE}ingredients`;
 export const INGREDIENT_ROUTE = `${INGREDIENTS_ROUTE}/:id`;
+export const FEED_ROUTE = `${HOME_ROUTE}feed`;
 
 // Список статусов загрузки данных
 export const lOADING_DATA = 'loading';

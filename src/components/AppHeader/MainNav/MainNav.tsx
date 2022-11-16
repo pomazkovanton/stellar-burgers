@@ -4,16 +4,17 @@ import styles from './mainnav.module.css';
 
 import NavItem from '../NavItem/NavItem';
 import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FEED_ROUTE, HOME_ROUTE } from '../../../utils/constans';
 
 const MainNav: React.FC = () => {
   return (
     <nav>
       <ul className={styles.list}>
-        <NavItem url='/stellar-burgers/'>
+        <NavItem url={HOME_ROUTE}>
           <BurgerIcon type='secondary' />
           <p className='text text_type_main-default text_color_inactive ml-2'>Конструктор</p>
         </NavItem>
-        <NavItem url='/stellar-burgers/feed'>
+        <NavItem url={FEED_ROUTE}>
           <ListIcon type='secondary' />
           <p className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</p>
         </NavItem>
