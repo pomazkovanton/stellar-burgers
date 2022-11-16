@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -12,10 +12,16 @@ import {
 import styles from './registerpage.module.css';
 import { register } from '../../store/authSlice';
 import useForm from '../../hooks/useForm';
+import { HOME_ROUTE } from '../../utils/constans';
 
 const RegisterPage: React.FC = () => {
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
+  const { isAuth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  if (isAuth) {
+    return <Redirect to={HOME_ROUTE} />;
+  }
 
   const handlerSubmit = (e) => {
     e.preventDefault();

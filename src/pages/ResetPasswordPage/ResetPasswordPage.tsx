@@ -1,17 +1,28 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { getNewPassword } from '../../utils/auth-api';
-import { LOGIN_ROUTE } from '../../utils/constans';
-
-import styles from './resetpasswordpage.module.css';
+import { FORGOT_PASSWORD_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from '../../utils/constans';
 import useForm from '../../hooks/useForm';
 
+import styles from './resetpasswordpage.module.css';
+
 const ResetPasswordPage = () => {
+  const { isAuth } = useSelector((state) => state.auth);
   const { values, handleChange } = useForm({ password: '', token: '' });
   const history = useHistory();
+  const PREVIOUS_LOCATION_ROUTE = history.location.state?.from.pathname;
+
+  if (isAuth) {
+    return <Redirect to={HOME_ROUTE} />;
+  }
+
+  if (PREVIOUS_LOCATION_ROUTE !== FORGOT_PASSWORD_ROUTE) {
+    return <Redirect to={FORGOT_PASSWORD_ROUTE} />;
+  }
 
   const handlerSubmit = async (e) => {
     e.preventDefault();

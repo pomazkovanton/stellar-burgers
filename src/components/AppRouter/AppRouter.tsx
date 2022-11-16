@@ -17,7 +17,9 @@ const AppRouter = () => {
         })}
         {privateRoutes.map(({ path, page }) => {
           return (
-            <ProtectedRoute key={path} page={page} children={React.createElement(page)} exact />
+            <ProtectedRoute key={path} path={path} exact>
+              {React.createElement(page)}
+            </ProtectedRoute>
           );
         })}
         <Redirect to={HOME_ROUTE} />
