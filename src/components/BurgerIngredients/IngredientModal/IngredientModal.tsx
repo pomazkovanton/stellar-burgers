@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import Modal from '../../Modal/Modal';
 import IngredientDetails from '../../BurgerIngredients/IngredientDetails/IngredientDetails';
@@ -10,7 +10,12 @@ import { removeDetails } from '../../../store/ingredientDetailsSlice';
 const IngredientModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
+
+  if (!isShowDetails) {
+    history.push(location.pathname, {});
+  }
 
   const handleCloseModalDetails = () => {
     dispatch(removeDetails());
