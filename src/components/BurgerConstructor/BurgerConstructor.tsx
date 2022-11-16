@@ -15,7 +15,12 @@ import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 
 import { fetchOrder, removeOrder } from '../../store/orderSlice';
-import { addToBurger, reorderInBurger, removeFromBurger } from '../../store/burgerSlice';
+import {
+  addToBurger,
+  reorderInBurger,
+  removeFromBurger,
+  removeAllBurger,
+} from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
 import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
 
@@ -86,6 +91,7 @@ const BurgerConstructor: React.FC = () => {
 
   const handleCloseModalOrder = () => {
     dispatch(removeOrder());
+    dispatch(removeAllBurger());
   };
 
   return (
