@@ -14,7 +14,7 @@ const IngredientModal = () => {
   const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
 
   if (!isShowDetails) {
-    history.push(location.pathname, {});
+    history.replace(location.pathname);
   }
 
   const handleCloseModalDetails = () => {
