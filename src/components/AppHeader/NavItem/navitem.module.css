@@ -1,5 +1,22 @@
 .link {
   display: flex;
   text-decoration: none;
+  color: var(--text-inactive-color);
+  transition: all 0.4s linear;
+}
+
+.link p {
   color: inherit;
+}
+
+.link svg {
+  fill: currentcolor;
+}
+
+.link:hover {
+  color: var(--text-primary-color);
+}
+
+.active {
+  color: var(--text-primary-color);
 }

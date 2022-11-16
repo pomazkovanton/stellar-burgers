@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from 'react-router-dom';
 
 import {
   ConstructorElement,
@@ -14,15 +15,22 @@ import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 
 import { fetchOrder, removeOrder } from '../../store/orderSlice';
-import { addToBurger, reorderInBurger, removeFromBurger } from '../../store/burgerSlice';
+import {
+  addToBurger,
+  reorderInBurger,
+  removeFromBurger,
+  removeAllBurger,
+} from '../../store/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
-import { lOADING_DATA } from '../../utils/constans';
+import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
 
 import styles from './burgerconstructor.module.css';
 
 const BurgerConstructor: React.FC = () => {
+  const history = useHistory();
   const { burger } = useSelector((state) => state.burger);
   const { orderStatus, order, isShowOrder } = useSelector((state) => state.order);
+  const { isAuth } = useSelector((state) => state.auth);
 
   const bun = useMemo(() => burger.find((ingr) => ingr.item.type === 'bun'), [burger]);
   const otherIngredients = useMemo(
@@ -60,8 +68,12 @@ const BurgerConstructor: React.FC = () => {
   };
 
   const handleOrderClick = () => {
-    const idIngredients = { ingredients: getIdIngredients() };
-    dispatch(fetchOrder(idIngredients));
+    if (isAuth) {
+      const idIngredients = { ingredients: getIdIngredients() };
+      dispatch(fetchOrder(idIngredients));
+    } else {
+      history.push(LOGIN_ROUTE);
+    }
   };
 
   const handleDragIngredient = (result) => {
@@ -79,6 +91,7 @@ const BurgerConstructor: React.FC = () => {
 
   const handleCloseModalOrder = () => {
     dispatch(removeOrder());
+    dispatch(removeAllBurger());
   };
 
   return (

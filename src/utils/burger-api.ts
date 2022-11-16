@@ -1,15 +1,5 @@
-import axios from 'axios';
-
+import { handleRequest } from './utils';
 import { ORDERS_URL, INGREDIENTS_URL } from './constans';
-
-//Универсальный обработчик запроса на сервер
-const handleRequest = async (url: string, method: string, data = {}) => {
-  const res = await axios(url, {
-    method: method,
-    data: data,
-  });
-  return res;
-};
 
 //Получение данных об ингредиентах с сервера
 export const getIngredients = () => {

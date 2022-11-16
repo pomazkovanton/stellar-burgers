@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const ingredientsSlice = createSlice({
-  name: 'ingredients',
+  name: 'burger',
   initialState: {
     burger: [],
   },
@@ -20,8 +20,12 @@ const ingredientsSlice = createSlice({
     removeFromBurger(state, action) {
       state.burger = state.burger.filter((ingr) => ingr.id !== action.payload);
     },
+    removeAllBurger(state) {
+      state.burger = [];
+    },
   },
 });
 
-export const { addToBurger, reorderInBurger, removeFromBurger } = ingredientsSlice.actions;
+export const { addToBurger, reorderInBurger, removeFromBurger, removeAllBurger } =
+  ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

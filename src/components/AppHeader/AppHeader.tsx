@@ -5,6 +5,8 @@ import styles from './appheader.module.css';
 import { Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import NavItem from './NavItem/NavItem';
 import MainNav from './MainNav/MainNav';
+import { HOME_ROUTE, PROFILE_ROUTE } from '../../utils/constans';
+import { NavLink } from 'react-router-dom';
 
 const AppHeader: React.FC = () => {
   return (
@@ -12,10 +14,17 @@ const AppHeader: React.FC = () => {
       <div className={styles.content}>
         <MainNav />
         <div className={styles.wrapper}>
-          <Logo />
+          <NavLink
+            exact
+            to={HOME_ROUTE}
+            className={styles.link}
+            activeClassName={styles.linkActive}
+          >
+            <Logo />
+          </NavLink>
         </div>
         <ul className={styles.list}>
-          <NavItem url='/'>
+          <NavItem url={PROFILE_ROUTE}>
             <ProfileIcon type='secondary' />
             <p className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</p>
           </NavItem>
