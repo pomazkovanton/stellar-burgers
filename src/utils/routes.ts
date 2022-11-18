@@ -6,11 +6,13 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import IngredientPage from '../pages/IngredientPage/IngredientPage';
+import FeedPage from '../pages/FeedPage/FeedPage';
 
 // Импорт модальных окон
 import IngredientModal from '../components/BurgerIngredients/IngredientModal/IngredientModal';
 
 import {
+  FEED_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
   INGREDIENT_ROUTE,
@@ -45,6 +47,10 @@ export const publicRoutes = [
   {
     path: INGREDIENT_ROUTE,
     page: IngredientPage,
+  },
+  {
+    path: FEED_ROUTE,
+    page: FeedPage,
   },
 ];
 
