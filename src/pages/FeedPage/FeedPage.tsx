@@ -576,8 +576,7 @@ const FeedPage = () => {
           <div className={styles.wrapper}>
             <div className={styles.board}>
               <h3 className='text text_type_main-medium'>Готовы:</h3>
-              <ul>
-                <li className={`text text_type_digits-default ${styles.orderSuccess}`}>034533</li>
+              <ul className={styles.boardList}>
                 <li className={`text text_type_digits-default ${styles.orderSuccess}`}>034533</li>
                 <li className={`text text_type_digits-default ${styles.orderSuccess}`}>034533</li>
                 <li className={`text text_type_digits-default ${styles.orderSuccess}`}>034533</li>
@@ -589,22 +588,21 @@ const FeedPage = () => {
             </div>
             <div className={styles.board}>
               <h3 className='text text_type_main-medium'>В работе:</h3>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
-              <p className='text text_type_digits-default'>034533</p>
+              <ul className={styles.boardList}>
+                <li className='text text_type_digits-default'>034533</li>
+                <li className='text text_type_digits-default'>034533</li>
+                <li className='text text_type_digits-default'>034533</li>
+                <li className='text text_type_digits-default'>034533</li>
+              </ul>
             </div>
           </div>
           <div className={styles.board}>
             <h3 className='text text_type_main-medium'>Выполнено за все время:</h3>
-            <p>28 752</p>
+            <p className={`text text_type_digits-large ${styles.shadows}`}>28 752</p>
           </div>
           <div className={styles.board}>
             <h3 className='text text_type_main-medium'>Выполнено за сегодня:</h3>
-            <p>138</p>
+            <p className={`text text_type_digits-large ${styles.shadows}`}>138</p>
           </div>
         </div>
       </div>
