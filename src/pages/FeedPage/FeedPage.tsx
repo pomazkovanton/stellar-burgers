@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import Board from '../../components/Board/Board';
+import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
 
 import { connect, disconnect } from '../../store/slices/wsSlice';
 import styles from './feedpage.module.css';
@@ -13,10 +13,11 @@ const FeedPage = () => {
 
   useEffect(() => {
     dispatch(connect('wss://norma.nomoreparties.space/orders/all'));
+
     return () => {
       dispatch(disconnect());
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>
@@ -86,50 +87,8 @@ const FeedPage = () => {
                 </article>
               </li>
             </ul>
-            <div className={styles.statistics}>
-              <div className={styles.wrapper}>
-                <Board title='Готовы:'>
-                  <ul className={styles.boardList}>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                    <li className={`text text_type_digits-default ${styles.orderSuccess}`}>
-                      034533
-                    </li>
-                  </ul>
-                </Board>
-                <Board title='В работе:'>
-                  <ul className={styles.boardList}>
-                    <li className='text text_type_digits-default'>034533</li>
-                    <li className='text text_type_digits-default'>034533</li>
-                    <li className='text text_type_digits-default'>034533</li>
-                    <li className='text text_type_digits-default'>034533</li>
-                  </ul>
-                </Board>
-              </div>
-              <Board title='Выполнено за все время:'>
-                <p className={`text text_type_digits-large ${styles.shadows}`}>{data.total}</p>
-              </Board>
-              <Board title='Выполнено за сегодня:'>
-                <p className={`text text_type_digits-large ${styles.shadows}`}>{data.totalToday}</p>
-              </Board>
-            </div>
-          </div>{' '}
+            <StatisticsBoard data={data} />
+          </div>
         </>
       )}
     </div>

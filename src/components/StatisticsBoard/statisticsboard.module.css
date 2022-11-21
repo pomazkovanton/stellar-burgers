@@ -1,0 +1,49 @@
+.statistics {
+  display: flex;
+  max-width: 580px;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 60px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 36px;
+}
+
+.boardList {
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  list-style: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  max-height: 295px;
+  overflow-y: auto;
+  direction: ltr;
+  scrollbar-color: var(--background-element) var(--text-inactive-color);
+  scrollbar-width: 8px;
+  box-sizing: border-box;
+}
+
+.boardList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.boardList::-webkit-scrollbar-track {
+  background-color: var(--background-element);
+}
+
+.boardList::-webkit-scrollbar-thumb {
+  background-color: var(--text-inactive-color);
+}
+
+.orderSuccess {
+  color: var(--colors-interface-success);
+}
+
+.shadows {
+  text-shadow: 0 0 16px rgb(51 51 255 / 25%), 0 0 8px rgb(51 51 255 / 25%),
+    0 4px 32px rgb(51 51 255 / 50%);
+}
