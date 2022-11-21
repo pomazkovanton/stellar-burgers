@@ -10,7 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './registerpage.module.css';
-import { register } from '../../store/authSlice';
+import { register } from '../../store/slices/authSlice';
 import useForm from '../../hooks/useForm';
 import { HOME_ROUTE } from '../../utils/constans';
 

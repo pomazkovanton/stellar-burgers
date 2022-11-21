@@ -6,8 +6,8 @@ import AppHeader from '../AppHeader/AppHeader';
 import AppRouter from '../AppRouter/AppRouter';
 
 import { getCookie } from '../../utils/utils';
-import { getUser, updateToken } from '../../store/authSlice';
-import { fetchIngredients } from '../../store/ingredientsSlice';
+import { getUser, updateToken } from '../../store/slices/authSlice';
+import { fetchIngredients } from '../../store/slices/ingredientsSlice';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

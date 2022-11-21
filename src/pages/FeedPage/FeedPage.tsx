@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { connect, disconnect } from 'src/store/wsSlice';
+import { connect, disconnect } from '../../store/slices/wsSlice';
 import styles from './feedpage.module.css';
 
 const FeedPage = () => {

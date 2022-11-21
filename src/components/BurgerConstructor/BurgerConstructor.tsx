@@ -14,13 +14,13 @@ import {
 import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 
-import { fetchOrder, removeOrder } from '../../store/orderSlice';
+import { fetchOrder, removeOrder } from '../../store/slices/orderSlice';
 import {
   addToBurger,
   reorderInBurger,
   removeFromBurger,
   removeAllBurger,
-} from '../../store/burgerSlice';
+} from '../../store/slices/burgerSlice';
 import { BurgerIngredients } from '../../types/burgerIngredients';
 import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
 

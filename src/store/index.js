@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 //Импорт reducers
-import ingredientsReducer from './ingredientsSlice';
-import burgerReducer from './burgerSlice';
-import ingredientDetailsReducer from './ingredientDetailsSlice';
-import orderReducer from './orderSlice';
-import authReducer from './authSlice';
-import wsReducer from './wsSlice';
+import ingredientsReducer from './slices/ingredientsSlice';
+import burgerReducer from './slices/burgerSlice';
+import ingredientDetailsReducer from './slices/ingredientDetailsSlice';
+import orderReducer from './slices/orderSlice';
+import authReducer from './slices/authSlice';
+import wsReducer from './slices/wsSlice';
 
 //Импорт middlewares
 import wsMiddleware from './middleware/wsMiddleware';
 
-import { wsSlice } from './wsSlice';
+import { wsSlice } from './slices/wsSlice';
 
 const rootReducer = {
   ingredients: ingredientsReducer,

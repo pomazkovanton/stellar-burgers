@@ -9,7 +9,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './loginpage.module.css';
-import { login } from '../../store/authSlice';
+import { login } from '../../store/slices/authSlice';
 import useForm from '../../hooks/useForm';
 import { HOME_ROUTE } from '../../utils/constans';
 
