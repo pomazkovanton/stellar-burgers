@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
 
 import { connect, disconnect } from '../../store/slices/wsSlice';
@@ -10,6 +10,7 @@ import styles from './feedpage.module.css';
 
 const FeedPage = () => {
   const { data, isConnected } = useSelector((state) => state.ws);
+  const { ingredients } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,65 +29,47 @@ const FeedPage = () => {
           <h2 className='text text_type_main-large'>Лента заказов</h2>
           <div className={styles.mainWrapper}>
             <ul className={styles.orderList}>
-              <li>
-                <article className={styles.card}>
-                  <div className={styles.header}>
-                    <p className='text text_type_digits-default'>#034535</p>
-                    <data className='text text_type_main-default text_color_inactive'>
-                      Сегодня, 16:20 i-GMT+3
-                    </data>
-                  </div>
-                  <h3 className='text text_type_main-medium'>Death Star Starship Main бургер</h3>
-                  <div className={styles.main}>
-                    <ul className={styles.ingredientsList}>
-                      <li
-                        style={{ transform: 'translateX(0)', zIndex: 5 }}
-                        className={styles.ingredientsItem}
-                      >
-                        <img
-                          className={styles.ingredientsImg}
-                          src='https://cdn.pixabay.com/photo/2016/03/10/18/44/top-view-1248955__340.jpg'
-                          alt=''
-                        />
-                      </li>
-                      <li
-                        style={{ transform: 'translateX(-16px)', zIndex: 4 }}
-                        className={styles.ingredientsItem}
-                      >
-                        <img
-                          className={styles.ingredientsImg}
-                          src='https://cdn.pixabay.com/photo/2017/01/20/15/06/oranges-1995056__340.jpg'
-                          alt=''
-                        />
-                      </li>
-                      <li
-                        style={{ transform: 'translateX(-32px)', zIndex: 3 }}
-                        className={styles.ingredientsItem}
-                      >
-                        <img
-                          className={styles.ingredientsImg}
-                          src='https://cdn.pixabay.com/photo/2017/05/07/08/56/pancakes-2291908__340.jpg'
-                          alt=''
-                        />
-                      </li>
-                      <li
-                        style={{ transform: 'translateX(-48px)', zIndex: 2 }}
-                        className={styles.ingredientsItem}
-                      >
-                        <img
-                          className={styles.ingredientsImg}
-                          src='https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971552__340.jpg'
-                          alt=''
-                        />
-                      </li>
-                    </ul>
-                    <p className={styles.price}>
-                      <span className='text text_type_digits-default'>480</span>
-                      <CurrencyIcon type='primary' />
-                    </p>
-                  </div>
-                </article>
-              </li>
+              {data.orders.map((order) => {
+                return (
+                  <li key={order._id}>
+                    <article className={styles.card}>
+                      <div className={styles.header}>
+                        <p className='text text_type_digits-default'>#{order.number}</p>
+                        <data className='text text_type_main-default text_color_inactive'>
+                          Сегодня, 16:20 i-GMT+3
+                        </data>
+                      </div>
+                      <h3 className='text text_type_main-medium'>{order.name}</h3>
+                      <div className={styles.main}>
+                        <ul className={styles.ingredientsList}>
+                          {order.ingredients.map((id, index) => {
+                            return (
+                              <li
+                                key={id}
+                                style={{
+                                  transform: `translateX(${0 - 16 * index}px)`,
+                                  zIndex: `${5 - index}`,
+                                }}
+                                className={styles.ingredientsItem}
+                              >
+                                <img
+                                  className={styles.ingredientsImg}
+                                  src='https://cdn.pixabay.com/photo/2016/03/10/18/44/top-view-1248955__340.jpg'
+                                  alt=''
+                                />
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        <p className={styles.price}>
+                          <span className='text text_type_digits-default'>480</span>
+                          <CurrencyIcon type='primary' />
+                        </p>
+                      </div>
+                    </article>
+                  </li>
+                );
+              })}
             </ul>
             <StatisticsBoard data={data} />
           </div>
