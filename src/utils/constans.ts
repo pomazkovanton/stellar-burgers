@@ -1,4 +1,6 @@
 const BASE_API_URL = 'https://norma.nomoreparties.space/api';
+const BASE_AUTH_URL = `${BASE_API_URL}/auth`;
+const BASE_SOCKET_URL = 'wss://norma.nomoreparties.space';
 
 // Список эндпоинтов
 export const ORDERS_URL = `${BASE_API_URL}/orders`;
@@ -6,13 +8,14 @@ export const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
 export const FORGOT_PASSWORD_URL = `${BASE_API_URL}/password-reset`;
 export const RESET_PASSWORD_URL = `${BASE_API_URL}/password-reset/reset`;
 
-const BASE_AUTH_URL = `${BASE_API_URL}/auth`;
-
 export const LOGIN_URL = `${BASE_AUTH_URL}/login`;
 export const REGISTER_URL = `${BASE_AUTH_URL}/register`;
 export const LOGOUT_URL = `${BASE_AUTH_URL}/logout`;
 export const TOKEN_URL = `${BASE_AUTH_URL}/token`;
 export const USER_URL = `${BASE_AUTH_URL}/user`;
+
+export const ALL_ORDERS_URL = `${BASE_SOCKET_URL}/orders/all`;
+export const USER_ORDERS_URL = `${BASE_SOCKET_URL}/orders`;
 
 // Список маршрутов
 export const HOME_ROUTE = '/stellar-burgers/';

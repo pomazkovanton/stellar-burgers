@@ -5,6 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
 
 import { connect, disconnect } from '../../store/slices/wsSlice';
+import { ALL_ORDERS_URL } from '../../utils/constans';
 import styles from './feedpage.module.css';
 
 const FeedPage = () => {
@@ -12,7 +13,7 @@ const FeedPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(connect('wss://norma.nomoreparties.space/orders/all'));
+    dispatch(connect(ALL_ORDERS_URL));
 
     return () => {
       dispatch(disconnect());
