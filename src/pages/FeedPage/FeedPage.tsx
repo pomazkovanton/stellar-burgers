@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
@@ -24,45 +25,58 @@ const FeedPage = () => {
   return (
     <div className={styles.container}>
       {!isConnected && <h2>Загрузка данных...</h2>}
-      {isConnected && data && (
+      {isConnected && data && ingredients && (
         <>
           <h2 className='text text_type_main-large'>Лента заказов</h2>
           <div className={styles.mainWrapper}>
             <ul className={styles.orderList}>
               {data.orders.map((order) => {
+                const price = order.ingredients
+                  .map((id) => ingredients.find((ingr) => ingr._id === id))
+                  .reduce((acc, ingr) => acc + ingr.price, 0);
+
                 return (
                   <li key={order._id}>
                     <article className={styles.card}>
                       <div className={styles.header}>
                         <p className='text text_type_digits-default'>#{order.number}</p>
                         <data className='text text_type_main-default text_color_inactive'>
-                          Сегодня, 16:20 i-GMT+3
+                          {order.createdAt}
+                          {/* Сегодня, 16:20 i-GMT+3 */}
                         </data>
                       </div>
                       <h3 className='text text_type_main-medium'>{order.name}</h3>
                       <div className={styles.main}>
                         <ul className={styles.ingredientsList}>
                           {order.ingredients.map((id, index) => {
-                            return (
-                              <li
-                                key={id}
-                                style={{
-                                  transform: `translateX(${0 - 16 * index}px)`,
-                                  zIndex: `${5 - index}`,
-                                }}
-                                className={styles.ingredientsItem}
-                              >
-                                <img
-                                  className={styles.ingredientsImg}
-                                  src='https://cdn.pixabay.com/photo/2016/03/10/18/44/top-view-1248955__340.jpg'
-                                  alt=''
-                                />
-                              </li>
-                            );
+                            if (index <= 5) {
+                              const { image } = ingredients.filter((ingr) => ingr._id === id)[0];
+                              return (
+                                <li
+                                  key={uuidv4()}
+                                  style={{
+                                    transform: `translateX(${0 - 16 * index}px)`,
+                                    zIndex: `${5 - index}`,
+                                  }}
+                                  className={styles.ingredientsItem}
+                                >
+                                  <img className={styles.ingredientsImg} src={image} alt='' />
+                                  {index === 5 && (
+                                    <div className={styles.counter}>
+                                      <span
+                                        className={`text text_type_digits-default ${styles.counterText}`}
+                                      >
+                                        {`+${order.ingredients.length - 5}`}
+                                      </span>
+                                    </div>
+                                  )}
+                                </li>
+                              );
+                            }
                           })}
                         </ul>
                         <p className={styles.price}>
-                          <span className='text text_type_digits-default'>480</span>
+                          <span className='text text_type_digits-default'>{price}</span>
                           <CurrencyIcon type='primary' />
                         </p>
                       </div>
