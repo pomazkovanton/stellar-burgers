@@ -1,8 +1,19 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { connect, disconnect } from 'src/store/wsSlice';
 import styles from './feedpage.module.css';
 
 const FeedPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(connect('wss://norma.nomoreparties.space/orders/all'));
+    return () => {
+      dispatch(disconnect());
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <h2 className='text text_type_main-large'>Лента заказов</h2>
