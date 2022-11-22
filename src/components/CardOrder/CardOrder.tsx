@@ -4,14 +4,22 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './cardorder.module.css';
+import { useDispatch } from 'react-redux';
+import { addDetails } from '../../store/slices/orderDetailsSlice';
 
 const CardOrder = ({ order, ingredients }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(addDetails(order));
+  };
+
   const price = order.ingredients
     .map((id) => ingredients.find((ingr) => ingr._id === id))
     .reduce((acc, ingr) => acc + ingr.price, 0);
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onMouseDown={handleClick}>
       <div className={styles.header}>
         <p className='text text_type_digits-default'>#{order.number}</p>
         <data className='text text_type_main-default text_color_inactive'>{order.createdAt}</data>

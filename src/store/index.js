@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import ingredientsReducer from './slices/ingredientsSlice';
 import burgerReducer from './slices/burgerSlice';
 import ingredientDetailsReducer from './slices/ingredientDetailsSlice';
+import OrderDetailsReducer from './slices/orderDetailsSlice';
 import orderReducer from './slices/orderSlice';
 import authReducer from './slices/authSlice';
 import wsReducer from './slices/wsSlice';
@@ -17,6 +18,7 @@ const rootReducer = {
   ingredients: ingredientsReducer,
   burger: burgerReducer,
   ingredientDetails: ingredientDetailsReducer,
+  orderDetails: OrderDetailsReducer,
   order: orderReducer,
   auth: authReducer,
   ws: wsReducer,

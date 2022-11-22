@@ -36,3 +36,8 @@
 .orderList::-webkit-scrollbar-thumb {
   background-color: var(--text-inactive-color);
 }
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}

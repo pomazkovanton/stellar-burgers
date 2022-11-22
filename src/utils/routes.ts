@@ -17,11 +17,13 @@ import {
   HOME_ROUTE,
   INGREDIENT_ROUTE,
   LOGIN_ROUTE,
+  ORDER_ROUTE,
   PROFILE_ORDERS_ROUTE,
   PROFILE_ROUTE,
   REGISTER_ROUTE,
   RESET_PASSWORD_ROUTE,
 } from './constans';
+import OrderModal from 'src/components/OrderModal/OrderModal';
 
 export const publicRoutes = [
   {
@@ -52,6 +54,10 @@ export const publicRoutes = [
     path: FEED_ROUTE,
     page: FeedPage,
   },
+  // {
+  //   path: ORDER_ROUTE,
+  //   page: null,
+  // },
 ];
 
 export const privateRoutes = [
@@ -59,15 +65,19 @@ export const privateRoutes = [
     path: PROFILE_ROUTE,
     page: ProfilePage,
   },
-  {
-    path: PROFILE_ORDERS_ROUTE,
-    page: ProfilePage,
-  },
+  // {
+  //   path: PROFILE_ORDERS_ROUTE,
+  //   page: ProfilePage,
+  // },
 ];
 
 export const modalRoutes = [
   {
     path: INGREDIENT_ROUTE,
     page: IngredientModal,
+  },
+  {
+    path: ORDER_ROUTE,
+    page: OrderModal,
   },
 ];

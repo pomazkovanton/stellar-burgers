@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import CardOrder from 'src/components/CardOrder/CardOrder';
 
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
 
 import { connect, disconnect } from '../../store/slices/wsSlice';
-import { ALL_ORDERS_URL } from '../../utils/constans';
+import { ALL_ORDERS_URL, FEED_ROUTE } from '../../utils/constans';
 import styles from './feedpage.module.css';
 
 const FeedPage = () => {
@@ -13,6 +14,7 @@ const FeedPage = () => {
   const { ingredients } = useSelector((state) => state.ingredients);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(connect(ALL_ORDERS_URL));
@@ -32,9 +34,18 @@ const FeedPage = () => {
             <ul className={styles.orderList}>
               {data.orders.map((order) => {
                 return (
-                  <li key={order._id}>
-                    <CardOrder order={order} ingredients={ingredients} />
-                  </li>
+                  <Link
+                    key={order._id}
+                    className={styles.link}
+                    to={{
+                      pathname: `${FEED_ROUTE}/${order._id}`,
+                      state: { background: location },
+                    }}
+                  >
+                    <li>
+                      <CardOrder order={order} ingredients={ingredients} />
+                    </li>
+                  </Link>
                 );
               })}
             </ul>
