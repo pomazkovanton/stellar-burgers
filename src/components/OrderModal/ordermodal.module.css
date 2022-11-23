@@ -8,15 +8,15 @@
 }
 
 .list {
-  list-style: none;
-  padding: 0;
   margin: 0;
   margin-top: 25px;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
   overflow-y: auto;
   max-height: 312px;
+  flex-direction: column;
+  list-style: none;
+  gap: 16px;
   direction: ltr;
   scrollbar-color: var(--background-element) var(--text-inactive-color);
   scrollbar-width: 8px;
@@ -36,8 +36,8 @@
 
 .item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
 }
 
@@ -45,7 +45,8 @@
   box-sizing: border-box;
   width: 64px;
   height: 64px;
-  background: linear-gradient(black, black) padding-box,
+  background:
+    linear-gradient(black, black) padding-box,
     linear-gradient(to right, #801ab3, #4c4cff) border-box;
   border: 3px solid transparent;
   border-radius: 100%;
@@ -65,8 +66,8 @@
 }
 
 .footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
