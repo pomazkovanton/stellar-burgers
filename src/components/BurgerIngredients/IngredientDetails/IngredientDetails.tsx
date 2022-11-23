@@ -11,7 +11,7 @@ const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => 
   if (ingredient === null) return null;
 
   return (
-    <>
+    <div className={styles.container}>
       <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
       <h3 className='text text_type_main-medium mt-4'>{ingredient.name}</h3>
       <ul className={styles.list}>
@@ -34,7 +34,7 @@ const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => 
           </p>
         </li>
       </ul>
-    </>
+    </div>
   );
 };
 
