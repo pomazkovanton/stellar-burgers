@@ -44,3 +44,34 @@ export const getCookie = (name) => {
 export const deleteCookie = (name) => {
   setCookie(name, null, { expires: -1 });
 };
+
+// Функция для работы с датой
+export const getDate = (orderDate, dateNow) => {
+  const daysPast = Math.round((dateNow.valueOf() - orderDate.valueOf()) / 1000 / 3600 / 24);
+
+  const hours = orderDate.getHours();
+
+  const minutesWithoutZero = orderDate.getMinutes();
+
+  const minutes =
+    minutesWithoutZero < 10 ? '0' + minutesWithoutZero.toString() : minutesWithoutZero.toString();
+
+  if (daysPast === 0) return `Сегодня, ${hours}:${minutes} i-GMT+3`;
+  if (daysPast === 1) return `Вчера, ${hours}:${minutes} i-GMT+3`;
+
+  let dayMessage = 'дней';
+  let daysCopy = daysPast;
+  daysCopy %= 100;
+  if (daysCopy >= 5 && daysCopy <= 20) {
+    dayMessage = 'дней';
+  }
+  daysCopy %= 10;
+  if (daysCopy === 1) {
+    dayMessage = 'день';
+  }
+  if (daysCopy >= 2 && daysCopy <= 4) {
+    dayMessage = 'дня';
+  }
+
+  return `${daysPast} ${dayMessage} назад, ${hours}:${minutes} i-GMT+3`;
+};

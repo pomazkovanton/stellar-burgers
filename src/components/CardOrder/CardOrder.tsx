@@ -6,9 +6,11 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import styles from './cardorder.module.css';
 import { useDispatch } from 'react-redux';
 import { addDetails } from '../../store/slices/orderDetailsSlice';
+import { getDate } from '../../utils/utils';
 
 const CardOrder = ({ order, ingredients }) => {
   const dispatch = useDispatch();
+  const orderDate = getDate(new Date(order.createdAt), new Date());
 
   const handleClick = () => {
     dispatch(addDetails(order));
@@ -22,7 +24,7 @@ const CardOrder = ({ order, ingredients }) => {
     <article className={styles.card} onMouseDown={handleClick}>
       <div className={styles.header}>
         <p className='text text_type_digits-default'>#{order.number}</p>
-        <data className='text text_type_main-default text_color_inactive'>{order.createdAt}</data>
+        <data className='text text_type_main-default text_color_inactive'>{orderDate}</data>
       </div>
       <h3 className='text text_type_main-medium'>{order.name}</h3>
       <div className={styles.main}>

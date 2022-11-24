@@ -7,6 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import styles from './ordermodal.module.css';
 import { removeDetails } from '../../store/slices/orderDetailsSlice';
+import { getDate } from '../../utils/utils';
 
 const OrderModal = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const OrderModal = () => {
   );
 
   const orderPrice = orderIngredients.reduce((acc, ingr) => acc + ingr.price, 0);
+  const orderDate = getDate(new Date(orderDetails.createdAt), new Date());
 
   orderIngredients.map((ingr) => {
     const isLocated =
@@ -83,9 +85,7 @@ const OrderModal = () => {
           })}
         </ul>
         <div className={styles.footer}>
-          <p className='text text_type_main-default text_color_inactive'>
-            {orderDetails.createdAt}
-          </p>
+          <p className='text text_type_main-default text_color_inactive'>{orderDate}</p>
           <p className={styles.price}>
             <span className='text text_type_digits-default'>{orderPrice}</span>
             <CurrencyIcon type='primary' />
