@@ -7,9 +7,11 @@ import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import IngredientPage from '../pages/IngredientPage/IngredientPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
+import OrderPage from '../pages/OrderPage/OrderPage';
 
 // Импорт модальных окон
 import IngredientModal from '../components/BurgerIngredients/IngredientModal/IngredientModal';
+import OrderModal from '../components/OrderModal/OrderModal';
 
 import {
   FEED_ROUTE,
@@ -23,7 +25,6 @@ import {
   REGISTER_ROUTE,
   RESET_PASSWORD_ROUTE,
 } from './constans';
-import OrderModal from 'src/components/OrderModal/OrderModal';
 
 export const publicRoutes = [
   {
@@ -54,10 +55,10 @@ export const publicRoutes = [
     path: FEED_ROUTE,
     page: FeedPage,
   },
-  // {
-  //   path: ORDER_ROUTE,
-  //   page: null,
-  // },
+  {
+    path: ORDER_ROUTE,
+    page: OrderPage,
+  },
 ];
 
 export const privateRoutes = [
