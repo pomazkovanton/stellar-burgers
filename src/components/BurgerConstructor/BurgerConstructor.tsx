@@ -30,13 +30,15 @@ const BurgerConstructor: React.FC = () => {
   const history = useHistory();
   const { burger } = useSelector((state) => state.burger);
   const { orderStatus, order, isShowOrder } = useSelector((state) => state.order);
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth, token } = useSelector((state) => state.auth);
 
   const bun = useMemo(() => burger.find((ingr) => ingr.item.type === 'bun'), [burger]);
   const otherIngredients = useMemo(
     () => burger.filter((ingr) => ingr.item.type !== 'bun'),
     [burger],
   );
+
+  const accessToken = { authorization: `Bearer ${token}` };
 
   const isBunAdded = bun !== undefined;
 
@@ -70,7 +72,7 @@ const BurgerConstructor: React.FC = () => {
   const handleOrderClick = () => {
     if (isAuth) {
       const idIngredients = { ingredients: getIdIngredients() };
-      dispatch(fetchOrder(idIngredients));
+      dispatch(fetchOrder({ id: idIngredients, token: accessToken }));
     } else {
       history.push(LOGIN_ROUTE);
     }
