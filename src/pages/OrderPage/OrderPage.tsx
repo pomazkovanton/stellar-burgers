@@ -22,7 +22,6 @@ const OrderPage = () => {
 
   if (isConnected && data) order = data.orders.find((item) => item._id === id);
 
-  console.log(id);
   return (
     <div className={styles.container}>
       {!isConnected && <h2>Загрузка...</h2>}

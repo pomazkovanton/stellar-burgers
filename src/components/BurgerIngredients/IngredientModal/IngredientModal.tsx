@@ -13,13 +13,15 @@ const IngredientModal = () => {
   const location = useLocation();
   const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
 
+  if (!ingredientDetails) return null;
+
   if (!isShowDetails) {
     history.replace(location.pathname);
   }
 
   const handleCloseModalDetails = () => {
-    dispatch(removeDetails());
     history.goBack();
+    dispatch(removeDetails());
   };
 
   return (
