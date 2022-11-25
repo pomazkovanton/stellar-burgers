@@ -4,17 +4,25 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './cardorder.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addDetails } from '../../store/slices/orderDetailsSlice';
 import { getDate } from '../../utils/utils';
 
-const CardOrder = ({ order, ingredients }) => {
+const CardOrder = ({ order, isStatus = false }) => {
   const dispatch = useDispatch();
+  const { ingredients } = useSelector((state) => state.ingredients);
   const orderDate = getDate(new Date(order.createdAt), new Date());
 
   const handleClick = () => {
     dispatch(addDetails(order));
   };
+
+  const status =
+    order.status === 'done'
+      ? { text: 'Выполнен', color: 'var(--colors-interface-success)' }
+      : order === 'pending'
+      ? { text: 'Отменен', color: 'var(--colors-interface-error)' }
+      : { text: 'Готовится', color: 'var(--colors-interface-accent)' };
 
   const price = order.ingredients
     .map((id) => ingredients.find((ingr) => ingr._id === id))
@@ -26,7 +34,17 @@ const CardOrder = ({ order, ingredients }) => {
         <p className='text text_type_digits-default'>#{order.number}</p>
         <data className='text text_type_main-default text_color_inactive'>{orderDate}</data>
       </div>
-      <h3 className='text text_type_main-medium'>{order.name}</h3>
+      <div>
+        <h3 className='text text_type_main-medium'>{order.name}</h3>
+        {isStatus && (
+          <p
+            className={`text text_type_main-default ${styles.status}`}
+            style={{ color: status.color }}
+          >
+            {status.text}
+          </p>
+        )}
+      </div>
       <div className={styles.main}>
         <ul className={styles.ingredientsList}>
           {order.ingredients.map((id, index) => {

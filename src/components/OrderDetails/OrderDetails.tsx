@@ -14,8 +14,8 @@ const OrderDetails = ({ order }) => {
     order.status === 'done'
       ? { text: 'Выполнен', color: 'var(--colors-interface-success)' }
       : order === 'pending'
-      ? { text: 'Готовится', color: 'var(--colors-interface-accent)' }
-      : { text: 'Отменен', color: 'var(--colors-interface-error)' };
+      ? { text: 'Отменен', color: 'var(--colors-interface-error)' }
+      : { text: 'Готовится', color: 'var(--colors-interface-accent)' };
 
   const orderIngredients = order.ingredients.map(
     (id) => ingredients.filter((ingr) => ingr._id === id)[0],

@@ -8,6 +8,7 @@ import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import IngredientPage from '../pages/IngredientPage/IngredientPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
 import OrderPage from '../pages/OrderPage/OrderPage';
+import HistoryOrderPage from '../pages/HistoryOrderPage/HistoryOrderPage';
 
 // Импорт модальных окон
 import IngredientModal from '../components/BurgerIngredients/IngredientModal/IngredientModal';
@@ -66,10 +67,10 @@ export const privateRoutes = [
     path: PROFILE_ROUTE,
     page: ProfilePage,
   },
-  // {
-  //   path: PROFILE_ORDERS_ROUTE,
-  //   page: ProfilePage,
-  // },
+  {
+    path: PROFILE_ORDERS_ROUTE,
+    page: HistoryOrderPage,
+  },
 ];
 
 export const modalRoutes = [

@@ -11,7 +11,6 @@ import styles from './feedpage.module.css';
 
 const FeedPage = () => {
   const { data, isConnected } = useSelector((state) => state.ws);
-  const { ingredients } = useSelector((state) => state.ingredients);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -27,7 +26,7 @@ const FeedPage = () => {
   return (
     <div className={styles.container}>
       {!isConnected && <h2>Загрузка данных...</h2>}
-      {isConnected && data && ingredients && (
+      {isConnected && data && (
         <>
           <h2 className='text text_type_main-large'>Лента заказов</h2>
           <div className={styles.mainWrapper}>
@@ -43,7 +42,7 @@ const FeedPage = () => {
                     }}
                   >
                     <li>
-                      <CardOrder order={order} ingredients={ingredients} />
+                      <CardOrder order={order} />
                     </li>
                   </Link>
                 );
