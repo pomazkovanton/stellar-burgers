@@ -72,6 +72,10 @@ export const privateRoutes = [
     path: PROFILE_ORDERS_ROUTE,
     page: HistoryOrderPage,
   },
+  {
+    path: PROFILE_ORDER_ROUTE,
+    page: OrderPage,
+  },
 ];
 
 export const modalRoutes = [
