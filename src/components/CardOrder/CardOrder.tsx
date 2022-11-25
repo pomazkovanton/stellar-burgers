@@ -60,10 +60,10 @@ const CardOrder = ({ order, isStatus = false }) => {
                   className={styles.ingredientsItem}
                 >
                   <img className={styles.ingredientsImg} src={image} alt='' />
-                  {index === 5 && (
+                  {order.ingredients.length > 6 && index > 4 && (
                     <div className={styles.counter}>
                       <span className={`text text_type_digits-default ${styles.counterText}`}>
-                        {`+${order.ingredients.length - 5}`}
+                        {`+${order.ingredients.length - 6}`}
                       </span>
                     </div>
                   )}
