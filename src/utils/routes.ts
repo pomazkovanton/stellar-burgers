@@ -22,6 +22,7 @@ import {
   LOGIN_ROUTE,
   ORDER_ROUTE,
   PROFILE_ORDERS_ROUTE,
+  PROFILE_ORDER_ROUTE,
   PROFILE_ROUTE,
   REGISTER_ROUTE,
   RESET_PASSWORD_ROUTE,
@@ -80,6 +81,10 @@ export const modalRoutes = [
   },
   {
     path: ORDER_ROUTE,
+    page: OrderModal,
+  },
+  {
+    path: PROFILE_ORDER_ROUTE,
     page: OrderModal,
   },
 ];

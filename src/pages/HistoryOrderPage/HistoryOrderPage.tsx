@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { disconnect, connect } from '../../store/slices/wsSlice';
 import { logout } from '../../store/slices/authSlice';
 import { PROFILE_ORDERS_ROUTE, PROFILE_ROUTE, USER_ORDERS_URL } from '../../utils/constans';
@@ -13,6 +13,7 @@ const HistoryOrderPage = () => {
   const dispatch = useDispatch();
   const { data, isConnected } = useSelector((state) => state.ws);
   const { token } = useSelector((state) => state.auth);
+  const location = useLocation();
 
   const handlerLogout = () => {
     dispatch(logout({ token: refreshToken }));
@@ -70,7 +71,18 @@ const HistoryOrderPage = () => {
               .slice(0)
               .reverse()
               .map((order) => {
-                return <CardOrder order={order} isStatus={true} />;
+                return (
+                  <Link
+                    key={order._id}
+                    className={styles.linkCard}
+                    to={{
+                      pathname: `${PROFILE_ORDERS_ROUTE}/${order._id}`,
+                      state: { background: location },
+                    }}
+                  >
+                    <CardOrder order={order} isStatus={true} />
+                  </Link>
+                );
               })}
           </ul>
         </>
