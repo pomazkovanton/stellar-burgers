@@ -16,7 +16,7 @@ const IngredientModal = () => {
   if (!ingredientDetails) return null;
 
   if (!isShowDetails) {
-    history.replace(location.pathname);
+    location.state = null;
   }
 
   const handleCloseModalDetails = () => {

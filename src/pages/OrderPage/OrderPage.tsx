@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import OrderDetails from 'src/components/OrderDetails/OrderDetails';
 import { disconnect, connect } from '../../store/slices/wsSlice';
 import { ALL_ORDERS_URL } from '../../utils/constans';
@@ -8,6 +8,7 @@ import styles from './orderpage.module.css';
 
 const OrderPage = () => {
   const { id } = useParams();
+  const location = useLocation();
   const { data, isConnected } = useSelector((state) => state.ws);
   const dispatch = useDispatch();
   let order = null;
