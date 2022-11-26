@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Modal from '../Modal/Modal';
 
@@ -12,9 +12,7 @@ const OrderModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { orderDetails, isShowDetails } = useSelector((store) => store.orderDetails);
-  const match = useRouteMatch();
 
-  console.log(match.url);
   if (!orderDetails) return null;
 
   const handleCloseModalDetails = () => {

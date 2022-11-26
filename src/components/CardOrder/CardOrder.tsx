@@ -28,6 +28,14 @@ const CardOrder = ({ order, isStatus = false }) => {
     .map((id) => ingredients.find((ingr) => ingr._id === id))
     .reduce((acc, ingr) => acc + ingr.price, 0);
 
+  const uniqueIngredients = [];
+
+  order.ingredients.map((id) => {
+    if (!uniqueIngredients.includes(id)) {
+      uniqueIngredients.push(id);
+    }
+  });
+
   return (
     <article className={styles.card} onMouseDown={handleClick}>
       <div className={styles.header}>
@@ -47,12 +55,12 @@ const CardOrder = ({ order, isStatus = false }) => {
       </div>
       <div className={styles.main}>
         <ul className={styles.ingredientsList}>
-          {order.ingredients.map((id, index) => {
+          {uniqueIngredients.map((id, index) => {
             if (index <= 5) {
               const { image } = ingredients.filter((ingr) => ingr._id === id)[0];
               return (
                 <li
-                  key={uuidv4()}
+                  key={id}
                   style={{
                     transform: `translateX(${0 - 16 * index}px)`,
                     zIndex: `${5 - index}`,
