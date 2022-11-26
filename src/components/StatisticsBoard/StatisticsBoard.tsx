@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import Board from '../Board/Board';
 
@@ -15,7 +14,7 @@ const StatisticsBoard = ({ data }) => {
               if (order.status === 'done') {
                 return (
                   <li
-                    key={uuidv4()}
+                    key={order._id}
                     className={`text text_type_digits-default ${styles.orderSuccess}`}
                   >
                     {order.number}
@@ -30,7 +29,7 @@ const StatisticsBoard = ({ data }) => {
             {data.orders.map((order) => {
               if (order.status !== 'done') {
                 return (
-                  <li key={uuidv4()} className='text text_type_digits-default'>
+                  <li key={order._id} className='text text_type_digits-default'>
                     {order.number}
                   </li>
                 );
