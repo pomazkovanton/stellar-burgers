@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import Modal from '../../Modal/Modal';
 import IngredientDetails from '../../BurgerIngredients/IngredientDetails/IngredientDetails';
@@ -15,9 +15,7 @@ const IngredientModal = () => {
 
   if (!ingredientDetails) return null;
 
-  if (!isShowDetails) {
-    location.state = null;
-  }
+  if (!isShowDetails) return <Redirect to={location.pathname} />;
 
   const handleCloseModalDetails = () => {
     history.goBack();

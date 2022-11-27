@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import Modal from '../Modal/Modal';
 
@@ -14,7 +14,7 @@ const OrderModal = () => {
   const location = useLocation();
   const { orderDetails, isShowDetails } = useSelector((store) => store.orderDetails);
 
-  if (!isShowDetails && !orderDetails) location.state = null;
+  if (!isShowDetails && !orderDetails) return <Redirect to={location.pathname} />;
 
   if (!orderDetails) return null;
 

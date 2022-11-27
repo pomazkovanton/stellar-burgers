@@ -8,7 +8,6 @@ import styles from './orderpage.module.css';
 
 const OrderPage = () => {
   const { id } = useParams();
-  const location = useLocation();
   const { data, isConnected } = useSelector((state) => state.ws);
   const dispatch = useDispatch();
   let order = null;
@@ -26,7 +25,8 @@ const OrderPage = () => {
   return (
     <div className={styles.container}>
       {!isConnected && <h2>Загрузка...</h2>}
-      {isConnected && data && (
+      {isConnected && data && !order && <h2>Заказ не найден.</h2>}
+      {isConnected && data && order && (
         <>
           <h2 className={`text text_type_main-medium  ${styles.title}`}>{`#${order.number}`}</h2>
           <OrderDetails order={order} />
