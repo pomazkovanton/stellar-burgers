@@ -1,5 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 //Импорт reducers
 import ingredientsReducer from './slices/ingredientsSlice';
 import burgerReducer from './slices/burgerSlice';
@@ -14,7 +24,7 @@ import wsMiddleware from './middleware/wsMiddleware';
 
 import { wsSlice } from './slices/wsSlice';
 
-const rootReducer = {
+const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   burger: burgerReducer,
   ingredientDetails: ingredientDetailsReducer,
@@ -22,10 +32,25 @@ const rootReducer = {
   order: orderReducer,
   auth: authReducer,
   ws: wsReducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['orderDetails', 'ingredientDetails', 'ingredients', 'auth'],
 };
 
-export default configureStore({
-  reducer: rootReducer,
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(wsMiddleware(wsSlice.actions)),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(wsMiddleware(wsSlice.actions)),
 });
+
+export const persistor = persistStore(store);
+export default store;
