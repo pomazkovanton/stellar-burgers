@@ -7,6 +7,7 @@ import ModalOverlay from './ModalOverlay/ModalOverlay';
 
 interface IModalProps {
   title?: string;
+  isSmallTitle?: boolean;
   isActive: boolean;
   closeModal: () => void;
   children: React.ReactNode;
@@ -14,7 +15,13 @@ interface IModalProps {
 
 const modalRoot = document.getElementById('modals') as HTMLElement;
 
-const Modal: React.FC<IModalProps> = ({ isActive, closeModal, children, title }) => {
+const Modal: React.FC<IModalProps> = ({
+  isActive,
+  closeModal,
+  children,
+  title,
+  isSmallTitle = false,
+}) => {
   useEffect(() => {
     const handleEscClose = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
@@ -33,7 +40,11 @@ const Modal: React.FC<IModalProps> = ({ isActive, closeModal, children, title })
         role='presentation'
       >
         <div className={styles.header}>
-          <h2 className='text text_type_main-large'>{title}</h2>
+          <h2
+            className={!isSmallTitle ? 'text text_type_main-large' : 'text text_type_main-medium'}
+          >
+            {title}
+          </h2>
           <button onMouseDown={closeModal} className={styles.button}>
             <CloseIcon type='primary' />
           </button>

@@ -8,6 +8,7 @@
   padding-left: 16px;
   overflow-y: auto;
   max-height: 664px;
+  max-height: calc(100vh - 302px);
   direction: ltr;
   scrollbar-color: var(--background-element) var(--text-inactive-color);
   scrollbar-width: 8px;

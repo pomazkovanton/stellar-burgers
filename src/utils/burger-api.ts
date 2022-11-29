@@ -7,6 +7,6 @@ export const getIngredients = () => {
 };
 
 //Получение номера заказа с сервера
-export const getOrder = (body) => {
-  return handleRequest(ORDERS_URL, 'POST', body);
+export const getOrder = (data) => {
+  return handleRequest(ORDERS_URL, 'POST', data.id, data.token);
 };

@@ -12,7 +12,7 @@ import {
   REJECTED_DATA,
   RESOLVED_DATA,
 } from 'src/utils/constans';
-import { logout, updateUser } from '../../store/authSlice';
+import { logout, updateUser } from '../../store/slices/authSlice';
 import { getCookie } from '../../utils/utils';
 import useForm from '../../hooks/useForm';
 

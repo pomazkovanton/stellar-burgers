@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setCookie, deleteCookie } from '../utils/utils';
+import { setCookie, deleteCookie } from '../../utils/utils';
 import {
   getRegisterData,
   getAuthData,
@@ -7,8 +7,8 @@ import {
   getLogoutData,
   getUserData,
   refreshUserData,
-} from '../utils/auth-api';
-import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../utils/constans';
+} from '../../utils/auth-api';
+import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../../utils/constans';
 
 export const register = createAsyncThunk(
   'user/register',
