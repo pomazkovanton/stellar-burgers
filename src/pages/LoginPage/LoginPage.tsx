@@ -10,7 +10,7 @@ import {
 
 import styles from './loginpage.module.css';
 import { login } from '../../store/slices/authSlice';
-import useForm from '../../hooks/useForm';
+import useForm from '../../utils/hooks/useForm';
 import { HOME_ROUTE } from '../../utils/constans';
 
 const LoginPage: React.FC = () => {

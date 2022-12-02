@@ -21,7 +21,7 @@ import {
   removeFromBurger,
   removeAllBurger,
 } from '../../store/slices/burgerSlice';
-import { BurgerIngredients } from '../../types/burgerIngredients';
+import { BurgerIngredients } from '../../utils/types/burgerIngredients';
 import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
 
 import styles from './burgerconstructor.module.css';

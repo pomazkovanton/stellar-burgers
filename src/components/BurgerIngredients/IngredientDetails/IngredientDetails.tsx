@@ -1,5 +1,5 @@
 import React from 'react';
-import { IngredientType } from '../../../types/Ingredient';
+import { IngredientType } from '../../../utils/types/Ingredient';
 
 import styles from './ingredientdetails.module.css';
 

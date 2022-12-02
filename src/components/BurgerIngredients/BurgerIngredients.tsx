@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import IngredientList from './IngredientList/IngredientList';
-import { IngredientType } from '../../types/Ingredient';
+import { IngredientType } from '../../utils/types/Ingredient';
 import Tabs from './Tabs/Tabs';
 
 import styles from './burgeringredients.module.css';
