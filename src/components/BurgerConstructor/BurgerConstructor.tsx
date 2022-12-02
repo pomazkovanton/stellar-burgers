@@ -21,7 +21,7 @@ import {
   removeFromBurger,
   removeAllBurger,
 } from '../../store/slices/burgerSlice';
-import { BurgerIngredients } from '../../utils/types/burgerIngredients';
+import { Burger } from '../../utils/types/burger';
 import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
 
 import styles from './burgerconstructor.module.css';
@@ -58,7 +58,7 @@ const BurgerConstructor: React.FC = () => {
     ? styles.container
     : [styles.container, styles.containerHover].join(' ');
 
-  const calculatingPrice = (burger: BurgerIngredients[]): number => {
+  const calculatingPrice = (burger: Burger[]): number => {
     return burger.reduce(
       (acc, ingr) => (ingr.item.type !== 'bun' ? acc + ingr.item.price : acc + ingr.item.price * 2),
       0,
