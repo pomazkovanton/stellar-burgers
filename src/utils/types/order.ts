@@ -1,4 +1,4 @@
-type TStatus = 'done' | 'pending';
+type TStatus = 'done' | 'pending' | 'created';
 
 export type TOrder = {
   _id: string;

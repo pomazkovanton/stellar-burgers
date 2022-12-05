@@ -1,12 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TWsResponse } from '../../utils/types/wsResponse';
+
+type TWsState = {
+  isConnected: boolean;
+  data: TWsResponse | null;
+  error: boolean;
+};
+
+const initialState: TWsState = {
+  isConnected: false,
+  data: null,
+  error: false,
+};
 
 export const wsSlice = createSlice({
   name: 'ws',
-  initialState: {
-    isConnected: false,
-    data: null,
-    error: null,
-  },
+  initialState,
   reducers: {
     message(state, { payload }) {
       if (!payload.success) return;
