@@ -6,3 +6,9 @@ export type TWsResponse = {
   total: number;
   totalToday: number;
 };
+
+export type TOrderResponse = {
+  name: string;
+  order: TOrder;
+  success: boolean;
+};

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TWsResponse } from '../../utils/types/wsResponse';
+import { TWsResponse } from '../../utils/types/responses';
 
 type TWsState = {
   isConnected: boolean;
