@@ -11,7 +11,7 @@ import {
 
 import styles from './registerpage.module.css';
 import { register } from '../../store/slices/authSlice';
-import useForm from '../../utils/hooks/useForm';
+import { useForm } from '../../utils/hooks';
 import { HOME_ROUTE } from '../../utils/constans';
 
 const RegisterPage: React.FC = () => {

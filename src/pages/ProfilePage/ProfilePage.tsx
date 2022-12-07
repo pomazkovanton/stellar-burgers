@@ -14,7 +14,7 @@ import {
 } from 'src/utils/constans';
 import { logout, updateUser } from '../../store/slices/authSlice';
 import { getCookie } from '../../utils/utils';
-import useForm from '../../utils/hooks/useForm';
+import { useForm } from '../../utils/hooks';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();

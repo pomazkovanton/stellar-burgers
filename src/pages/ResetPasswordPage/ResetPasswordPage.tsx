@@ -6,7 +6,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 
 import { getNewPassword } from '../../utils/auth-api';
 import { FORGOT_PASSWORD_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from '../../utils/constans';
-import useForm from '../../utils/hooks/useForm';
+import { useForm } from '../../utils/hooks';
 
 import styles from './resetpasswordpage.module.css';
 

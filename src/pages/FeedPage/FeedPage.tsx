@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import CardOrder from 'src/components/CardOrder/CardOrder';
+import { Link, useLocation } from 'react-router-dom';
 
+import CardOrder from '../../components/CardOrder/CardOrder';
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
 
 import { connect, disconnect } from '../../store/slices/wsSlice';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { ALL_ORDERS_URL, FEED_ROUTE } from '../../utils/constans';
+
 import styles from './feedpage.module.css';
 
 const FeedPage = () => {
-  const { data, isConnected } = useSelector((state) => state.ws);
+  const { data, isConnected } = useAppSelector((state) => state.ws);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import useForm from '../../utils/hooks/useForm';
+import { useForm } from '../../utils/hooks';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgotpasswordpage.module.css';
 import { getCodeInEmail } from '../../utils/auth-api';
