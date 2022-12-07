@@ -63,3 +63,7 @@ export type TReject = {
 export type TUpdateUserData = {
   user: TRegisterData;
 } & TToken;
+
+export type TOrderData = {
+  id: string[];
+} & TToken;

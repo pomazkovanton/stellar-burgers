@@ -1,8 +1,9 @@
 /* eslint-disable no-useless-escape */
 import axios from 'axios';
+import { TMethod } from './types/common';
 
 //Универсальный обработчик запроса на сервер
-export const handleRequest = async (url: string, method: string, data = {}, headers = {}) => {
+export const handleRequest = async (url: string, method: TMethod, data = {}, headers = {}) => {
   const res = await axios(url, {
     method: method,
     data: data,
