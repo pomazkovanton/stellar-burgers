@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
 
 import CardOrder from '../../components/CardOrder/CardOrder';
 import StatisticsBoard from '../../components/StatisticsBoard/StatisticsBoard';
@@ -10,7 +11,7 @@ import { ALL_ORDERS_URL, FEED_ROUTE } from '../../utils/constans';
 
 import styles from './feedpage.module.css';
 
-const FeedPage = () => {
+const FeedPage: React.FC = () => {
   const { data, isConnected } = useAppSelector((state) => state.ws);
 
   const dispatch = useAppDispatch();
@@ -26,7 +27,17 @@ const FeedPage = () => {
 
   return (
     <div className={styles.container}>
-      {!isConnected && <h2>Загрузка данных...</h2>}
+      {!isConnected && (
+        <ThreeDots
+          height='120'
+          width='120'
+          radius='12'
+          color='#4C4CFF'
+          ariaLabel='three-dots-loading'
+          wrapperClass={styles.loader}
+          visible={true}
+        />
+      )}
       {isConnected && data && (
         <>
           <h2 className='text text_type_main-large'>Лента заказов</h2>

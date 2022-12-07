@@ -41,3 +41,8 @@
   text-decoration: none;
   color: inherit;
 }
+
+.loader {
+  margin: auto;
+  width: 120px;
+}
