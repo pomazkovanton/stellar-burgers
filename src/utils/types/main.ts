@@ -43,6 +43,15 @@ export type TToken = {
   token: string;
 };
 
+export type TForgotData = {
+  email: string;
+};
+
+export type TResetData = {
+  password: string;
+  token: string;
+};
+
 export type TAuthorization = {
   authorization: string;
 };
