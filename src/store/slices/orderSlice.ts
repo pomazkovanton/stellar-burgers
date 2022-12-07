@@ -3,6 +3,7 @@ import { getOrder } from '../../utils/burger-api';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../../utils/constans';
 import { TRequestStatus } from '../../utils/types/common';
 import { TOrderResponse } from '../../utils/types/responses';
+import { TReject } from '../../utils/types/main';
 
 type TOrderState = {
   order: number | null;
@@ -18,7 +19,7 @@ const initialState: TOrderState = {
   isShowOrder: false,
 };
 
-export const fetchOrder = createAsyncThunk<TOrderResponse, string[], { rejectValue: string }>(
+export const fetchOrder = createAsyncThunk<TOrderResponse, string[], TReject>(
   'order/fetchOrder',
   async function (idIngredients, { rejectWithValue }) {
     try {

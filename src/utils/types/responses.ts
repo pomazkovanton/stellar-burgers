@@ -1,5 +1,4 @@
-import { TOrder } from './order';
-import { TIngredient } from './Ingredient';
+import { TIngredient, TOrder, TUser } from './main';
 
 export type TWsResponse = {
   success: boolean;
@@ -17,4 +16,24 @@ export type TOrderResponse = {
 export type TIngredientsResponse = {
   success: boolean;
   data: TIngredient[];
+};
+
+export type TAuthResponse = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type TUserAuthResponse = {
+  user: TUser;
+} & TAuthResponse;
+
+export type TLogoutResponse = {
+  message: string;
+  success: boolean;
+};
+
+export type TUserDataResponse = {
+  success: boolean;
+  user: TUser;
 };

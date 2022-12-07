@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TBurger } from '../../utils/types/burger';
+import { TBurger } from '../../utils/types/main';
 
 type TIndex = {
   startIndex: number;

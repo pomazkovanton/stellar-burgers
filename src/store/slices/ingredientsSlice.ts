@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredients } from '../../utils/burger-api';
 import { lOADING_DATA, REJECTED_DATA, RESOLVED_DATA } from '../../utils/constans';
-import { TIngredient } from '../../utils/types/Ingredient';
+import { TIngredient, TReject } from '../../utils/types/main';
 import { TRequestStatus } from '../../utils/types/common';
 import { TIngredientsResponse } from '../../utils/types/responses';
 
@@ -17,18 +17,17 @@ const initialState: TIngredientsState = {
   ingredientsError: null,
 };
 
-export const fetchIngredients = createAsyncThunk<
-  TIngredientsResponse,
-  undefined,
-  { rejectValue: string }
->('ingredients/fetchIngredients', async function (_, { rejectWithValue }) {
-  try {
-    const { data } = await getIngredients();
-    return data;
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
+export const fetchIngredients = createAsyncThunk<TIngredientsResponse, undefined, TReject>(
+  'ingredients/fetchIngredients',
+  async function (_, { rejectWithValue }) {
+    try {
+      const { data } = await getIngredients();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',

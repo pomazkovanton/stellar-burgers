@@ -19,7 +19,7 @@ import useForm from '../../utils/hooks/useForm';
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
-  const { user, token, getDataUserStatus, getDataUserError } = useSelector((state) => state.auth);
+  const { user, token, responseStatus, responseError } = useSelector((state) => state.auth);
 
   const { values, handleChange, setValues } = useForm({
     name: '',
@@ -82,9 +82,9 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.container}>
-      {getDataUserStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
-      {getDataUserStatus === REJECTED_DATA && <h2>Ошибка загрузки данных: {getDataUserError}</h2>}
-      {getDataUserStatus === RESOLVED_DATA && (
+      {responseStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
+      {responseStatus === REJECTED_DATA && <h2>Ошибка загрузки данных: {responseError}</h2>}
+      {responseStatus === RESOLVED_DATA && (
         <>
           <div className={styles.wrapper}>
             <ul className={styles.nav}>

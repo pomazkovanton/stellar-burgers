@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TOrder } from '../../utils/types/order';
+import { TOrder } from '../../utils/types/main';
 
 type TOrderDetailsState = {
   orderDetails: TOrder | null;
