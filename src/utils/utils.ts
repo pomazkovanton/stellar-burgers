@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import axios from 'axios';
 
 //Универсальный обработчик запроса на сервер
@@ -11,8 +12,11 @@ export const handleRequest = async (url: string, method: string, data = {}, head
 };
 
 //Функции для работы с куки
-export const setCookie = (name, value, props) => {
-  props = props || {};
+export const setCookie = (name: string, value: string | null, props: any) => {
+  props = {
+    path: '/',
+    ...props,
+  };
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
     const d = new Date();
@@ -22,7 +26,7 @@ export const setCookie = (name, value, props) => {
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
-  value = encodeURIComponent(value);
+  if (value !== null) value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
   for (const propName in props) {
     updatedCookie += '; ' + propName;
@@ -34,19 +38,19 @@ export const setCookie = (name, value, props) => {
   document.cookie = updatedCookie;
 };
 
-export const getCookie = (name) => {
+export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'),
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string) => {
   setCookie(name, null, { expires: -1 });
 };
 
 // Функция для работы с датой
-export const getDate = (orderDate, dateNow) => {
+export const getDate = (orderDate: Date, dateNow: Date) => {
   const daysPast = Math.round((dateNow.valueOf() - orderDate.valueOf()) / 1000 / 3600 / 24);
 
   const hours = orderDate.getHours();
