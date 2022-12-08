@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+
+import CardOrder from '../../components/CardOrder/CardOrder';
+import Loader from '../../components/Loader/Loader';
+
 import { disconnect, connect } from '../../store/slices/wsSlice';
 import { logout } from '../../store/slices/authSlice';
 import { PROFILE_ORDERS_ROUTE, PROFILE_ROUTE, USER_ORDERS_URL } from '../../utils/constans';
 import { getCookie } from '../../utils/utils';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+
 import styles from './historyorderpage.module.css';
-import CardOrder from 'src/components/CardOrder/CardOrder';
 
 const HistoryOrderPage = () => {
   const refreshToken = getCookie('token');
-  const dispatch = useDispatch();
-  const { data, isConnected } = useSelector((state) => state.ws);
-  const { token } = useSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
+  const { data, isConnected } = useAppSelector((state) => state.ws);
+  const { token } = useAppSelector((state) => state.auth);
+
   const handlerLogout = () => {
-    dispatch(logout({ token: refreshToken }));
+    if (refreshToken) dispatch(logout({ token: refreshToken }));
   };
 
   useEffect(() => {
@@ -25,11 +31,11 @@ const HistoryOrderPage = () => {
     return () => {
       dispatch(disconnect());
     };
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <div className={styles.container}>
-      {!isConnected && <h2>Загрузка данных...</h2>}
+      {!isConnected && <Loader />}
       {isConnected && data && (
         <>
           <div className={styles.wrapper}>
