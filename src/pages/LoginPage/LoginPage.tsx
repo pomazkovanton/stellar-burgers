@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -8,24 +7,27 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './loginpage.module.css';
 import { login } from '../../store/slices/authSlice';
-import { useForm } from '../../utils/hooks';
+import { useForm, useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { HOME_ROUTE } from '../../utils/constans';
 
+import styles from './loginpage.module.css';
+
 const LoginPage: React.FC = () => {
-  const { isAuth } = useSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const history = useHistory<History>();
+
+  const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ email: '', password: '' });
-  const dispatch = useDispatch();
-  const history = useHistory();
+
   const PREVIOUS_LOCATION_ROUTE = history.location.state?.from.pathname;
 
   if (isAuth) {
     return <Redirect to={PREVIOUS_LOCATION_ROUTE || HOME_ROUTE} />;
   }
 
-  const handlerSubmit = (e) => {
-    e.preventDefault();
+  const handlerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(login(values));
   };
 
