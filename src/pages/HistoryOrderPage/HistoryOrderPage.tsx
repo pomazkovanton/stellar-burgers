@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 import styles from './historyorderpage.module.css';
 
-const HistoryOrderPage = () => {
+const HistoryOrderPage: React.FC = () => {
   const refreshToken = getCookie('token');
 
   const dispatch = useAppDispatch();
