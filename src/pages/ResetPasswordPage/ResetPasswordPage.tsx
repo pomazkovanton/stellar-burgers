@@ -9,7 +9,7 @@ import { useForm, useAppSelector } from '../../utils/hooks';
 
 import styles from './resetpasswordpage.module.css';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: React.FC = () => {
   const history = useHistory<History>();
 
   const { isAuth } = useAppSelector((state) => state.auth);
