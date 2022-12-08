@@ -6,10 +6,10 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const useForm = (inputValues) => {
+export const useForm = (inputValues: any) => {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };
