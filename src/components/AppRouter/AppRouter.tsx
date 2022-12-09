@@ -1,12 +1,17 @@
 import React from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 
-import { HOME_ROUTE } from '../../utils/constans';
-import { privateRoutes, publicRoutes, modalRoutes } from '../../utils/routes';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
-const AppRouter = () => {
-  const location = useLocation();
+import { HOME_ROUTE } from '../../utils/constans';
+import { privateRoutes, publicRoutes, modalRoutes } from '../../utils/routes';
+
+interface ILocationState {
+  background: any;
+}
+
+const AppRouter: React.FC = () => {
+  const location = useLocation<ILocationState>();
   const background = location.state && location.state.background;
 
   return (
