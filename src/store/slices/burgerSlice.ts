@@ -29,7 +29,7 @@ const ingredientsSlice = createSlice({
       const [removed] = state.burger.splice(startIndex, 1);
       state.burger.splice(endIndex, 0, removed);
     },
-    removeFromBurger(state, action: PayloadAction<number>) {
+    removeFromBurger(state, action: PayloadAction<string>) {
       state.burger = state.burger.filter((ingr) => ingr.id !== action.payload);
     },
     removeAllBurger(state) {

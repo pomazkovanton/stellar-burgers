@@ -26,7 +26,7 @@ export type TIngredient = {
 };
 
 export type TBurger = {
-  id: number;
+  id: string;
   item: TIngredient;
 };
 
@@ -65,6 +65,19 @@ export type TUpdateUserData = {
   token: TAuthorization;
 };
 
+export type TIdIngredients = {
+  ingredients: string[];
+};
+
 export type TOrderData = {
-  id: string[];
-} & TToken;
+  id: TIdIngredients;
+  token: TAuthorization;
+};
+
+export type TDragItem = {
+  ingredient: TIngredient;
+};
+
+export enum TDragItemTypes {
+  INGREDIENT = 'ingredient',
+}
