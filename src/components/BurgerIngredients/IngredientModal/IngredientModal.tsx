@@ -1,16 +1,16 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Modal from '../../Modal/Modal';
 import IngredientDetails from '../../BurgerIngredients/IngredientDetails/IngredientDetails';
 
 import { removeDetails } from '../../../store/slices/ingredientDetailsSlice';
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks';
 
-const IngredientModal = () => {
-  const dispatch = useDispatch();
+const IngredientModal: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const { ingredientDetails, isShowDetails } = useSelector((store) => store.ingredientDetails);
+  const { ingredientDetails, isShowDetails } = useAppSelector((store) => store.ingredientDetails);
 
   if (!ingredientDetails) return null;
 

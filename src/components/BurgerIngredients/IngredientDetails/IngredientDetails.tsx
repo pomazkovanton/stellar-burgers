@@ -1,10 +1,11 @@
 import React from 'react';
-import { IngredientType } from '../../../utils/types/Ingredient';
+
+import { TIngredient } from '../../../utils/types/main';
 
 import styles from './ingredientdetails.module.css';
 
 interface IngredientDetailsProps {
-  ingredient: IngredientType | null;
+  ingredient: TIngredient | null;
 }
 
 const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => {

@@ -81,3 +81,8 @@ export type TDragItem = {
 export enum TDragItemTypes {
   INGREDIENT = 'ingredient',
 }
+
+export type TTab = {
+  value: string;
+  name: string;
+};

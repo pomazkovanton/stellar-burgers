@@ -1,28 +1,28 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
-
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { IngredientType } from '../../../utils/types/Ingredient';
+import { TIngredient } from '../../../utils/types/main';
 import { addDetails } from '../../../store/slices/ingredientDetailsSlice';
-
-import styles from './ingredient.module.css';
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks';
 import { INGREDIENTS_ROUTE } from 'src/utils/constans';
 
+import styles from './ingredient.module.css';
+
 interface IngredientProps {
-  ingredient: IngredientType;
+  ingredient: TIngredient;
 }
 
 const Ingredient: React.FC<IngredientProps> = ({ ingredient }) => {
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const { burger } = useAppSelector((state) => state.burger);
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item: { ingredient },
   });
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { burger } = useSelector((state) => state.burger);
 
   const count = burger.filter((el) => el.item._id === ingredient._id).length;
 

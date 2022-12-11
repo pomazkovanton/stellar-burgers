@@ -1,18 +1,15 @@
 import React from 'react';
 import { Link } from 'react-scroll';
-
-import styles from './tabs.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-type Tab = {
-  value: string;
-  name: string;
-};
+import { TTab } from '../../../utils/types/main';
+
+import styles from './tabs.module.css';
 
 interface ITabsProps {
   current: string;
+  tabs: TTab[];
   handleClick: (tab: string) => void;
-  tabs: Tab[];
 }
 
 const Tabs: React.FC<ITabsProps> = ({ current, handleClick, tabs }) => {

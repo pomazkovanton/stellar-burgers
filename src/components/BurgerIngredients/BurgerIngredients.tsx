@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 import IngredientList from './IngredientList/IngredientList';
-import { IngredientType } from '../../utils/types/Ingredient';
 import Tabs from './Tabs/Tabs';
+
+import { TIngredient, TTab } from '../../utils/types/main';
 
 import styles from './burgeringredients.module.css';
 
-const tabsIngredients = [
+const tabsIngredients: TTab[] = [
   {
     name: 'Булки',
     value: 'bun',
@@ -22,7 +23,7 @@ const tabsIngredients = [
 ];
 
 interface IBurgerIngredientsProps {
-  ingredients: IngredientType[];
+  ingredients: TIngredient[];
 }
 
 const BurgerIngredients: React.FC<IBurgerIngredientsProps> = ({ ingredients }) => {
