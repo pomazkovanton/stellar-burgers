@@ -13,7 +13,7 @@ export const handleRequest = async (url: string, method: TMethod, data = {}, hea
 };
 
 //Функции для работы с куки
-export const setCookie = (name: string, value: string | null, props: any) => {
+export const setCookie = (name: string, value: string | null, props?: any) => {
   props = {
     path: '/',
     ...props,
