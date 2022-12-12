@@ -3,7 +3,7 @@ import { ThreeDots } from 'react-loader-spinner';
 
 import styles from './loader.module.css';
 
-const Loader: React.DC = () => {
+const Loader: React.FC = () => {
   return (
     <ThreeDots
       height='120'

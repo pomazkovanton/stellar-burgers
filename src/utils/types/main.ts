@@ -86,3 +86,8 @@ export type TTab = {
   value: string;
   name: string;
 };
+
+export type TSortedOrderIngredients = {
+  item: TIngredient;
+  count: number;
+};

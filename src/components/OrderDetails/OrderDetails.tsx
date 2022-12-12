@@ -1,19 +1,27 @@
 import React from 'react';
-import styles from './orderdetails.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
-import { getDate } from 'src/utils/utils';
 
-const OrderDetails = ({ order }) => {
-  const { ingredients } = useSelector((store) => store.ingredients);
+import { getDate } from '../../utils/utils';
+import { useAppSelector } from '../../utils/hooks';
+import { TOrder, TSortedOrderIngredients } from '../../utils/types/main';
+
+import styles from './orderdetails.module.css';
+
+interface IOrderDetailsProps {
+  order: TOrder;
+}
+
+const OrderDetails: React.FC<IOrderDetailsProps> = ({ order }) => {
+  const { ingredients } = useAppSelector((store) => store.ingredients);
 
   if (!order) return null;
 
-  const sortedOrderIngredients = [];
+  const sortedOrderIngredients: TSortedOrderIngredients[] = [];
+
   const status =
     order.status === 'done'
       ? { text: 'Выполнен', color: 'var(--colors-interface-success)' }
-      : order === 'pending'
+      : order.status !== 'pending'
       ? { text: 'Отменен', color: 'var(--colors-interface-error)' }
       : { text: 'Готовится', color: 'var(--colors-interface-accent)' };
 
@@ -21,8 +29,8 @@ const OrderDetails = ({ order }) => {
     (id) => ingredients.filter((ingr) => ingr._id === id)[0],
   );
 
-  const orderPrice = orderIngredients.reduce((acc, ingr) => acc + ingr.price, 0);
-  const orderDate = getDate(new Date(order.createdAt), new Date());
+  const orderPrice: number = orderIngredients.reduce((acc, ingr) => acc + ingr.price, 0);
+  const orderDate: string = getDate(new Date(order.createdAt), new Date());
 
   orderIngredients.map((ingr) => {
     const isLocated =

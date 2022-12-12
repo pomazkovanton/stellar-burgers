@@ -2,9 +2,15 @@ import React from 'react';
 
 import Board from '../Board/Board';
 
+import { TWsResponse } from '../../utils/types/responses';
+
 import styles from './statisticsboard.module.css';
 
-const StatisticsBoard = ({ data }) => {
+interface IStatisticsBoardProps {
+  data: TWsResponse;
+}
+
+const StatisticsBoard: React.FC<IStatisticsBoardProps> = ({ data }) => {
   return (
     <div className={styles.statistics}>
       <div className={styles.wrapper}>

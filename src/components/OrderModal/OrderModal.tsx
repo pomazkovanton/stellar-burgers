@@ -1,17 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Modal from '../Modal/Modal';
-
-import styles from './ordermodal.module.css';
-import { removeDetails } from '../../store/slices/orderDetailsSlice';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
-const OrderModal = () => {
-  const dispatch = useDispatch();
+import { removeDetails } from '../../store/slices/orderDetailsSlice';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+
+import styles from './ordermodal.module.css';
+
+const OrderModal: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const { orderDetails, isShowDetails } = useSelector((store) => store.orderDetails);
+  const { orderDetails, isShowDetails } = useAppSelector((store) => store.orderDetails);
 
   if (!orderDetails) return null;
 

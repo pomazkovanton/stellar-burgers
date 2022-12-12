@@ -1,10 +1,10 @@
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './modal.module.css';
 import ModalOverlay from './ModalOverlay/ModalOverlay';
 
+import styles from './modal.module.css';
 interface IModalProps {
   title?: string;
   isSmallTitle?: boolean;
@@ -30,7 +30,7 @@ const Modal: React.FC<IModalProps> = ({
     };
     if (isActive) document.addEventListener('keydown', handleEscClose);
     return () => document.removeEventListener('keydown', handleEscClose);
-  }, [isActive]);
+  }, [isActive, closeModal]);
 
   return ReactDOM.createPortal(
     <ModalOverlay isActive={isActive} onClose={closeModal}>
