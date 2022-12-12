@@ -42,7 +42,7 @@ const initialState: TAuthState = {
 };
 
 export const register = createAsyncThunk<TUserAuthResponse, TRegisterData, TReject>(
-  '@@auth/register',
+  '@@auth/register-user',
   async function (registerData, { rejectWithValue }) {
     try {
       const { data } = await getRegisterData(registerData);
@@ -54,7 +54,7 @@ export const register = createAsyncThunk<TUserAuthResponse, TRegisterData, TReje
 );
 
 export const login = createAsyncThunk<TUserAuthResponse, TUser, TReject>(
-  '@@auth/login',
+  '@@auth/login-user',
   async function (authData, { rejectWithValue }) {
     try {
       const { data } = await getAuthData(authData);
@@ -66,7 +66,7 @@ export const login = createAsyncThunk<TUserAuthResponse, TUser, TReject>(
 );
 
 export const updateToken = createAsyncThunk<TAuthResponse, TToken, TReject>(
-  '@@auth/updateToken',
+  '@@auth/updateToken-user',
   async function (token, { rejectWithValue }) {
     try {
       const { data } = await getNewToken(token);
@@ -78,7 +78,7 @@ export const updateToken = createAsyncThunk<TAuthResponse, TToken, TReject>(
 );
 
 export const logout = createAsyncThunk<TLogoutResponse, TToken, TReject>(
-  '@@auth/logout',
+  '@@auth/logout-user',
   async function (token, { rejectWithValue }) {
     try {
       const { data } = await getLogoutData(token);
@@ -90,7 +90,7 @@ export const logout = createAsyncThunk<TLogoutResponse, TToken, TReject>(
 );
 
 export const getUser = createAsyncThunk<TUserDataResponse, TAuthorization, TReject>(
-  '@@auth/getUser',
+  '@@auth/get-user',
   async function (token, { rejectWithValue }) {
     try {
       const { data } = await getUserData(token);
@@ -102,7 +102,7 @@ export const getUser = createAsyncThunk<TUserDataResponse, TAuthorization, TReje
 );
 
 export const updateUser = createAsyncThunk<TUserDataResponse, TUpdateUserData, TReject>(
-  '@@auth/updateUser',
+  '@@auth/update-user',
   async function (updateUserData, { rejectWithValue }) {
     try {
       const { data } = await refreshUserData(updateUserData);
@@ -169,7 +169,7 @@ const authSlice = createSlice({
   },
 });
 
-const isError = (action: AnyAction) => action.type.endsWith('rejected');
-const isLoading = (action: AnyAction) => action.type.endsWith('pending');
+const isError = (action: AnyAction) => action.type.endsWith('-user/rejected');
+const isLoading = (action: AnyAction) => action.type.endsWith('-user/pending');
 
 export default authSlice.reducer;
