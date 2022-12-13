@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -8,10 +7,11 @@ import AppRouter from '../AppRouter/AppRouter';
 import { getCookie } from '../../utils/utils';
 import { getUser, updateToken } from '../../store/slices/authSlice';
 import { fetchIngredients } from '../../store/slices/ingredientsSlice';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.auth);
   const refreshToken = getCookie('token');
 
   useEffect(() => {

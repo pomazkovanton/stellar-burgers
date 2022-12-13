@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -9,22 +8,24 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './registerpage.module.css';
 import { register } from '../../store/slices/authSlice';
-import useForm from '../../hooks/useForm';
+import { useForm, useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { HOME_ROUTE } from '../../utils/constans';
 
+import styles from './registerpage.module.css';
+
 const RegisterPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   const { values, handleChange } = useForm({ name: '', email: '', password: '' });
-  const { isAuth } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   if (isAuth) {
     return <Redirect to={HOME_ROUTE} />;
   }
 
-  const handlerSubmit = (e) => {
-    e.preventDefault();
+  const handlerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(register(values));
   };
 

@@ -1,10 +1,18 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { LOGIN_ROUTE } from 'src/utils/constans';
 
-const ProtectedRoute = ({ children, ...rest }) => {
-  const { isAuth } = useSelector((store) => store.auth);
+import { LOGIN_ROUTE } from 'src/utils/constans';
+import { useAppSelector } from '../../../utils/hooks';
+
+interface IProtectedRouteProps {
+  key: string;
+  path: string;
+  exact: true;
+  children: React.ReactNode;
+}
+
+const ProtectedRoute: React.FC<IProtectedRouteProps> = ({ children, ...rest }) => {
+  const { isAuth } = useAppSelector((store) => store.auth);
   return (
     <Route
       {...rest}

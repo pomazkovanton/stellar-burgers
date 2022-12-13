@@ -1,15 +1,21 @@
 import React from 'react';
-
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './cardorder.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { addDetails } from '../../store/slices/orderDetailsSlice';
 import { getDate } from '../../utils/utils';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TOrder } from '../../utils/types/main';
 
-const CardOrder = ({ order, isStatus = false }) => {
-  const dispatch = useDispatch();
-  const { ingredients } = useSelector((state) => state.ingredients);
+import styles from './cardorder.module.css';
+
+interface ICardOrderProps {
+  order: TOrder;
+  isStatus?: boolean;
+}
+
+const CardOrder: React.FC<ICardOrderProps> = ({ order, isStatus = false }) => {
+  const dispatch = useAppDispatch();
+  const { ingredients } = useAppSelector((state) => state.ingredients);
   const orderDate = getDate(new Date(order.createdAt), new Date());
 
   const handleClick = () => {
@@ -19,15 +25,20 @@ const CardOrder = ({ order, isStatus = false }) => {
   const status =
     order.status === 'done'
       ? { text: 'Выполнен', color: 'var(--colors-interface-success)' }
-      : order === 'pending'
+      : order.status !== 'pending'
       ? { text: 'Отменен', color: 'var(--colors-interface-error)' }
       : { text: 'Готовится', color: 'var(--colors-interface-accent)' };
 
-  const price = order.ingredients
+  const price: number = order.ingredients
     .map((id) => ingredients.find((ingr) => ingr._id === id))
-    .reduce((acc, ingr) => acc + ingr.price, 0);
+    .reduce((acc, ingr) => {
+      if (ingr !== undefined) {
+        return acc + ingr.price;
+      }
+      return acc;
+    }, 0);
 
-  const uniqueIngredients = [];
+  const uniqueIngredients: string[] = [];
 
   order.ingredients.map((id) => {
     if (!uniqueIngredients.includes(id)) {
@@ -36,7 +47,7 @@ const CardOrder = ({ order, isStatus = false }) => {
   });
 
   return (
-    <article className={styles.card} onMouseDown={handleClick}>
+    <article className={styles.card} role='presentation' onMouseDown={handleClick}>
       <div className={styles.header}>
         <p className='text text_type_digits-default'>#{order.number}</p>
         <data className='text text_type_main-default text_color_inactive'>{orderDate}</data>

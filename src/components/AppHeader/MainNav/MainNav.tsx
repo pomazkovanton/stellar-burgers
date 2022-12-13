@@ -1,10 +1,11 @@
 import React from 'react';
-
-import styles from './mainnav.module.css';
+import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import NavItem from '../NavItem/NavItem';
-import { BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import { FEED_ROUTE, HOME_ROUTE } from '../../../utils/constans';
+
+import styles from './mainnav.module.css';
 
 const MainNav: React.FC = () => {
   return (

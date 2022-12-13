@@ -1,7 +1,22 @@
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+  Middleware,
+} from '@reduxjs/toolkit';
+
+type TWsActions = {
+  open: ActionCreatorWithoutPayload<string>;
+  error: ActionCreatorWithoutPayload<string>;
+  message: ActionCreatorWithPayload<any, string>;
+  close: ActionCreatorWithoutPayload<string>;
+  disconnect: ActionCreatorWithoutPayload<string>;
+  connect: ActionCreatorWithPayload<any, string>;
+};
+
 const wsMiddleware =
-  ({ close, error, message, open, disconnect, connect }) =>
+  ({ close, error, message, open, disconnect, connect }: TWsActions): Middleware =>
   (store) => {
-    let socket = null;
+    let socket: WebSocket | null = null;
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;

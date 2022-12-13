@@ -1,13 +1,15 @@
 import React from 'react';
-import { IngredientType } from '../../../types/Ingredient';
+
 import Ingredient from '../Ingredient/Ingredient';
+
+import { TIngredient } from '../../../utils/types/main';
 
 import styles from './ingredientlist.module.css';
 
 interface IngredientListProps {
   type: string;
   title: string;
-  ingredients: IngredientType[];
+  ingredients: TIngredient[];
 }
 
 const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, type }) => {

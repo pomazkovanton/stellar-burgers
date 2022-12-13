@@ -1,13 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TOrder } from '../../utils/types/main';
+
+type TOrderDetailsState = {
+  orderDetails: TOrder | null;
+  isShowDetails: boolean;
+};
+
+const initialState: TOrderDetailsState = {
+  orderDetails: null,
+  isShowDetails: false,
+};
 
 const orderDetailsSlice = createSlice({
   name: 'orderDetails',
-  initialState: {
-    orderDetails: null,
-    isShowDetails: false,
-  },
+  initialState,
   reducers: {
-    addDetails(state, action) {
+    addDetails(state, action: PayloadAction<TOrder>) {
       state.orderDetails = action.payload;
       state.isShowDetails = true;
     },

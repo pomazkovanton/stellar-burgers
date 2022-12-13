@@ -1,16 +1,15 @@
 import React, { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-
 import {
   ConstructorElement,
   CurrencyIcon,
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import OrderDetails from '../BurgerConstructor/OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 
@@ -21,31 +20,31 @@ import {
   removeFromBurger,
   removeAllBurger,
 } from '../../store/slices/burgerSlice';
-import { BurgerIngredients } from '../../types/burgerIngredients';
+import { TAuthorization, TBurger, TDragItem, TDragItemTypes } from '../../utils/types/main';
 import { lOADING_DATA, LOGIN_ROUTE } from '../../utils/constans';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 import styles from './burgerconstructor.module.css';
 
 const BurgerConstructor: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const { burger } = useSelector((state) => state.burger);
-  const { orderStatus, order, isShowOrder } = useSelector((state) => state.order);
-  const { isAuth, token } = useSelector((state) => state.auth);
 
-  const bun = useMemo(() => burger.find((ingr) => ingr.item.type === 'bun'), [burger]);
+  const { burger } = useAppSelector((state) => state.burger);
+  const { orderStatus, order, isShowOrder } = useAppSelector((state) => state.order);
+  const { isAuth, token } = useAppSelector((state) => state.auth);
+
+  const bun = useMemo(() => burger.find((ingr) => ingr.item.type === 'bun'), [burger]) || null;
   const otherIngredients = useMemo(
     () => burger.filter((ingr) => ingr.item.type !== 'bun'),
     [burger],
   );
 
-  const accessToken = { authorization: `Bearer ${token}` };
+  const accessToken: TAuthorization = { authorization: `Bearer ${token}` };
+  const isBunAdded = bun !== null;
 
-  const isBunAdded = bun !== undefined;
-
-  const dispatch = useDispatch();
-
-  const [{ isHover }, dropTarget] = useDrop({
-    accept: 'ingredient',
+  const [{ isHover }, dropTarget] = useDrop<TDragItem, void, { isHover: boolean }>({
+    accept: TDragItemTypes.INGREDIENT,
     drop({ ingredient }) {
       dispatch(addToBurger({ id: uuidv4(), item: ingredient }));
     },
@@ -58,7 +57,7 @@ const BurgerConstructor: React.FC = () => {
     ? styles.container
     : [styles.container, styles.containerHover].join(' ');
 
-  const calculatingPrice = (burger: BurgerIngredients[]): number => {
+  const calculatingPrice = (burger: TBurger[]): number => {
     return burger.reduce(
       (acc, ingr) => (ingr.item.type !== 'bun' ? acc + ingr.item.price : acc + ingr.item.price * 2),
       0,
@@ -66,19 +65,20 @@ const BurgerConstructor: React.FC = () => {
   };
 
   const getIdIngredients = () => {
-    return [bun.item._id, ...otherIngredients.map((ingr) => ingr.item._id), bun.item._id];
+    if (bun !== null)
+      return [bun.item._id, ...otherIngredients.map((ingr) => ingr.item._id), bun.item._id];
   };
 
   const handleOrderClick = () => {
     if (isAuth) {
-      const idIngredients = { ingredients: getIdIngredients() };
+      const idIngredients = { ingredients: getIdIngredients() || [] };
       dispatch(fetchOrder({ id: idIngredients, token: accessToken }));
     } else {
       history.push(LOGIN_ROUTE);
     }
   };
 
-  const handleDragIngredient = (result) => {
+  const handleDragIngredient = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) return;
     if (source.index === destination.index && source.droppableId === destination.droppableId) {
@@ -87,7 +87,7 @@ const BurgerConstructor: React.FC = () => {
     dispatch(reorderInBurger({ startIndex: source.index, endIndex: destination.index }));
   };
 
-  const handleDeleteIngredient = (id: number): void => {
+  const handleDeleteIngredient = (id: string): void => {
     dispatch(removeFromBurger(id));
   };
 
@@ -171,7 +171,7 @@ const BurgerConstructor: React.FC = () => {
         )}
       </section>
       <Modal isActive={isShowOrder} closeModal={handleCloseModalOrder}>
-        <OrderDetails numberOrder={order} />
+        {order !== null && <OrderDetails numberOrder={order} />}
       </Modal>
     </>
   );

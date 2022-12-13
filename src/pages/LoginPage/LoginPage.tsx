@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -8,24 +7,38 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './loginpage.module.css';
 import { login } from '../../store/slices/authSlice';
-import useForm from '../../hooks/useForm';
+import { useForm, useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { HOME_ROUTE } from '../../utils/constans';
 
+import styles from './loginpage.module.css';
+
+interface ILocationState {
+  from: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  state?: object;
+}
+
 const LoginPage: React.FC = () => {
-  const { isAuth } = useSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const location = useLocation<ILocationState>();
+
+  const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ email: '', password: '' });
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const PREVIOUS_LOCATION_ROUTE = history.location.state?.from.pathname;
+
+  const PREVIOUS_LOCATION_ROUTE = location.state?.from.pathname;
 
   if (isAuth) {
     return <Redirect to={PREVIOUS_LOCATION_ROUTE || HOME_ROUTE} />;
   }
 
-  const handlerSubmit = (e) => {
-    e.preventDefault();
+  const handlerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(login(values));
   };
 

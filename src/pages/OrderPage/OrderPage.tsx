@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import OrderDetails from 'src/components/OrderDetails/OrderDetails';
+import { useParams } from 'react-router-dom';
+
+import OrderDetails from '../../components/OrderDetails/OrderDetails';
+import Loader from '../../components/Loader/Loader';
+
 import { disconnect, connect } from '../../store/slices/wsSlice';
 import { ALL_ORDERS_URL } from '../../utils/constans';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TOrder } from '../../utils/types/main';
+
 import styles from './orderpage.module.css';
 
-const OrderPage = () => {
-  const { id } = useParams();
-  const { data, isConnected } = useSelector((state) => state.ws);
-  const dispatch = useDispatch();
-  let order = null;
+type TParams = {
+  id: string;
+};
+
+const OrderPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const { data, isConnected } = useAppSelector((state) => state.ws);
+  const { id } = useParams<TParams>();
+  let order: TOrder | null = null;
 
   useEffect(() => {
     dispatch(connect(ALL_ORDERS_URL));
@@ -20,11 +30,11 @@ const OrderPage = () => {
     };
   }, [dispatch]);
 
-  if (isConnected && data) order = data.orders.find((item) => item._id === id);
+  if (isConnected && data) order = data.orders.find((item) => item._id === id) || null;
 
   return (
     <div className={styles.container}>
-      {!isConnected && <h2>Загрузка...</h2>}
+      {!isConnected && <Loader />}
       {isConnected && data && !order && <h2>Заказ не найден.</h2>}
       {isConnected && data && order && (
         <>

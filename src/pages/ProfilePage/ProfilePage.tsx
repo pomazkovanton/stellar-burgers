@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import Loader from '../../components/Loader/Loader';
 
-import styles from './profilepage.module.css';
 import {
   lOADING_DATA,
   PROFILE_ORDERS_ROUTE,
   PROFILE_ROUTE,
   REJECTED_DATA,
   RESOLVED_DATA,
-} from 'src/utils/constans';
+} from '../../utils/constans';
 import { logout, updateUser } from '../../store/slices/authSlice';
 import { getCookie } from '../../utils/utils';
-import useForm from '../../hooks/useForm';
+import { useForm, useAppDispatch, useAppSelector } from '../../utils/hooks';
+
+import styles from './profilepage.module.css';
 
 const ProfilePage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { user, token, getDataUserStatus, getDataUserError } = useSelector((state) => state.auth);
-
+  const { user, token, responseStatus, responseError } = useAppSelector((state) => state.auth);
   const { values, handleChange, setValues } = useForm({
     name: '',
     email: '',
@@ -31,9 +31,9 @@ const ProfilePage = () => {
   const refreshToken = getCookie('token');
   const accessToken = { authorization: `Bearer ${token}` };
 
-  const inputNameRef = React.useRef(null);
-  const inputEmailRef = React.useRef(null);
-  const inputPasswordRef = React.useRef(null);
+  const inputNameRef = React.useRef<HTMLInputElement>(null);
+  const inputEmailRef = React.useRef<HTMLInputElement>(null);
+  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (user) {
@@ -43,49 +43,51 @@ const ProfilePage = () => {
         password: '',
       });
     }
-  }, [user]);
+  }, [user, setValues]);
 
   const setDisabledForm = () => {
     const inputs = [inputNameRef.current, inputEmailRef.current, inputPasswordRef.current];
     inputs.map((input) => {
-      if (input.disabled === false) {
+      if (input !== null && input.disabled === false) {
         input.classList.add('input__textfield-disabled');
         input.disabled = true;
       }
     });
   };
 
-  const handlerSubmit = (e) => {
-    e.preventDefault();
+  const handlerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(updateUser({ user: values, token: accessToken }));
     setDisabledForm();
     setIsVisible(false);
   };
 
   const handlerLogout = () => {
-    dispatch(logout({ token: refreshToken }));
+    if (refreshToken) dispatch(logout({ token: refreshToken }));
   };
 
-  const handlerIconClick = (inputRef) => {
+  const handlerIconClick = (inputRef: React.RefObject<HTMLInputElement>) => {
     const input = inputRef.current;
-    input.classList.remove('input__textfield-disabled');
-    input.focus();
-    input.disabled = false;
+    if (input !== null) {
+      input.classList.remove('input__textfield-disabled');
+      input.focus();
+      input.disabled = false;
+    }
     setIsVisible(true);
   };
 
   const handlerCancelBtn = () => {
     setDisabledForm();
-    setValues({ name: user.name, email: user.email, password: '' });
+    if (user !== null) setValues({ name: user.name, email: user.email, password: '' });
     setIsVisible(false);
   };
 
   return (
-    <div className={styles.container}>
-      {getDataUserStatus === lOADING_DATA && <h2>Загрузка данных...</h2>}
-      {getDataUserStatus === REJECTED_DATA && <h2>Ошибка загрузки данных: {getDataUserError}</h2>}
-      {getDataUserStatus === RESOLVED_DATA && (
-        <>
+    <>
+      {responseStatus === lOADING_DATA && <Loader />}
+      {responseStatus === REJECTED_DATA && <h2>Ошибка загрузки данных: {responseError}</h2>}
+      {responseStatus === RESOLVED_DATA && (
+        <div className={styles.container}>
           <div className={styles.wrapper}>
             <ul className={styles.nav}>
               <li>
@@ -165,9 +167,9 @@ const ProfilePage = () => {
               </div>
             )}
           </form>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

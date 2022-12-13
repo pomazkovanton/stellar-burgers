@@ -1,12 +1,13 @@
 import React from 'react';
-
-import styles from './appheader.module.css';
-
+import { NavLink } from 'react-router-dom';
 import { Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import NavItem from './NavItem/NavItem';
 import MainNav from './MainNav/MainNav';
+
 import { HOME_ROUTE, PROFILE_ROUTE } from '../../utils/constans';
-import { NavLink } from 'react-router-dom';
+
+import styles from './appheader.module.css';
 
 const AppHeader: React.FC = () => {
   return (

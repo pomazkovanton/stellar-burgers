@@ -4,7 +4,7 @@ import styles from './orderdetails.module.css';
 import doneImg from '../../../images/done.png';
 
 interface IOrderDetailsProps {
-  numberOrder: string;
+  numberOrder: number;
 }
 
 const OrderDetails: React.FC<IOrderDetailsProps> = ({ numberOrder }) => {

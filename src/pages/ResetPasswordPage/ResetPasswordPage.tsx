@@ -1,20 +1,32 @@
 import React from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { getNewPassword } from '../../utils/auth-api';
 import { FORGOT_PASSWORD_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from '../../utils/constans';
-import useForm from '../../hooks/useForm';
+import { useForm, useAppSelector } from '../../utils/hooks';
 
 import styles from './resetpasswordpage.module.css';
 
-const ResetPasswordPage = () => {
-  const { isAuth } = useSelector((state) => state.auth);
+interface ILocationState {
+  from: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  state?: object;
+}
+
+const ResetPasswordPage: React.FC = () => {
+  const location = useLocation<ILocationState>();
+
+  const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ password: '', token: '' });
-  const history = useHistory();
-  const PREVIOUS_LOCATION_ROUTE = history.location.state?.from.pathname;
+
+  const PREVIOUS_LOCATION_ROUTE = location.state?.from.pathname;
 
   if (isAuth) {
     return <Redirect to={HOME_ROUTE} />;
@@ -24,8 +36,8 @@ const ResetPasswordPage = () => {
     return <Redirect to={FORGOT_PASSWORD_ROUTE} />;
   }
 
-  const handlerSubmit = async (e) => {
-    e.preventDefault();
+  const handlerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       const { data } = await getNewPassword(values);
       if (data.success) {

@@ -1,14 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import useForm from '../../hooks/useForm';
+
+import { useForm, useAppSelector } from '../../utils/hooks';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './forgotpasswordpage.module.css';
 import { getCodeInEmail } from '../../utils/auth-api';
 import { HOME_ROUTE, RESET_PASSWORD_ROUTE } from '../../utils/constans';
 
+import styles from './forgotpasswordpage.module.css';
+
 const ForgotPasswordPage: React.FC = () => {
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ email: '' });
   const history = useHistory();
   const location = useLocation();
@@ -17,15 +19,15 @@ const ForgotPasswordPage: React.FC = () => {
     return <Redirect to={HOME_ROUTE} />;
   }
 
-  const handlerSubmit = async (e) => {
-    e.preventDefault();
+  const handlerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       const { data } = await getCodeInEmail(values);
       if (data.success) {
         history.push(RESET_PASSWORD_ROUTE, { from: location });
       }
     } catch (error) {
-      alert('Ошибка: Не получилось востановить пароль!' + error.message);
+      alert('Ошибка: Не получилось восстановить пароль!' + error.message);
     }
   };
 

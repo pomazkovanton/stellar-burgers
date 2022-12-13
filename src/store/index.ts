@@ -10,6 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 //Импорт reducers
 import ingredientsReducer from './slices/ingredientsSlice';
 import burgerReducer from './slices/burgerSlice';
@@ -52,5 +53,7 @@ const store = configureStore({
     }).concat(wsMiddleware(wsSlice.actions)),
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);
 export default store;
