@@ -13,7 +13,11 @@ export const handleRequest = async (url: string, method: TMethod, data = {}, hea
 };
 
 //Функции для работы с куки
-export const setCookie = (name: string, value: string | null, props?: any) => {
+export const setCookie = (
+  name: string,
+  value: string | null,
+  props?: Record<string, string | number | Date | boolean>,
+) => {
   props = {
     path: '/',
     ...props,
@@ -24,8 +28,10 @@ export const setCookie = (name: string, value: string | null, props?: any) => {
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+  if (exp instanceof Date) {
+    if (exp && exp.toUTCString) {
+      props.expires = exp.toUTCString();
+    }
   }
   if (value !== null) value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;

@@ -7,7 +7,15 @@ import { HOME_ROUTE } from '../../utils/constans';
 import { privateRoutes, publicRoutes, modalRoutes } from '../../utils/routes';
 
 interface ILocationState {
-  background: any;
+  background: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  from: string;
+  state?: object;
 }
 
 const AppRouter: React.FC = () => {

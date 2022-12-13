@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -13,14 +13,25 @@ import { HOME_ROUTE } from '../../utils/constans';
 
 import styles from './loginpage.module.css';
 
+interface ILocationState {
+  from: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  state?: object;
+}
+
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const history = useHistory<History>();
+  const location = useLocation<ILocationState>();
 
   const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ email: '', password: '' });
 
-  const PREVIOUS_LOCATION_ROUTE = history.location.state?.from.pathname;
+  const PREVIOUS_LOCATION_ROUTE = location.state?.from.pathname;
 
   if (isAuth) {
     return <Redirect to={PREVIOUS_LOCATION_ROUTE || HOME_ROUTE} />;
