@@ -16,13 +16,15 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients, title, typ
   return (
     <div className={styles.container} id={type}>
       <h2 className='text text_type_main-medium'>{title}</h2>
-      <ul className={styles.list}>
-        {ingredients.map((ingredient) =>
-          ingredient.type === type ? (
-            <Ingredient key={ingredient._id} ingredient={ingredient} />
-          ) : null,
-        )}
-      </ul>
+      {ingredients.length > 0 && (
+        <ul className={styles.list}>
+          {ingredients.map((ingredient) =>
+            ingredient.type === type ? (
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
+            ) : null,
+          )}
+        </ul>
+      )}
     </div>
   );
 };

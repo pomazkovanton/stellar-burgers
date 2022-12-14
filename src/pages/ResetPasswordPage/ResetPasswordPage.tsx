@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -22,6 +22,7 @@ interface ILocationState {
 
 const ResetPasswordPage: React.FC = () => {
   const location = useLocation<ILocationState>();
+  const history = useHistory();
 
   const { isAuth } = useAppSelector((state) => state.auth);
   const { values, handleChange } = useForm({ password: '', token: '' });

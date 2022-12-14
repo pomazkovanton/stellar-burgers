@@ -3,12 +3,17 @@ import axios from 'axios';
 import { TMethod } from './types/common';
 
 //Универсальный обработчик запроса на сервер
-export const handleRequest = async (url: string, method: TMethod, data = {}, headers = {}) => {
-  const res = await axios(url, {
+export const handleRequest = async <T>(
+  url: string,
+  method: TMethod,
+  data = {},
+  headers = {},
+): Promise<T> => {
+  const res = await (<T>axios(url, {
     method: method,
     data: data,
     headers: headers,
-  });
+  }));
   return res;
 };
 
